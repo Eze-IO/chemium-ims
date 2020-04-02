@@ -112,8 +112,9 @@ export const navItems: INavData[] = [
   },
   {
     name: 'User(s)',
-    url: '/charts',
-    icon: 'icon-ban',
-    attributes: { disabled: true },
+    url: '/users',
+    icon: 'icon-ban'
+    /*,
+    attributes: { disabled: true },*/
   },
 ];
