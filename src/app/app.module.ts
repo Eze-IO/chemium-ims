@@ -41,6 +41,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { UsersComponent } from './views/users/users.component';
+import { RecordComponent } from './views/record/record.component';
+import { ProfileComponent } from './views/profile/profile.component';
+import { SettingsComponent } from './views/settings/settings.component';
+import { ReportComponent } from './views/report/report.component';
 
 @NgModule({
   imports: [

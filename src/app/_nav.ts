@@ -12,108 +12,108 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Main Tables',
-    url: '/base',
-    icon: 'icon-puzzle',
+    url: '/record',
+    icon: 'icon-layers',
     children: [
+      /*{
+        name: 'Contract Details',
+        url: '/record',
+        icon: 'icon-doc'
+      },*/
       {
-        name: 'Warehouse',
-        url: '/base/cards',
-        icon: 'icon-puzzle'
+        name: 'Agent(s)',
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
-        name: 'Carousels',
-        url: '/base/carousels',
-        icon: 'icon-puzzle'
+        name: 'Counterparties',
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
-        name: 'Collapses',
-        url: '/base/collapses',
-        icon: 'icon-puzzle'
+        name: 'Inventory Schedule',
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
-        name: 'Forms',
-        url: '/base/forms',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Navbars',
-        url: '/base/navbars',
-        icon: 'icon-puzzle'
+        name: 'Inventories',
+        url: '/record',
+        icon: 'icon-doc'
 
       },
       {
-        name: 'Pagination',
-        url: '/base/paginations',
-        icon: 'icon-puzzle'
+        name: 'Trucker(s)',
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
-        name: 'Popovers',
-        url: '/base/popovers',
-        icon: 'icon-puzzle'
+        name: 'Payment Term(s)',
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
-        name: 'Progress',
-        url: '/base/progress',
-        icon: 'icon-puzzle'
+        name: 'Bridge Financing',
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
-        name: 'Switches',
-        url: '/base/switches',
-        icon: 'icon-puzzle'
+        name: 'Letters of Credit',
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
-        name: 'Tables',
-        url: '/base/tables',
-        icon: 'icon-puzzle'
+        name: 'Link(s)',
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
-        name: 'Tabs',
-        url: '/base/tabs',
-        icon: 'icon-puzzle'
+        name: 'BL?',
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
-        name: 'Tooltips',
-        url: '/base/tooltips',
-        icon: 'icon-puzzle'
+        name: 'Contract(s)',
+        url: '/record',
+        icon: 'icon-doc'
       }
     ]
   },
   {
     name: 'Associate Tables',
-    url: '/buttons',
-    icon: 'icon-cursor',
+    url: '/record',
+    icon: 'icon-layers',
     children: [
       {
         name: 'Trader(s)',
-        url: '/buttons/buttons',
-        icon: 'icon-cursor'
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
         name: 'Warehouse(s)',
-        url: '/buttons/dropdowns',
-        icon: 'icon-cursor'
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
         name: 'Product(s)',
-        url: '/buttons/brand-buttons',
-        icon: 'icon-cursor'
+        url: '/record',
+        icon: 'icon-doc'
       },
       {
         name: 'Measurement(s)',
-        url: '/buttons/brand-buttons',
-        icon: 'icon-cursor'
+        url: '/record',
+        icon: 'icon-doc'
       }
     ]
   },
   {
     name: 'Generate Report',
-    url: '/charts',
-    icon: 'icon-puzzle',
+    url: '/report',
+    icon: 'icon-chart',
   },
   {
     name: 'User(s)',
     url: '/users',
-    icon: 'icon-ban'
+    icon: 'icon-people'
     /*,
     attributes: { disabled: true },*/
   },
