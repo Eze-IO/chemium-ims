@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UrlSerializer } from '@angular/router';
+import { CustomUrlSerializer } from './custom-url-serializer';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -45,6 +47,7 @@ import { RecordComponent } from './views/record/record.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { SettingsComponent } from './views/settings/settings.component';
 import { ReportComponent } from './views/report/report.component';
+import { LogoutComponent } from './views/logout/logout.component';
 
 @NgModule({
   imports: [
@@ -67,12 +70,15 @@ import { ReportComponent } from './views/report/report.component';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    LogoutComponent
   ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }],
+  },{ provide: UrlSerializer,
+    useClass: CustomUrlSerializer }
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

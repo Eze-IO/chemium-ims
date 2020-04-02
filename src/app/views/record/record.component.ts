@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-record',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecordComponent implements OnInit {
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.queryParams.subscribe(params => {
+          let table = params['table'];
+          let type = params['type'];
+          console.log(table); // Print the parameter to the console.
+      });
+  }
 
   ngOnInit(): void {
   }
