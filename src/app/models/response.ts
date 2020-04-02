@@ -1,7 +1,7 @@
 /*
   Representation of an api response
 */
-export class repsonse {
+export class response {
   success:boolean;
   result:string;
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RestAPIService } from '../../services/rest-api.service';
+import { response } from '../../models/response';
 
 @Component({
   selector: 'app-dashboard',
