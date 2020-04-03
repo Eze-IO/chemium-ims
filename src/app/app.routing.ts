@@ -81,6 +81,26 @@ export const routes: Routes = [
       {
         path: 'widgets',
         loadChildren: () => import('./views/widgets/widgets.module').then(m => m.WidgetsModule)
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./views/users/users.module').then(m => m.UsersModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule)
+      },
+      {
+        path: 'record',
+        loadChildren: () => import('./views/record/record.module').then(m => m.RecordModule)
+      },
+      {
+        path: 'report',
+        loadChildren: () => import('./views/report/report.module').then(m => m.ReportModule)
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('./views/settings/settings.module').then(m => m.SettingsModule)
       }
     ]
   },

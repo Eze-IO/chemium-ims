@@ -4,248 +4,117 @@ export const navItems: INavData[] = [
   {
     name: 'Dashboard',
     url: '/dashboard',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
+    icon: 'icon-speedometer'
   },
   {
     title: true,
-    name: 'Theme'
+    name: 'Option(s)'
   },
   {
-    name: 'Colors',
-    url: '/theme/colors',
-    icon: 'icon-drop'
-  },
-  {
-    name: 'Typography',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
-  },
-  {
-    title: true,
-    name: 'Components'
-  },
-  {
-    name: 'Base',
-    url: '/base',
-    icon: 'icon-puzzle',
+    name: 'Main Record(s)',
+    url: '/record',
+    icon: 'icon-layers',
     children: [
+      /*{
+        name: 'Contract Details',
+        url: '/record?table=contract_details',
+        icon: 'icon-doc'
+      },*/
       {
-        name: 'Cards',
-        url: '/base/cards',
-        icon: 'icon-puzzle'
+        name: 'Agent(s)',
+        url: "/record?table=agent",
+        icon: 'icon-doc'
       },
       {
-        name: 'Carousels',
-        url: '/base/carousels',
-        icon: 'icon-puzzle'
+        name: 'Counterparties',
+        url: '/record?table=counterparty',
+        icon: 'icon-doc'
       },
       {
-        name: 'Collapses',
-        url: '/base/collapses',
-        icon: 'icon-puzzle'
+        name: 'Inventory Schedule',
+        url: '/record?table=inventory_schedule',
+        icon: 'icon-doc'
       },
       {
-        name: 'Forms',
-        url: '/base/forms',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Navbars',
-        url: '/base/navbars',
-        icon: 'icon-puzzle'
+        name: 'Inventories',
+        url: '/record?table=inventory',
+        icon: 'icon-doc'
 
       },
       {
-        name: 'Pagination',
-        url: '/base/paginations',
-        icon: 'icon-puzzle'
+        name: 'Trucker(s)',
+        url: '/record?table=trucker',
+        icon: 'icon-doc'
       },
       {
-        name: 'Popovers',
-        url: '/base/popovers',
-        icon: 'icon-puzzle'
+        name: 'Payment Term(s)',
+        url: '/record?table=payment_terms',
+        icon: 'icon-doc'
       },
       {
-        name: 'Progress',
-        url: '/base/progress',
-        icon: 'icon-puzzle'
+        name: 'Bridge Financing',
+        url: '/record?table=bridge_finance',
+        icon: 'icon-doc'
       },
       {
-        name: 'Switches',
-        url: '/base/switches',
-        icon: 'icon-puzzle'
+        name: 'Letters of Credit',
+        url: '/record?table=lc',
+        icon: 'icon-doc'
       },
       {
-        name: 'Tables',
-        url: '/base/tables',
-        icon: 'icon-puzzle'
+        name: 'Link(s)',
+        url: '/record?table=link',
+        icon: 'icon-doc'
       },
       {
-        name: 'Tabs',
-        url: '/base/tabs',
-        icon: 'icon-puzzle'
+        name: 'BL?',
+        url: '/record?table=bl',
+        icon: 'icon-doc'
       },
       {
-        name: 'Tooltips',
-        url: '/base/tooltips',
-        icon: 'icon-puzzle'
+        name: 'Contract(s)',
+        url: '/record?table=contract',
+        icon: 'icon-doc'
       }
     ]
   },
   {
-    name: 'Buttons',
-    url: '/buttons',
-    icon: 'icon-cursor',
-    children: [
-      {
-        name: 'Buttons',
-        url: '/buttons/buttons',
-        icon: 'icon-cursor'
-      },
-      {
-        name: 'Dropdowns',
-        url: '/buttons/dropdowns',
-        icon: 'icon-cursor'
-      },
-      {
-        name: 'Brand Buttons',
-        url: '/buttons/brand-buttons',
-        icon: 'icon-cursor'
-      }
-    ]
-  },
-  {
-    name: 'Charts',
-    url: '/charts',
-    icon: 'icon-pie-chart'
-  },
-  {
-    name: 'Icons',
-    url: '/icons',
-    icon: 'icon-star',
-    children: [
-      {
-        name: 'CoreUI Icons',
-        url: '/icons/coreui-icons',
-        icon: 'icon-star',
-        badge: {
-          variant: 'success',
-          text: 'NEW'
-        }
-      },
-      {
-        name: 'Flags',
-        url: '/icons/flags',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Font Awesome',
-        url: '/icons/font-awesome',
-        icon: 'icon-star',
-        badge: {
-          variant: 'secondary',
-          text: '4.7'
-        }
-      },
-      {
-        name: 'Simple Line Icons',
-        url: '/icons/simple-line-icons',
-        icon: 'icon-star'
-      }
-    ]
-  },
-  {
-    name: 'Notifications',
-    url: '/notifications',
-    icon: 'icon-bell',
-    children: [
-      {
-        name: 'Alerts',
-        url: '/notifications/alerts',
-        icon: 'icon-bell'
-      },
-      {
-        name: 'Badges',
-        url: '/notifications/badges',
-        icon: 'icon-bell'
-      },
-      {
-        name: 'Modals',
-        url: '/notifications/modals',
-        icon: 'icon-bell'
-      }
-    ]
-  },
-  {
-    name: 'Widgets',
-    url: '/widgets',
-    icon: 'icon-calculator',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
-  },
-  {
-    divider: true
-  },
-  {
-    title: true,
-    name: 'Extras',
-  },
-  {
-    name: 'Pages',
-    url: '/pages',
-    icon: 'icon-star',
-    children: [
-      {
-        name: 'Login',
-        url: '/login',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Register',
-        url: '/register',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Error 404',
-        url: '/404',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Error 500',
-        url: '/500',
-        icon: 'icon-star'
-      }
-    ]
-  },
-  {
-    name: 'Disabled',
-    url: '/dashboard',
-    icon: 'icon-ban',
-    badge: {
-      variant: 'secondary',
-      text: 'NEW'
-    },
-    attributes: { disabled: true },
-  },
-  {
-    name: 'Download CoreUI',
-    url: 'http://coreui.io/angular/',
-    icon: 'icon-cloud-download',
-    class: 'mt-auto',
-    variant: 'success',
-    attributes: { target: '_blank', rel: 'noopener' }
-  },
-  {
-    name: 'Try CoreUI PRO',
-    url: 'http://coreui.io/pro/angular/',
+    name: 'Linked Record(s)',
+    url: '/record?type=linked',
     icon: 'icon-layers',
-    variant: 'danger',
-    attributes: { target: '_blank', rel: 'noopener' }
-  }
+    children: [
+      {
+        name: 'Trader(s)',
+        url: '/record?type=linked&table=trader',
+        icon: 'icon-doc'
+      },
+      {
+        name: 'Warehouse(s)',
+        url: '/record?type=linked&table=warehouse',
+        icon: 'icon-doc'
+      },
+      {
+        name: 'Product(s)',
+        url: '/record?type=linked&table=product',
+        icon: 'icon-doc'
+      },
+      {
+        name: 'Measurement(s)',
+        url: '/record?type=linked&table=unit_measurment',
+        icon: 'icon-doc'
+      }
+    ]
+  },
+  {
+    name: 'Generate Report',
+    url: '/report',
+    icon: 'icon-chart',
+  },
+  {
+    name: 'User(s)',
+    url: '/users',
+    icon: 'icon-people'
+    /*,
+    attributes: { disabled: true },*/
+  },
 ];
