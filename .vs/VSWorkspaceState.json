@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\containers",
+    "\\src\\app\\containers\\default-layout",
+    "\\src\\app\\services",
+    "\\src\\app\\views",
+    "\\src\\app\\views\\login"
+  ],
+  "SelectedNode": "\\src\\app\\services\\rest-api.service.ts",
+  "PreviewInSolutionExplorer": false
+}
