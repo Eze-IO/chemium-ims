@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { WarehouseService } from '../../services/warehouse.service';
+import { warehouse } from '../../models/entities/warehouse';
 
 @Component({
   selector: 'app-record',
@@ -8,7 +10,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RecordComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  private RecordName:string;
+  private test:warehouse[];
+
+  constructor(private activatedRoute: ActivatedRoute,
+    private ws: WarehouseService) {
     this.activatedRoute.queryParams.subscribe(params => {
           let table = params['table'];
           let type = params['type'];
@@ -17,6 +23,8 @@ export class RecordComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.test = this.ws.GetEntries();
+    this.RecordName = WarehouseService.Name;
   }
 
 }
