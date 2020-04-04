@@ -1,0 +1,77 @@
+.clock-day:before {
+  content: var(--timer-day);
+}
+
+.clock-hours:before {
+  content: var(--timer-hours);
+}
+
+.clock-minutes:before {
+  content: var(--timer-minutes);
+}
+
+.clock-seconds:before {
+  content: var(--timer-seconds);
+}
+
+.clock-container {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color: inherit;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.clock-col {
+  text-align: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  min-width: 90px;
+  position: relative;
+}
+
+.clock-col:not(:last-child):before, .clock-col:not(:last-child):after {
+  content: "";
+  background-color: #000000;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  right: -42px;
+}
+
+.clock-col:not(:last-child):before {
+  top: 35%;
+}
+
+.clock-col:not(:last-child):after {
+  top: 50%;
+}
+
+.clock-timer:before {
+  color: #000000;
+  font-size: 4.2rem;
+  text-transform: uppercase;
+}
+
+.clock-label {
+  color: #000000;
+  text-transform: uppercase;
+  font-size: .7rem;
+  margin-top: 10px;
+}
+
+.clock-col + .clock-col {
+  margin-top: 20px;
+}
+
+.clock-col:before, .clock-col:after {
+  display: none !important;
+}
