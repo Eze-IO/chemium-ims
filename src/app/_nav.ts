@@ -67,7 +67,7 @@ export const navItems: INavData[] = [
         icon: 'icon-doc'
       },
       {
-        name: 'BL?',
+        name: 'Bill of Lading',
         url: '/record?table=bl',
         icon: 'icon-doc'
       },

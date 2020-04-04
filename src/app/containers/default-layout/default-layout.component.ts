@@ -1,6 +1,8 @@
 import {Component } from '@angular/core';
 import { navItems } from '../../_nav';
 import { response } from '../../models/response';
+import { CurrentUserService } from '../../services/current-user.service';
+import { ExtensionService } from '../../helpers/extension.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,6 +13,13 @@ export class DefaultLayoutComponent {
   public navItems = navItems;
 
   constructor() { }
+
+  public GetName(): string {
+    let user = CurrentUserService.GetInfo().name;
+    if (ExtensionService.IsEmptyOrNull(user))
+      return "Hello 👋 and Welcome!";
+    return "Hello 👋, ${user}";
+  }
 
   toggleMinimize(e) {
     this.sidebarMinimized = e;

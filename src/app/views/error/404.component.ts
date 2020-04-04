@@ -7,7 +7,7 @@ export class P404Component {
 
   constructor() { }
 
-  public home(event) {
+  public Home(event) {
       location.replace("/#");
   }
 }

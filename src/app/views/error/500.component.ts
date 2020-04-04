@@ -7,7 +7,7 @@ export class P500Component {
 
   constructor() { }
 
-  public home(event) {
+  public Home(event) {
       location.replace("/#");
   }
 }

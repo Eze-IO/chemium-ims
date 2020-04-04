@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StringExService } from './string-ex.service';
+import { InventoryService } from './inventory.service';
 
-describe('StringExService', () => {
-  let service: StringExService;
+describe('InventoryService', () => {
+  let service: InventoryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(StringExService);
+    service = TestBed.inject(InventoryService);
   });
 
   it('should be created', () => {

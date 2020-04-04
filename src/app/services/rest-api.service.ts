@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpEvent } from '@angular/commo
 import { Observable } from 'rxjs';
 import { response } from '../models/response';
 import { user } from '../models/user';
-import { StringExService } from '../helpers/string-ex.service';
+import { ExtensionService } from '../helpers/extension.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,7 +19,7 @@ export class RestAPIService {
   constructor(private http: HttpClient) {}
 
  public GetEntity(entity: string): Promise<any> {
-    if (!StringExService.IsEmptyOrNull(entity))
+   if (!ExtensionService.IsEmptyOrNull(entity))
       entity = entity.toLowerCase();
     let result = null;
     const request = {
@@ -35,6 +35,29 @@ export class RestAPIService {
         }
       ).catch(err =>
         console.log('Error: ' + err));
+  }
+
+  public UpdateRegister(user: user): Promise<any> {
+    if (user != null) {
+      let result = null;
+      const request = {
+        'username': user.email,
+        'name': user.name,
+        'phone_number': user.phone_number,
+        'token': null
+      };
+
+      return this.http.post(restapi.updateuser, request, httpOptions).toPromise<any>()
+        .then(val => {
+            if (val['Success']) {
+              let json = JSON.parse(val['Result']);
+              return json;
+            }
+          }
+        ).catch(err =>
+          console.log('Error: ' + err));
+    }
+    return null;
   }
 
   public UpdateUser(user: user): Promise<any> {

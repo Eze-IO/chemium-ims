@@ -11,18 +11,18 @@
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item d-md-down-none" style="margin-right:10px;">
       <!--<a class="nav-link" href="#">Users</a>-->
-      <span href="#">Hello 👋, [FULL_NAME]</span>
+      <span href="#">{{ GetName() }}</span>
     </li>
     <li class="nav-item dropdown" dropdown placement="bottom right" style="margin-right:15px;">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
-        <img src="https://d1uuza77bngiy9.cloudfront.net/images/donkey@donkey.com" class="img-avatar" alt="[EMAIL]" />
+        <img src="https://d1uuza77bngiy9.cloudfront.net/images/user_default.jpg" class="img-avatar" alt="[EMAIL]" />
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <div class="dropdown-header text-center"><strong>Account Settings</strong></div>
         <a class="dropdown-item" href="#/profile"><i class="fa fa-user"></i> Profile</a>
         <a class="dropdown-item" href="#/settings"><i class="icon-settings"></i> Settings</a>
         <div class="divider"></div>
-        <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+        <a class="dropdown-item" href="#/login"><i class="fa fa-lock"></i> Logout</a>
       </div>
     </li>
     <!---<li class="nav-item d-md-down-none">
