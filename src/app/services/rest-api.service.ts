@@ -80,6 +80,24 @@ export class RestAPIService {
    }
  }
 
+ public GetReport(functionName: string, parameters: any): Promise<boolean> {
+   if (!ExtensionService.IsEmptyOrNull(functionName)) {
+     const request = {
+       'name': functionName,
+       'params': JSON.parse(parameters),
+     };
+     return this.http.post(restapiurl.getreport, request, httpOptions).toPromise<any>()
+       .then(val => {
+           if (val['Success']) {
+             let json = JSON.parse(val['Result']);
+             return json;
+           }
+         }
+       ).catch(err =>
+         console.log('Error: ' + err));
+   }
+ }
+
  public ModifyEntity(entity: string, id: number): Promise<boolean> {
    if (!ExtensionService.IsEmptyOrNull(entity)) {
      const request = {
@@ -89,8 +107,7 @@ export class RestAPIService {
      return this.http.post(restapiurl.modifyentity, request, httpOptions).toPromise<any>()
        .then(val => {
            if (val['Success']) {
-             let json = JSON.parse(val['Result']);
-             console.log(json);
+             console.log(val['Result']);
              return val['Success'];
            }
          }
@@ -100,10 +117,10 @@ export class RestAPIService {
  }
 
   public UpdateRegister(first_name: string, last_name: string,
-    email: string, password: string, phone_number: string, type :Type) : Promise<any> {
-    if (!ExtensionService.IsEmptyOrNull(first_name) || !ExtensionService.IsEmptyOrNull(last_name) ||
-      !ExtensionService.IsEmptyOrNull(email) || !ExtensionService.IsEmptyOrNull(password) ||
-      !ExtensionService.IsEmptyOrNull(phone_number) || !ExtensionService.IsEmptyOrNull(type.toString())) {
+    email: string, password: string, phone_number: string, type :Type) : Promise<boolean> {
+    if (!ExtensionService.IsEmptyOrNull(first_name) && !ExtensionService.IsEmptyOrNull(last_name) &&
+      !ExtensionService.IsEmptyOrNull(email) && !ExtensionService.IsEmptyOrNull(password) &&
+      !ExtensionService.IsEmptyOrNull(phone_number) && !ExtensionService.IsEmptyOrNull(type.toString())) {
       const request = {
         'first_name': first_name,
         'last_name': last_name,
@@ -116,8 +133,8 @@ export class RestAPIService {
       return this.http.post(restapiurl.userregister, request, httpOptions).toPromise<any>()
         .then(val => {
             if (val['Success']) {
-              let json = JSON.parse(val['Result']);
-              return json;
+              console.log(val['Result']);
+              return val['Success'];
             }
           }
         ).catch(err =>
@@ -148,17 +165,45 @@ export class RestAPIService {
     return null;
   }
 
-  public ListUsers(user: user): Promise<any> {
-    if (user != null) {
-      let result = null;
+  public UploadUserPicture(username: string, picture: string): Promise<boolean> {
+    if (!ExtensionService.IsEmptyOrNull(username) &&
+      !ExtensionService.IsEmptyOrNull(picture)) {
       const request = {
-        'username': user.email,
-        'name': user.name,
-        'phone_number': user.phone_number,
-        'token': null
+        'username': username,
+        'picture': picture
       };
+      return this.http.post(restapiurl.uploaduserpicture, request, httpOptions).toPromise<any>()
+        .then(val => {
+            if (val['Success']) {
+              console.log(val['Result']);
+              return val['Success'];
+            }
+          }
+        ).catch(err =>
+          console.log('Error: ' + err));
+    }
+  }
 
-      return this.http.post(restapiurl.listusers, request, httpOptions).toPromise<any>()
+  public ListUsers(): Promise<any> {
+    return this.http.get(restapiurl.listusers, httpOptions).toPromise<any>()
+      .then(val => {
+          if (val['Success']) {
+            let json = JSON.parse(val['Result']);
+            return json;
+          }
+        }
+      ).catch(err =>
+        console.log('Error: ' + err));
+  }
+
+  public TokenRequester(username: string, password: string): Promise<any> {
+    if (!ExtensionService.IsEmptyOrNull(username) &&
+      !ExtensionService.IsEmptyOrNull(password)) {
+      const request = {
+        'username': username,
+        'password': password
+      }; 
+      return this.http.post(restapiurl.tokenrequester, request, httpOptions).toPromise<any>()
         .then(val => {
             if (val['Success']) {
               let json = JSON.parse(val['Result']);
@@ -168,6 +213,24 @@ export class RestAPIService {
         ).catch(err =>
           console.log('Error: ' + err));
     }
-    return null;
+    
+  }
+
+  public DeleteUser(username: string): Promise<boolean> {
+    if (!ExtensionService.IsEmptyOrNull(username)) {
+      const request = {
+        'username': username
+      };
+      return this.http.post(restapiurl.deleteuser, request, httpOptions).toPromise<any>()
+        .then(val => {
+            if (val['Success']) {
+              console.log(val['Result']);
+              return val['Success'];
+            }
+          }
+        ).catch(err =>
+          console.log('Error: ' + err));
+    }
+
   }
 }
