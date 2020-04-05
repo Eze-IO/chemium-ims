@@ -2,10 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { UrlSerializer } from '@angular/router';
 import { CustomUrlSerializer } from './custom-url-serializer';
+import { JwtInterceptor } from './jwt.interceptor';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -77,11 +78,10 @@ import { ClockComponent } from './views/clock/clock.component';
     RegisterComponent,
     LogoutComponent
   ],
-  providers: [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  },{ provide: UrlSerializer,
-    useClass: CustomUrlSerializer }
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: UrlSerializer, useClass: CustomUrlSerializer },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [ AppComponent ]
 })

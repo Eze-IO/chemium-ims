@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpEvent } from '@angular/commo
 import { Observable } from 'rxjs';
 import { response } from '../models/response';
 import { user } from '../models/user';
+import { AuthenticationService } from './authentication.service';
 import { ExtensionService } from '../helpers/extension.service';
 import { CurrentUserService } from './current-user.service';
 import { Type } from '../models/type';
@@ -149,7 +150,7 @@ export class RestAPIService {
         'username': user.email,
         'name': user.name,
         'phone_number': user.phone_number,
-        'token': CurrentUserService.Token
+        'token': AuthenticationService.Token
       };
 
       return this.http.post(restapiurl.updateuser, request, httpOptions).toPromise<any>()

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthGuard } from './auth.guard';
+
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
 
@@ -102,7 +104,8 @@ export const routes: Routes = [
         path: 'settings',
         loadChildren: () => import('./views/settings/settings.module').then(m => m.SettingsModule)
       }
-    ]
+    ],
+    //canActivate: [AuthGuard]
   },
   { path: '**', component: P404Component }
 ];

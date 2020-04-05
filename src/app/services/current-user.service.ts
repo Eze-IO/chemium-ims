@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RestAPIService } from './rest-api.service';
 import { user } from "../models/user";
+import { Type } from "../models/type";
+import { ExtensionService } from "../helpers/extension.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,33 +11,43 @@ export class CurrentUserService {
 
   constructor(private ras: RestAPIService) { }
 
-  public static FirstName: string;
-  public static LastName: string;
-  public static Token: string = null;
+  private _firstName: string;
+  private _lastName: string;
+  public get FirstName(): string { return this._firstName; }
+  public get LastName(): string { return this._lastName; }
 
-  public static GetInfo(): user {
-    return new user();
+  public GetInfo(): user {
+    let u: user = new user();
+    this.ras.UpdateUser(null).then(data => {
+      u.name = data['name'];
+      u.email = data['email'];
+      u.phone_number = data['phone_number'];
+      u.picture = data['picture'];
+      u.type = Type['type'];
+
+      let _name = u.name;
+      this._firstName = ExtensionService.IsEmptyOrNull(_name.split(' ')[0]) ? null : _name.split(' ')[0];
+      this._lastName = ExtensionService.IsEmptyOrNull(_name.split(' ')[1]) ? null : _name.split(' ')[1];
+    });
+    return u;
   }
 
-  public static UpdateInfo(user: user): boolean {
+  public UpdateInfo(user: user): boolean {
+    this.ras.UpdateUser(user).then(results => {
+      if (results !== null)
+        return true;
+    });
     return false;
   }
 
-  public static IsConfirmed(): boolean {
+  public UploadPicture(picture: string): boolean {
+    let username = this.GetInfo().email;
+    this.ras.UploadUserPicture(username, picture).then(results =>
+      { return results });
     return false;
   }
 
-  public static Authorize(username: string, password: string): boolean {
-    //
-    return false;
-  }
-
-  public static IsAuthorized(): boolean {
-    return false;
-  }
-
-  public static Deauthorize(username: string, password: string): boolean {
-    //
+  public IsConfirmed(): boolean {
     return false;
   }
 }

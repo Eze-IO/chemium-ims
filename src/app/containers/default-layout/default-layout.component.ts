@@ -12,10 +12,10 @@ export class DefaultLayoutComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
 
-  constructor() { }
+  constructor(private cu: CurrentUserService) { }
 
   public GetName(): string {
-    let user = CurrentUserService.GetInfo().name;
+    let user = null;//= this.cu.GetInfo().name;
     if (ExtensionService.IsEmptyOrNull(user))
       return "Hello 👋 and Welcome!";
     return "Hello 👋, ${user}";
