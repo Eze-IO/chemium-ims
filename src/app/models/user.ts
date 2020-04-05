@@ -9,5 +9,5 @@ export class user {
   email:string; // email & username are the same
   phone_number:string;
   picture:string;
-  type: Type;
+  type:Type;
 }

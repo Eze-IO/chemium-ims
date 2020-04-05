@@ -13,11 +13,6 @@ export class WarehouseService {
 
   public GetEntries(): warehouse[] {
     let arr: warehouse[] = new Array();
-    this.ras.GetEntity("warehouse").then(i => {
-      i.forEach(function(x) {
-        console.log(x);
-      });
-    });
     let entries = this.ras.GetEntity("warehouse");
     entries.then(items => {
       items.forEach(function (item) {
@@ -36,6 +31,10 @@ export class WarehouseService {
   public GetEntry(id: number): warehouse {
     let all = this.GetEntries();
     return all.find(x => x.warehouse_id === id);
+  }
+
+  public UpdateEntry(warehouse: warehouse): boolean {
+    return false;
   }
 
   public DeleteEntry(id:number): boolean {

@@ -1,7 +1,7 @@
 /*
   List of rest api links to call from AWS
 */
-export enum restapi {
+export enum restapiurl {
   confirmuser = "https://z85ckuu4m4.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_ConfirmUser",
   addtoentity = "https://0dzcevea0f.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_AddToEntity",
   userregister = "https://dd8qsetp34.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_UserRegister",

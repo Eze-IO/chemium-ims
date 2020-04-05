@@ -75,7 +75,7 @@ import { ClockComponent } from './views/clock/clock.component';
     P500Component,
     LoginComponent,
     RegisterComponent,
-    LogoutComponent,
+    LogoutComponent
   ],
   providers: [{
     provide: LocationStrategy,

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WarehouseService } from '../../services/warehouse.service';
-import { warehouse } from '../../models/entities/warehouse';
+import * as entity from '../../models/entities';
+import { ExtensionService } from '../../helpers/extension.service';
 
 @Component({
   selector: 'app-record',
@@ -11,20 +12,42 @@ import { warehouse } from '../../models/entities/warehouse';
 export class RecordComponent implements OnInit {
 
   private RecordName:string;
-  private test:warehouse[];
+  private test: entity.warehouse[];
+  private Table: string;
+  private Link: string;
 
   constructor(private activatedRoute: ActivatedRoute,
     private ws: WarehouseService) {
-    this.activatedRoute.queryParams.subscribe(params => {
-          let table = params['table'];
-          let type = params['type'];
-          console.log(table); // Print the parameter to the console.
-      });
+    this.activatedRoute.paramMap.subscribe(params => {
+          this.Table = params.get('table');
+          this.Link = params.get('link');
+    });
   }
 
   ngOnInit(): void {
     this.test = this.ws.GetEntries();
-    this.RecordName = WarehouseService.Name;
+    if (!ExtensionService.IsEmptyOrNull(this.Table)) {
+      this.Table = this.Table.toLowerCase();
+      switch (this.Table) {
+        case 'agent':
+          this.RecordName = "Agent";
+          break;
+        default:
+          this.RecordName = "?";
+          break;
+      }
+    }
+    if (!ExtensionService.IsEmptyOrNull(this.Link)) {
+      this.Link = this.Link.toLowerCase();
+      switch (this.Link) {
+        case 'warehouse':
+          this.RecordName = WarehouseService.Name;
+          break;
+        default:
+          this.RecordName = "?";
+          break;
+      }
+    }
   }
 
 }
