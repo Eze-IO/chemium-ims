@@ -19,11 +19,11 @@ export class AuthenticationService {
     return false;
   }
 
-  public IsAuthorized(): boolean {
+  public get IsAuthorized(): boolean {
     return (AuthenticationService._token);
   }
 
-  public Deauthorize(): boolean {
-    return ((AuthenticationService._token=null)===null);
+  public Deauthorize(): void {
+    AuthenticationService._token=null;
   }
 }

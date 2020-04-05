@@ -203,7 +203,7 @@ export class RestAPIService {
       const request = {
         'username': username,
         'password': password
-      }; 
+      };
       return this.http.post(restapiurl.tokenrequester, request, httpOptions).toPromise<any>()
         .then(val => {
             if (val['Success']) {
@@ -214,7 +214,7 @@ export class RestAPIService {
         ).catch(err =>
           console.log('Error: ' + err));
     }
-    
+
   }
 
   public DeleteUser(username: string): Promise<boolean> {
@@ -233,5 +233,18 @@ export class RestAPIService {
           console.log('Error: ' + err));
     }
 
+  }
+
+  public Test(): Promise<any> {
+    const request = JSON.parse('[{"trucker_id":1,"rate":688.0,"company":"Wordpedia","warehouse_id":2},{"trucker_id":2,"rate":676.0,"company":"Reallinks","warehouse_id":4},{"trucker_id":3,"rate":699.0,"company":"Youbridge","warehouse_id":1},{"trucker_id":4,"rate":656.0,"company":"Ainyx","warehouse_id":5},{"trucker_id":5,"rate":660.0,"company":"Kwilith","warehouse_id":1},{"trucker_id":6,"rate":576.0,"company":"Flipstorm","warehouse_id":4}]');
+    return this.http.post("https://uclss8ss43.execute-api.us-east-2.amazonaws.com/dev/Chemium_IMS_Functions_Test", request, httpOptions).toPromise<any>()
+      .then(val => {
+          if (val['Success']) {
+            let json = JSON.parse(val['Result']);
+            return json;
+          }
+        }
+      ).catch(err =>
+        console.log('Error: ' + err));
   }
 }

@@ -9,15 +9,16 @@ export class AdministratorService {
 
   constructor(private ras: RestAPIService) { }
 
-  public static GetUsers():user[] {
+  public GetUsers():user[] {
+    //this.ras.
     return null;
   }
 
-  public static CreateUser(user: user):boolean {
+  public CreateUser(user: user):boolean {
     return false;
   }
 
-  public static DeleteUser(user: user):boolean {
+  public DeleteUser(user: user):boolean {
     return false;
   }
 }
