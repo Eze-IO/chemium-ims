@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrentUserService } from '../../services/current-user.service';
+import { SafeHtml } from '@angular/platform-browser';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { user } from '../../models/user';
+import { ExtensionService } from '../../helpers/extension.service';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-profile',
@@ -6,10 +12,91 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  mainForm : FormGroup;
+  _status: string = null;
+  get status(): string {
+    return this._status;
+  }
+  _success: boolean = false;
+  get success(): boolean {
+    return this._success;
+  }
+  selectedFile: File;
 
-  constructor() { }
+  private u:user = new user();
+  private picture_content:SafeHtml;
+  constructor(private cu: CurrentUserService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.u = this.cu.GetInfo();
+    this.toggleLoadingProfile();
+    this.mainForm = this.formBuilder.group({
+       first_name: ['', Validators.required],
+       last_name: ['', Validators.required],
+       email: ['', Validators.required],
+       phone_number: ['', Validators.required]
+     });
+     this.mainForm.patchValue({
+       first_name: this.u.name,
+       last_name: this.u.name,
+       email: this.u.email,
+       phone_number: this.u.phone_number
+     });
   }
 
+  toggleLoadingProfile(){
+    let loader = "<div class='d-flex justify-content-center animated fadeIn' style='margin:auto;'>"
+    +"<div class='spinner-border m-5' style='width: 12rem; height: 12rem;' role='status'>"
+    +"<span class='sr-only'>Loading...</span></div></div>";
+    let picture = "<img src='[IMAGE]' class='bd-placeholder-img card-img' alt='[EMAIL]' />"
+    picture = picture.replace("[IMAGE]", this.cu.GetInfo().picture).replace('[EMAIL]', this.cu.GetInfo().email);
+    if(this.picture_content===picture){
+      this.picture_content = loader;
+    } else {
+      this.picture_content = picture;
+    }
+  }
+
+  onTextChange(e) {
+    console.log("wee!")
+    if(!ExtensionService.IsEmptyOrNull(this.mainForm.controls.email.value))
+      this.u.email = this.mainForm.controls.email.value;
+    if(!ExtensionService.IsEmptyOrNull(this.mainForm.controls.phone_number.value))
+      this.u.phone_number = this.mainForm.controls.phone_number.value;
+    let name = (this.mainForm.controls.first_name.value+" "+this.mainForm.controls.last_name.value);
+    if(!ExtensionService.IsEmptyOrNull(name))
+      this.u.name = name;
+  }
+
+  onFileSelected(e) {
+    this.selectedFile = <File>e.target.files[0];
+    console.log(this.selectedFile);
+  }
+
+  onUpload() {
+    this.toggleLoadingProfile();
+    if(this.selectedFile!==null){
+      const fd = new FormData();
+      //fd.append('image', this.selectedFile, this.selectedFile.name);
+      console.log(fd);
+      if(this.cu.UploadPicture(null)){
+        this._success = true;
+        this._status = "Successfully updated profile picture";
+      } else {
+        this._success = false;
+        this._status = "Failed to update profile picture";
+      }
+    }
+    this.toggleLoadingProfile();
+  }
+
+  onSubmit() {
+    if(this.cu.UpdateInfo(this.u)){
+      this._success = true;
+      this._status = "Successfully updated information";
+    } else {
+      this._success = false;
+      this._status = "Falied to update information";
+    }
+  }
 }

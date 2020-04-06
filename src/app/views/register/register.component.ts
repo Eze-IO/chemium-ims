@@ -139,7 +139,7 @@ export class RegisterComponent implements OnInit {
         u.name = "${this.first_name} ${this.last_name}";
         u.phone_number = this.phone_number;
         u.type = this.type;
-        if(this.admin.CreateUser(u)){
+        if(this.admin.CreateUser(u, this.password)){
           this.router.navigate(["/users"], { relativeTo: this.route });
         } else {
           this._status = "Failed to register user 🥺";

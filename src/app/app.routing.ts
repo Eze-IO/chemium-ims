@@ -11,6 +11,7 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { RegisterComponent } from './views/register/register.component';
+import { SupportComponent } from './views/support/support.component';
 
 export const routes: Routes = [
   {
@@ -50,7 +51,14 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
     data: {
-      title: 'Register Page'
+      title: 'User Register Page'
+    }
+  },
+  {
+    path: 'support',
+    component: SupportComponent,
+    data: {
+      title: 'Chemium IMS | Technical Support'
     }
   },
   {

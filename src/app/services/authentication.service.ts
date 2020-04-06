@@ -12,7 +12,8 @@ export class AuthenticationService {
   public static get Token(): string {
     return this._token;
   }
-  constructor(private ras: RestAPIService) { }
+  constructor(private ras: RestAPIService,
+              private request: HttpRequest<any>) { }
 
   public Authorize(username: string, password: string): boolean {
     let x = this.ras.TokenRequester(username, password);
@@ -20,7 +21,7 @@ export class AuthenticationService {
   }
 
   public get IsAuthorized(): boolean {
-    return (AuthenticationService._token);
+    return this.request.headers.get('Authorization') === 'IMS ${AuthenticationService._token}';
   }
 
   public Deauthorize(): void {

@@ -14,8 +14,7 @@
       <span href="#">{{ GetName() }}</span>
     </li>
     <li class="nav-item dropdown" dropdown placement="bottom right" style="margin-right:15px;">
-      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
-        <img src="https://d1uuza77bngiy9.cloudfront.net/images/user_default.jpg" class="img-avatar" alt="[EMAIL]" />
+      <a [innerHtml]="header_picture" class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <div class="dropdown-header text-center"><strong>Account Settings</strong></div>

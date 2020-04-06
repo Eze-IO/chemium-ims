@@ -18,18 +18,22 @@ export class CurrentUserService {
 
   public GetInfo(): user {
     let u: user = new user();
-    this.ras.UpdateUser(null).then(data => {
-      u.name = data['name'];
-      u.email = data['email'];
-      u.phone_number = data['phone_number'];
-      u.picture = data['picture'];
-      u.type = Type['type'];
+    if(ExtensionService.IsEmptyOrNull(u.picture))
+      u.picture = "https://d1uuza77bngiy9.cloudfront.net/images/user_default.jpg";
+    try{
+      this.ras.UpdateUser(null).then(data => {
+        u.name = data['name'];
+        u.email = data['email'];
+        u.phone_number = data['phone_number'];
+        u.picture = data['picture'];
+        u.type = Type['type'];
 
-      let _name = u.name;
-      this._firstName = ExtensionService.IsEmptyOrNull(_name.split(' ')[0]) ? null : _name.split(' ')[0];
-      this._lastName = ExtensionService.IsEmptyOrNull(_name.split(' ')[1]) ? null : _name.split(' ')[1];
-    });
-    return u;
+        let _name = u.name;
+        this._firstName = ExtensionService.IsEmptyOrNull(_name.split(' ')[0]) ? null : _name.split(' ')[0];
+        this._lastName = ExtensionService.IsEmptyOrNull(_name.split(' ')[1]) ? null : _name.split(' ')[1];
+      });
+      return u;
+    } catch { return u; }
   }
 
   public UpdateInfo(user: user): boolean {

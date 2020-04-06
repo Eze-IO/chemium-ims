@@ -53,6 +53,7 @@ import { SettingsComponent } from './views/settings/settings.component';
 import { ReportComponent } from './views/report/report.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { ClockComponent } from './views/clock/clock.component';
+import { SupportComponent } from './views/support/support.component';
 
 @NgModule({
   imports: [
@@ -79,7 +80,8 @@ import { ClockComponent } from './views/clock/clock.component';
     P500Component,
     LoginComponent,
     RegisterComponent,
-    LogoutComponent
+    LogoutComponent,
+    SupportComponent
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

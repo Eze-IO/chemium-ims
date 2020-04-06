@@ -11,7 +11,7 @@ import { Type } from '../models/type';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   })
 }
 
@@ -19,7 +19,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class RestAPIService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    httpOptions.headers.append('X-IMS-ID', AuthenticationService.Token);
+  }
 
  public GetEntity(entity: string): Promise<any> {
    if (!ExtensionService.IsEmptyOrNull(entity))
