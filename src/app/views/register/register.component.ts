@@ -23,7 +23,6 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthenticationService,
         private admin: AdministratorService) { }
 
   ngOnInit() {
@@ -38,7 +37,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  public checkPassword(password:string): boolean {
+  checkPassword(password:string): boolean {
     let r = /\d+/;
     let result = false;
     if(ExtensionService.IsEmptyOrNull(password))
@@ -66,7 +65,7 @@ export class RegisterComponent implements OnInit {
   private password_repeat:string;
   private type:Type = 0;
 
-  public checkValues(): boolean {
+  checkValues(): boolean {
     let result = false;
     this.first_name = this.mainForm.controls.first_name.value;
     this.last_name = this.mainForm.controls.last_name.value;
@@ -122,7 +121,7 @@ export class RegisterComponent implements OnInit {
     return result;
   }
 
-  public checkPhoneNumber() {
+  checkPhoneNumber() {
     var cleaned = ('' + document.getElementById("phone_number")).replace(/\D/g, '')
     var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
     if (match) {
@@ -131,7 +130,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  public onSubmit(){
+  onSubmit(){
     if(this.checkValues()){
       if(!this.mainForm.invalid){
         this._status = null;
@@ -143,7 +142,7 @@ export class RegisterComponent implements OnInit {
         if(this.admin.CreateUser(u)){
           this.router.navigate(["/users"], { relativeTo: this.route });
         } else {
-          this._status = "Failed to register user :(";
+          this._status = "Failed to register user 🥺";
           const invalid = [];
         }
       } else {
