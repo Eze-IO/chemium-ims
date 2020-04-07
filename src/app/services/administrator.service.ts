@@ -47,7 +47,7 @@ export class AdministratorService {
   }
 
   public IsUserConfirmed(u:user): boolean {
-    return !(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(u.email));
+    return !(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/.test(u.email));
   }
 
   public async CreateUser(user: user, password: string) {

@@ -183,6 +183,28 @@ export class RestAPIService {
         });
   }
 
+  public ChangePassword(currentPassword: string, newPassword: string): Promise<boolean> {
+    if (!ExtensionService.IsEmptyOrNull(currentPassword) &&
+      !ExtensionService.IsEmptyOrNull(newPassword)) {
+        const request = {
+            'current': currentPassword,
+            'new': newPassword,
+            'token': AuthenticationService.Token
+          };
+
+          return this.http.post<any>(restapiurl.changepassword.toString(), request, httpOptions).toPromise<boolean>()
+            .then(x => {
+                console.log(x['Result']);
+                return x['Success'];
+              }
+            ).catch(err => {
+              console.log('Error: ' + err);
+              return false;
+            });
+      }
+    }
+
+
   public UploadUserPicture(username: string, picture: string): Promise<boolean> {
     if (!ExtensionService.IsEmptyOrNull(username) &&
       !ExtensionService.IsEmptyOrNull(picture)) {

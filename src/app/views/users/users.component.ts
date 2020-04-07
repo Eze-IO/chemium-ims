@@ -35,7 +35,7 @@ export class UsersComponent implements OnInit {
       this.loading = 2;
       element.forEach(e => {
         if(this.admin.IsUserConfirmed(e)){
-          e.email = "USER NOT CONFIRMED!"
+          e.email = "USER IS NOT CONFIRMED"
         }
         e.picture = `"${e.picture}"`;
         this.userList.push(e);

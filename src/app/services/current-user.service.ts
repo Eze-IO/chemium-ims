@@ -43,12 +43,17 @@ export class CurrentUserService {
     return result;
   }
 
+  public async ChangePassword(current: string, _new: string) {
+    let result = await this.ras.ChangePassword(current, _new);
+    return result;
+  }
+
   public async UploadPicture(picture: string) {
     let result = await this.ras.UploadUserPicture(this.email, picture);
     return result;
   }
 
   public IsConfirmed(): boolean {
-    return !/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(this.GetInfo.email);
+    return !(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/.test(this.GetInfo.email));
   }
 }

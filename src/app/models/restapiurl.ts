@@ -7,6 +7,7 @@ export enum restapiurl {
   userregister = "https://dd8qsetp34.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_UserRegister",
   deleteuser = "https://cwvwfohrgl.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_DeleteUser",
   getentity = "https://56qkmctq04.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_GetEntity",
+  changepassword = "https://temdxxkbs8.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_ChangePassword",
   getreport = "https://bao618o72a.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_GetReport",
   updateuser = "https://lzpfp22acf.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_UpdateUser",
   listusers = "https://fxb03z0hg4.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_ListUsers",

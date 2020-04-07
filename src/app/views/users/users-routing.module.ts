@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: UsersComponent,
     data: {
-      title: 'List of Users'
+      title: '👥 List of Users'
     }
   }
 ];

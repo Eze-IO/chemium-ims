@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
   constructor(private cu: CurrentUserService, private formBuilder: FormBuilder, private ras: RestAPIService) { }
 
   ngOnInit(): void {
+    this.cu.ChangePassword("gfg", "ffdfe").then(x => console.log(x));
     this.u = this.cu.GetInfo;
     this.toggleLoadingProfile();
     this.mainForm = this.formBuilder.group({

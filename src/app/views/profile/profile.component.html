@@ -16,8 +16,11 @@
         </div>
         <div class="card-footer">
           <div class="text-center">
-            <input (change)="onFileSelected($event)" type="file" name="" value="" accept="image/png,image/gif,image/jpeg" />
-            <button (click)="onUpload()" class="btn btn-sm btn-primary">Upload</button>
+            <ul style="text-align:left;list-style-type:none;">
+              <li><input (change)="onFileSelected($event)" type="file" class="col-sm-10" value="?" accept="image/png,image/gif,image/jpeg" /></li>
+              &nbsp;
+              <li><button (click)="onUpload()" class="btn btn-sm btn-primary col-sm-10">Upload</button></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -67,6 +70,7 @@
         </div>
         <div class="card-footer">
           <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+          &nbsp;
           <button type="reset" routerLink="/support" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset Password</button>
         </div>
       </form>

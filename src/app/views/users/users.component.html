@@ -15,8 +15,8 @@
 <thead class="thead-light">
   <tr>
     <th class="text-center"><i class="icon-people"></i></th>
-    <th>Name</th>
-    <th>Email</th>
+    <th class="text-center">Name</th>
+    <th class="text-center">Email</th>
     <th class="text-center">Role</th>
     <th class="text-center"></th>
   </tr>
@@ -30,12 +30,12 @@
         </div>
       </td>
       <td>
-        <div class="small text-muted">
+        <div class="small text-muted text-center">
           <strong>{{u.name}}</strong>
         </div>
       </td>
       <td>
-        <div class="clearfix">
+        <div class="clearfix text-center" [ngClass]="{ 'alert alert-warning': u.email==='USER IS NOT CONFIRMED'}">
           {{u.email}}
         </div>
       </td>
