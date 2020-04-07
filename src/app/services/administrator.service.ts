@@ -20,19 +20,21 @@ export class AdministratorService {
   public async GetUsers() {
     let list:user[] = [];
     let result = await this.ras.ListUsers();
-    result.array.forEach(element => {
+    console.log(result);
+    result.forEach(element => {
         let u:user = new user();
-        u.name = element['name'];
-        u.email = element['email'];
-        u.phone_number = element['phone_number'];
-        u.picture = element['picture'];
-        switch(element['type'].toString().toLowerCase()){
+        console.log(element);
+        u.name = element['Name'];
+        u.email = element['Username'];
+        u.phone_number = element['PhoneNumber'];
+        u.picture = element['Picture'];
+        switch(element['Type']){
           case 'administrator':
-          case '4':
+          case 4:
             u.type = 4;
             break;
           case 'editor':
-          case '2':
+          case 2:
             u.type = 2;
             break;
           default:
@@ -42,6 +44,10 @@ export class AdministratorService {
         list.push(u);
     });
     return list;
+  }
+
+  public IsUserConfirmed(u:user): boolean {
+    return !(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(u.email));
   }
 
   public async CreateUser(user: user, password: string) {

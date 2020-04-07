@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { warehouse } from '../models/entities/warehouse';
-import { RestAPIService } from './rest-api.service';
+import { warehouse } from '../../models/entities/warehouse';
+import { RestAPIService } from '../rest-api.service';
 
 @Injectable({
   providedIn: 'root'

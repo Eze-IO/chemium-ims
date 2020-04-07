@@ -49,6 +49,6 @@ export class CurrentUserService {
   }
 
   public IsConfirmed(): boolean {
-    return false;
+    return !/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(this.GetInfo.email);
   }
 }

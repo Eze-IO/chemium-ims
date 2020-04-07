@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { WarehouseService } from '../../services/warehouse.service';
+import { WarehouseService } from '../../services/entities/warehouse.service';
 import * as entity from '../../models/entities';
 import { ExtensionService } from '../../helpers/extension.service';
 
@@ -11,7 +11,7 @@ import { ExtensionService } from '../../helpers/extension.service';
 })
 export class RecordComponent implements OnInit {
 
-  private RecordName:string;
+  RecordName:string;
   private test: entity.warehouse[];
   private Table: string;
   private Link: string;

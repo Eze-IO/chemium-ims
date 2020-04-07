@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
   dataUrl: string;
 
   private u:user = new user();
-  private picture_content:SafeHtml;
+  picture_content:SafeHtml;
   constructor(private cu: CurrentUserService, private formBuilder: FormBuilder, private ras: RestAPIService) { }
 
   ngOnInit(): void {

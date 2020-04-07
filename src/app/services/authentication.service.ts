@@ -15,13 +15,18 @@ export class AuthenticationService {
   constructor(private ras: RestAPIService,
               private request: HttpRequest<any>) { }
 
-  public Authorize(username: string, password: string): boolean {
-    let x = this.ras.TokenRequester(username, password);
-    return false;
+  public async Authorize(username: string, password: string) {
+    let x = await this.ras.TokenRequester(username, password);
+    if(new String(x)===null){
+      return false;
+    } else {
+      AuthenticationService._token = x;
+      return true;
+    }
   }
 
   public get IsAuthorized(): boolean {
-    return this.request.headers.get('Authorization') === 'IMS ${AuthenticationService._token}';
+    return (this.request.headers.get('Authorization') === `IMS ${AuthenticationService._token}`);
   }
 
   public Deauthorize(): void {
