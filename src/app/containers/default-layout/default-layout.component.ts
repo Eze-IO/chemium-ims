@@ -20,12 +20,12 @@ export class DefaultLayoutComponent {
     this.GetName();
   }
 
-  private async GetName(): Promise<string> {
+  private async GetName() {
     let user = this.cu.GetInfo;
-    this.Name = user.name;
-    if (ExtensionService.IsEmptyOrNull(user.name))
-      return "Hello 👋 and Welcome!";
-    return "Hello 👋, ${user}";
+    if(ExtensionService.IsEmptyOrNull(user.name)||user.name===undefined)
+      this.Name = "Hello 👋 and Welcome!";
+    else
+      this.Name = `Hello 👋, ${user.name}`;
   }
 
   public async setPicture() {
