@@ -83,11 +83,11 @@ export class RestAPIService {
    }
  }
 
- public GetReport(functionName: string, parameters: any): Promise<any> {
+ public GetReport(functionName: string, parameters: Array<any>): Promise<any> {
    if (!ExtensionService.IsEmptyOrNull(functionName)) {
      const request = {
        'name': functionName,
-       'params': JSON.parse(parameters),
+       'params': parameters,
      };
      return this.http.post<any>(restapiurl.getreport.toString(), request, httpOptions).toPromise<any>()
        .then(x => {

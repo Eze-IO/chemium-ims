@@ -30,15 +30,20 @@ export class UsersComponent implements OnInit {
   }
 
   updateView(){
+    this.userList = [];
     this.admin.GetUsers().then(element => {
       this.loading = 2;
       element.forEach(e => {
         if(this.admin.IsUserConfirmed(e)){
           e.email = "USER NOT CONFIRMED!"
         }
+        e.picture = `"${e.picture}"`;
         this.userList.push(e);
       })
-      this.loading = 0;
+      if(this.userList.length<=0)
+        this.loading = 1;
+      else
+        this.loading = 0;
     });
   }
 
