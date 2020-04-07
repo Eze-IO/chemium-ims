@@ -11,7 +11,7 @@ import { Type } from '../models/type';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   })
 }
 
@@ -153,12 +153,19 @@ export class RestAPIService {
     }
   }
 
-  public UpdateUser(user: user): Promise<any> {
-    if (user != null) {
-      const request = {
-        'username': user.email,
-        'name': user.name,
-        'phone_number': user.phone_number,
+  public UpdateUser(_user: user): Promise<any> {
+    if (_user === null || user === undefined) {
+      _user = new user;
+      _user.email = "?";
+      _user.email = "?";
+      _user.phone_number = "?";
+      _user.picture = "?";
+      _user.type = Type.Viewer;
+    }
+    const request = {
+        'username': _user.email,
+        'name': _user.name,
+        'phone_number': _user.phone_number,
         'token': AuthenticationService.Token
       };
 
@@ -174,8 +181,6 @@ export class RestAPIService {
           console.log('Error: ' + err);
           return null;
         });
-    }
-    return null;
   }
 
   public UploadUserPicture(username: string, picture: string): Promise<boolean> {

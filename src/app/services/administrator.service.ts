@@ -12,15 +12,15 @@ export class AdministratorService {
   constructor(private ras: RestAPIService,
               private cu: CurrentUserService) { }
 
-  public async IsAdministrator() {
-    let result = await this.cu.GetInfo();
+  public get IsAdministrator(): boolean {
+    let result = this.cu.GetInfo;
     return (result.type===Type.Administrator);
   }
 
-  public GetUsers():user[] {
+  public async GetUsers() {
     let list:user[] = [];
-    this.ras.ListUsers().then(users => {
-      users.array.forEach(element => {
+    let result = await this.ras.ListUsers();
+    result.array.forEach(element => {
         let u:user = new user();
         u.name = element['name'];
         u.email = element['email'];
@@ -40,22 +40,19 @@ export class AdministratorService {
             break;
         }
         list.push(u);
-      });
-    })
-    return null;
+    });
+    return list;
   }
 
-  public CreateUser(user: user, password: string):boolean {
+  public async CreateUser(user: user, password: string) {
     let fn = user.name.split(' ')[0];
     let ln = user.name.split(' ')[1];
-    this.ras.UpdateRegister(fn, ln, user.email, password, user.phone_number, user.type).then(x => {
-        return x;
-    })
-    return false;
+    let result = await this.ras.UpdateRegister(fn, ln, user.email, password, user.phone_number, user.type);
+    return result;
   }
 
-  public DeleteUser(user: user):boolean {
-    this.ras.DeleteUser(user.email).then(x => { return x; });
-    return false;
+  public async DeleteUser(user: user) {
+    let result = await this.ras.DeleteUser(user.email).then(x => { return x; });
+    return result;
   }
 }

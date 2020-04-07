@@ -1,7 +1,7 @@
 <div class="animated fadeIn">
   <div class="row">
     <div class="col-sm-12">
-      <div [ngClass]="{ 'alert alert-danger animated fadeIn': (status!==null&&!success), 'alert alert-success animated fadeIn': (status!==null&&success) }" role="alert">
+      <div class="alert animated fadeIn" [ngClass]="{ 'alert-danger': (status!==null&&!success), 'alert-success': (status!==null&&success) }" role="alert">
         {{ status }}
       </div>
     </div>
@@ -10,13 +10,13 @@
     <div class="col-sm-6">
       <div class="card">
         <div class="card-header">
-          <strong>Profile Picture <i class="icon-brush"></i></strong>
+          <strong><i class="icon-picture"></i> Profile Picture</strong>
         </div>
         <div class="card-body" [innerHtml]="picture_content">
         </div>
         <div class="card-footer">
           <div class="text-center">
-            <input (change)="onFileSelected($event)" type="file" name="" value="" accept="image/png,image/gif,image/jpeg"/>
+            <input (change)="onFileSelected($event)" type="file" name="" value="" accept="image/png,image/gif,image/jpeg" />
             <button (click)="onUpload()" class="btn btn-sm btn-primary">Upload</button>
           </div>
         </div>
@@ -25,7 +25,7 @@
     <div class="col-sm-6">
       <form class="card" [formGroup]="mainForm" (ngSubmit)="onSubmit()">
         <div class="card-header">
-          <strong>User Information <i class="icon-note"></i></strong>
+          <strong><i class="icon-note"></i> User Information</strong>
         </div>
         <div class="card-body">
           <div class="form-group">

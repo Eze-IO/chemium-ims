@@ -8,8 +8,25 @@ import { ExtensionService } from "../helpers/extension.service";
   providedIn: 'root'
 })
 export class CurrentUserService {
+  private u:user = new user();
+  constructor(private ras: RestAPIService) {
+    if (ExtensionService.IsEmptyOrNull(this.u.picture))
+      this.u.picture = "https://d1uuza77bngiy9.cloudfront.net/images/user_default.jpg";
+    this.ras.UpdateUser(null).then(data => {
+      if (data != null) {
+        this.u.name = data['name'];
+        this.email = this.u.email = data['email'];
+        this.u.phone_number = data['phone_number'];
+        this.u.picture = data['picture'];
+        this.u.type = Type['type'];
 
-  constructor(private ras: RestAPIService) { this.GetInfo().then(x => x); }
+        let _name = this.u.name;
+        this._firstName = ExtensionService.IsEmptyOrNull(_name.split(' ')[0]) ? null : _name.split(' ')[0];
+        this._lastName = ExtensionService.IsEmptyOrNull(_name.split(' ')[1]) ? null : _name.split(' ')[1];
+      }
+    });
+
+  }
 
   private email: string;
   private _firstName: string;
@@ -17,36 +34,18 @@ export class CurrentUserService {
   public get FirstName(): string { return this._firstName; }
   public get LastName(): string { return this._lastName; }
 
-  public async GetInfo(): Promise<user> {
-    let u: user = new user();
-    if(ExtensionService.IsEmptyOrNull(u.picture))
-      u.picture = "https://d1uuza77bngiy9.cloudfront.net/images/user_default.jpg";
-    try {
-      let data = await this.ras.UpdateUser(null);
-          u.name = data['name'];
-          this.email = u.email = data['email'];
-          u.phone_number = data['phone_number'];
-          u.picture = data['picture'];
-          u.type = Type['type'];
-
-          let _name = u.name;
-        this._firstName = ExtensionService.IsEmptyOrNull(_name.split(' ')[0]) ? null : _name.split(' ')[0];
-        this._lastName = ExtensionService.IsEmptyOrNull(_name.split(' ')[1]) ? null : _name.split(' ')[1];
-      return u;
-    } catch(err) { return u; }
+  public get GetInfo(): user {
+    return this.u;
   }
 
-  public async UpdateInfo(user: user): Promise<boolean> {
-    let result = await this.ras.UpdateUser(user).then(x => {
-      if (new String(x) === null)
-        return true;
-      return false;
-    });
+  public async UpdateInfo(user: user) {
+    let result = await this.ras.UpdateUser(user);
     return result;
   }
 
-  public UploadPicture(picture: string): Promise<boolean> {
-    return this.ras.UploadUserPicture(this.email, picture);
+  public async UploadPicture(picture: string) {
+    let result = await this.ras.UploadUserPicture(this.email, picture);
+    return result;
   }
 
   public IsConfirmed(): boolean {

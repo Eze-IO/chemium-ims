@@ -115,10 +115,6 @@ export const routes: Routes = [
       {
         path: 'report',
         loadChildren: () => import('./views/report/report.module').then(m => m.ReportModule)
-      },
-      {
-        path: 'settings',
-        loadChildren: () => import('./views/settings/settings.module').then(m => m.SettingsModule)
       }
     ],
     //canActivate: [AuthGuard]

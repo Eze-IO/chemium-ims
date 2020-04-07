@@ -17,20 +17,20 @@ export class DefaultLayoutComponent {
 
   constructor(private cu: CurrentUserService) {
     this.setPicture();
-    this.GetName().then(x => this.Name = x);
+    this.GetName();
   }
 
   private async GetName(): Promise<string> {
-    let user = await this.cu.GetInfo();
+    let user = this.cu.GetInfo;
+    this.Name = user.name;
     if (ExtensionService.IsEmptyOrNull(user.name))
       return "Hello 👋 and Welcome!";
     return "Hello 👋, ${user}";
   }
 
   public async setPicture() {
-    this.cu.GetInfo().then(x => {
-      this.HeaderPicture = "<img src='" + x.picture + "' class='img-avatar' alt='" + x.email + "' />";
-    })
+    let user = this.cu.GetInfo;
+    this.HeaderPicture = "<img src='" + user.picture + "' class='img-avatar' alt='" + user.email + "' />";
   }
 
   toggleMinimize(e) {

@@ -10,7 +10,7 @@ import { ExtensionService } from '../helpers/extension.service';
 export class AuthenticationService {
   private static _token = null;
   public static get Token(): string {
-    return this._token;
+    return (this._token===null?'?':this.Token);
   }
   constructor(private ras: RestAPIService,
               private request: HttpRequest<any>) { }

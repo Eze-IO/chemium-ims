@@ -30,9 +30,7 @@ export class ProfileComponent implements OnInit {
   constructor(private cu: CurrentUserService, private formBuilder: FormBuilder, private ras: RestAPIService) { }
 
   ngOnInit(): void {
-    this.cu.GetInfo().then(x => {
-      this.u = x;
-    });
+    this.u = this.cu.GetInfo;
     this.toggleLoadingProfile();
     this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
@@ -53,9 +51,7 @@ export class ProfileComponent implements OnInit {
     +"<div class='spinner-border m-5' style='width: 12rem; height: 12rem;' role='status'>"
     +"<span class='sr-only'>Loading...</span></div></div>";
     let picture = "<img src='[IMAGE]' class='bd-placeholder-img card-img' alt='[EMAIL]' />";
-    await this.cu.GetInfo().then(x => {
-      picture = picture.replace("[IMAGE]", x.picture).replace('[EMAIL]', x.email);
-    })
+    picture = picture.replace("[IMAGE]", this.u.picture).replace('[EMAIL]', this.u.email);
     if(this.picture_content===picture){
       this.picture_content = loader;
     } else {
@@ -89,16 +85,13 @@ export class ProfileComponent implements OnInit {
   onUpload() {
     this.toggleLoadingProfile();
     if (this.dataUrl !== null) {
-      this.cu.UploadPicture(this.dataUrl).then(x => {
-        console.log(x);
-        if (x) {
-          this._success = true;
-          this._status = "Successfully updated profile picture";
-        } else {
-          this._success = false;
-          this._status = "Failed to update profile picture";
-        }
-      });
+      if (this.cu.UploadPicture(this.dataUrl)) {
+        this._success = true;
+        this._status = "Successfully updated profile picture";
+      } else {
+        this._success = false;
+        this._status = "Failed to update profile picture";
+      }
     }
     this.toggleLoadingProfile();
   }
