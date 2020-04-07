@@ -3,12 +3,11 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\containers",
     "\\src\\app\\containers\\default-layout",
     "\\src\\app\\services",
     "\\src\\app\\views",
-    "\\src\\app\\views\\login"
+    "\\src\\app\\views\\profile"
   ],
-  "SelectedNode": "\\src\\app\\services\\rest-api.service.ts",
+  "SelectedNode": "\\src\\app\\services\\current-user.service.ts",
   "PreviewInSolutionExplorer": false
 }

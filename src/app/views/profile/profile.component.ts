@@ -28,7 +28,9 @@ export class ProfileComponent implements OnInit {
   constructor(private cu: CurrentUserService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.u = this.cu.GetInfo();
+    this.cu.GetInfo().then(x => {
+      this.u = x;
+    })
     this.toggleLoadingProfile();
     this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
@@ -44,12 +46,14 @@ export class ProfileComponent implements OnInit {
      });
   }
 
-  toggleLoadingProfile(){
+  async toggleLoadingProfile(){
     let loader = "<div class='d-flex justify-content-center animated fadeIn' style='margin:auto;'>"
     +"<div class='spinner-border m-5' style='width: 12rem; height: 12rem;' role='status'>"
     +"<span class='sr-only'>Loading...</span></div></div>";
-    let picture = "<img src='[IMAGE]' class='bd-placeholder-img card-img' alt='[EMAIL]' />"
-    picture = picture.replace("[IMAGE]", this.cu.GetInfo().picture).replace('[EMAIL]', this.cu.GetInfo().email);
+    let picture = "<img src='[IMAGE]' class='bd-placeholder-img card-img' alt='[EMAIL]' />";
+    await this.cu.GetInfo().then(x => {
+      picture = picture.replace("[IMAGE]", x.picture).replace('[EMAIL]', x.email);
+    })
     if(this.picture_content===picture){
       this.picture_content = loader;
     } else {
@@ -58,7 +62,6 @@ export class ProfileComponent implements OnInit {
   }
 
   onTextChange(e) {
-    console.log("wee!")
     if(!ExtensionService.IsEmptyOrNull(this.mainForm.controls.email.value))
       this.u.email = this.mainForm.controls.email.value;
     if(!ExtensionService.IsEmptyOrNull(this.mainForm.controls.phone_number.value))
@@ -73,30 +76,45 @@ export class ProfileComponent implements OnInit {
     console.log(this.selectedFile);
   }
 
+  async convertToDataUri(): Promise<string> {
+    let result = null
+    var reader = new FileReader();
+    let promise = new Promise<string>(function(resolve, reject) {
+      reader.onloadend = () => resolve(reader.result.toString());
+      reader.onerror = reject;
+      if (this.selectedFile!==null || typeof(this.selectedFile)!==undefined)
+      reader.readAsDataURL(this.selectedFile);
+    });
+    if (this.selectedFile !== null)
+      result = await promise;
+    return result;
+  }
+
   onUpload() {
     this.toggleLoadingProfile();
-    if(this.selectedFile!==null){
-      const fd = new FormData();
-      //fd.append('image', this.selectedFile, this.selectedFile.name);
-      console.log(fd);
-      if(this.cu.UploadPicture(null)){
-        this._success = true;
-        this._status = "Successfully updated profile picture";
-      } else {
-        this._success = false;
-        this._status = "Failed to update profile picture";
+    this.convertToDataUri().then(x => {
+      if (this.selectedFile !== null) {
+        if (this.cu.UploadPicture(x)) {
+          this._success = true;
+          this._status = "Successfully updated profile picture";
+        } else {
+          this._success = false;
+          this._status = "Failed to update profile picture";
+        }
       }
-    }
-    this.toggleLoadingProfile();
+      this.toggleLoadingProfile();
+    });
   }
 
   onSubmit() {
-    if(this.cu.UpdateInfo(this.u)){
-      this._success = true;
-      this._status = "Successfully updated information";
-    } else {
-      this._success = false;
-      this._status = "Falied to update information";
-    }
+    this.cu.UpdateInfo(this.u).then(x => {
+      if(x){
+        this._success = true;
+        this._status = "Successfully updated information";
+      } else {
+        this._success = false;
+        this._status = "Falied to update information";
+      }
+    });
   }
 }

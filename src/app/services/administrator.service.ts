@@ -12,8 +12,9 @@ export class AdministratorService {
   constructor(private ras: RestAPIService,
               private cu: CurrentUserService) { }
 
-  public get IsAdministrator(){
-    return (this.cu.GetInfo().type===Type.Administrator);
+  public async IsAdministrator() {
+    let result = await this.cu.GetInfo();
+    return (result.type===Type.Administrator);
   }
 
   public GetUsers():user[] {

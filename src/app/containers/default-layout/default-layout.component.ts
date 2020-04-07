@@ -12,19 +12,25 @@ import { SafeHtml } from '@angular/platform-browser';
 export class DefaultLayoutComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
-  public header_picture:SafeHtml;
+  public HeaderPicture: SafeHtml;
+  public Name:string;
 
-  constructor(private cu: CurrentUserService) { this.setPicture(); }
+  constructor(private cu: CurrentUserService) {
+    this.setPicture();
+    this.GetName().then(x => this.Name = x);
+  }
 
-  public GetName(): string {
-    let user = this.cu.GetInfo().name;
-    if (ExtensionService.IsEmptyOrNull(user))
+  private async GetName(): Promise<string> {
+    let user = await this.cu.GetInfo();
+    if (ExtensionService.IsEmptyOrNull(user.name))
       return "Hello 👋 and Welcome!";
     return "Hello 👋, ${user}";
   }
 
-  public setPicture() {
-    this.header_picture = "<img src='"+this.cu.GetInfo().picture+"' class='img-avatar' alt='"+this.cu.GetInfo().email+"' />";
+  public async setPicture() {
+    this.cu.GetInfo().then(x => {
+      this.HeaderPicture = "<img src='" + x.picture + "' class='img-avatar' alt='" + x.email + "' />";
+    })
   }
 
   toggleMinimize(e) {
