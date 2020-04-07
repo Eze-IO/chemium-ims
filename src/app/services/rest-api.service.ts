@@ -11,7 +11,7 @@ import { Type } from '../models/type';
 
 const httpOptions = {
   headers: new HttpHeaders({
-
+    'Content-Type': 'application/json'
   })
 }
 
@@ -54,13 +54,8 @@ export class RestAPIService {
      };
      return this.http.post<any>(restapiurl.addtoentity.toString(), request, httpOptions).toPromise<boolean>()
        .then(x => {
-         if (x['Success']) {
-           let json = JSON.parse(x['Result']);
-           console.log(json);
-           if (x['Success'] === 'true')
-             return true;
-         }
-         return false;
+         console.log(x['Result']);
+         return (x['Success']);
        }).catch(err => {
          console.log('Error: ' + err);
          return false;
@@ -78,13 +73,8 @@ export class RestAPIService {
      };
      return this.http.post<any>(restapiurl.updateentity.toString(), request, httpOptions).toPromise<boolean>()
        .then(x => {
-           if (x['Success']) {
-             let json = JSON.parse(x['Result']);
-             console.log(json);
-             if (x['Success'] === 'true')
-               return true;
-           }
-           return false;
+           console.log(x['Result']);
+           return (x['Success']);
          }
        ).catch(err => {
          console.log('Error: ' + err);
@@ -122,12 +112,8 @@ export class RestAPIService {
      };
      return this.http.post<any>(restapiurl.modifyentity.toString(), request, httpOptions).toPromise<boolean>()
        .then(x => {
-           if (x['Success']) {
-             console.log(x['Result']);
-             if (x['Success'] === 'true')
-               return true;
-           }
-           return false;
+           console.log(x['Result']);
+           return (x['Success']);
          }
        ).catch(err => {
          console.log('Error: ' + err);
@@ -155,12 +141,8 @@ export class RestAPIService {
 
       return this.http.post<any>(restapiurl.userregister.toString(), request, httpOptions).toPromise<boolean>()
         .then(x => {
-            if (x['Success']) {
-              console.log(x['Result']);
-              if (x['Success'] === 'true')
-                return true;
-            }
-            return false;
+            console.log(x['Result']);
+            return (x['Success']);
           }
         ).catch(err => {
           console.log('Error: ' + err);
@@ -205,12 +187,8 @@ export class RestAPIService {
       };
       return this.http.post<any>(restapiurl.uploaduserpicture.toString(), request, httpOptions).toPromise<boolean>()
         .then(x => {
-            if (x['Success']) {
-              console.log(x['Result']);
-              if (x['Success'] === 'true')
-                return true;
-            }
-            return false;
+            console.log(x['Result']);
+            return (x['Success']);
           }
         ).catch(err => {
           console.log('Error: ' + err);
@@ -264,12 +242,8 @@ export class RestAPIService {
       };
       return this.http.post<any>(restapiurl.deleteuser.toString(), request, httpOptions).toPromise<boolean>()
         .then(x => {
-            if (x['Success']) {
-              console.log(x['Result']);
-              if (x['Success'] === true)
-                return true;
-            }
-            return false;
+            console.log(x['Result']);
+            return (x['Success']);
           }
         ).catch(err => {
           console.log('Error: ' + err);

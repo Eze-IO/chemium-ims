@@ -9,8 +9,9 @@ import { ExtensionService } from "../helpers/extension.service";
 })
 export class CurrentUserService {
 
-  constructor(private ras: RestAPIService) { }
+  constructor(private ras: RestAPIService) { this.GetInfo().then(x => x); }
 
+  private email: string;
   private _firstName: string;
   private _lastName: string;
   public get FirstName(): string { return this._firstName; }
@@ -23,7 +24,7 @@ export class CurrentUserService {
     try {
       let data = await this.ras.UpdateUser(null);
           u.name = data['name'];
-          u.email = data['email'];
+          this.email = u.email = data['email'];
           u.phone_number = data['phone_number'];
           u.picture = data['picture'];
           u.type = Type['type'];
@@ -44,10 +45,8 @@ export class CurrentUserService {
     return result;
   }
 
-  public async UploadPicture(picture: string): Promise<boolean> {
-    let user = await this.GetInfo();
-    let result = await this.ras.UploadUserPicture(user.email, picture);
-    return result;
+  public UploadPicture(picture: string): Promise<boolean> {
+    return this.ras.UploadUserPicture(this.email, picture);
   }
 
   public IsConfirmed(): boolean {

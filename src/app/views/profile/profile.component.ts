@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { user } from '../../models/user';
 import { ExtensionService } from '../../helpers/extension.service';
 import { FileUploadModule } from 'primeng/fileupload';
+import { RestAPIService } from "../../services/rest-api.service";
 
 @Component({
   selector: 'app-profile',
@@ -22,15 +23,16 @@ export class ProfileComponent implements OnInit {
     return this._success;
   }
   selectedFile: File;
+  dataUrl: string;
 
   private u:user = new user();
   private picture_content:SafeHtml;
-  constructor(private cu: CurrentUserService, private formBuilder: FormBuilder) { }
+  constructor(private cu: CurrentUserService, private formBuilder: FormBuilder, private ras: RestAPIService) { }
 
   ngOnInit(): void {
     this.cu.GetInfo().then(x => {
       this.u = x;
-    })
+    });
     this.toggleLoadingProfile();
     this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
@@ -71,39 +73,34 @@ export class ProfileComponent implements OnInit {
       this.u.name = name;
   }
 
-  onFileSelected(e) {
-    this.selectedFile = <File>e.target.files[0];
-    console.log(this.selectedFile);
-  }
-
-  async convertToDataUri(): Promise<string> {
-    let result = null
+  async onFileSelected(e) {
+    let _file = this.selectedFile = <File>e.target.files[0];
     var reader = new FileReader();
-    let promise = new Promise<string>(function(resolve, reject) {
+    let promise = new Promise<string>(function (resolve, reject) {
       reader.onloadend = () => resolve(reader.result.toString());
       reader.onerror = reject;
-      if (this.selectedFile!==null || typeof(this.selectedFile)!==undefined)
-      reader.readAsDataURL(this.selectedFile);
+      if (_file!== null || typeof(_file)!== undefined)
+        reader.readAsDataURL(_file);
     });
-    if (this.selectedFile !== null)
-      result = await promise;
-    return result;
+    if (this.selectedFile!==null)
+      this.dataUrl = await promise;
   }
 
   onUpload() {
     this.toggleLoadingProfile();
-    this.convertToDataUri().then(x => {
-      if (this.selectedFile !== null) {
-        if (this.cu.UploadPicture(x)) {
+    if (this.dataUrl !== null) {
+      this.cu.UploadPicture(this.dataUrl).then(x => {
+        console.log(x);
+        if (x) {
           this._success = true;
           this._status = "Successfully updated profile picture";
         } else {
           this._success = false;
           this._status = "Failed to update profile picture";
         }
-      }
-      this.toggleLoadingProfile();
-    });
+      });
+    }
+    this.toggleLoadingProfile();
   }
 
   onSubmit() {

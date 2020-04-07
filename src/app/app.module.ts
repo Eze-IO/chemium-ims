@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UrlSerializer } from '@angular/router';
 import { CustomUrlSerializer } from './custom-url-serializer';
-import { JwtInterceptor } from './jwt.interceptor';
+//import { JwtInterceptor } from './jwt.interceptor';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -86,7 +86,7 @@ import { SupportComponent } from './views/support/support.component';
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: UrlSerializer, useClass: CustomUrlSerializer },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    //{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [ AppComponent ]
 })
