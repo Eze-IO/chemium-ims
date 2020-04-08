@@ -61,7 +61,7 @@
           <div class="form-group">
             <label for="company">Phone Number</label>
             <div class="input-group">
-              <input type="text" formControlName="phone_number" (input)="onTextChange($event.target.value)" class="form-control" id="phone_number" placeholder="?">
+              <input type="tel" ng2TelInput formControlName="phone_number" (input)="onTextChange($event.target.value)" class="form-control" id="phone_number" placeholder="?">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="fa fa-mobile"></i></span>
               </div>

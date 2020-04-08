@@ -11,6 +11,7 @@ import { CurrentUserService } from '../../services/current-user.service';
 })
 export class UsersComponent implements OnInit {
   userList:user[] = [];
+  currentUser:user;
   _status: string = null;
   get status(): string {
     return this._status;
@@ -27,6 +28,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateView();
+    this.currentUser = this.cu.GetInfo;
   }
 
   updateView(){

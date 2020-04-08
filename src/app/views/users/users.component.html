@@ -46,7 +46,7 @@
       </td>
       <td>
         <div class="text-center">
-          <button type="button" (click)="deleteUser(u)" class="btn btn-block btn-danger active" aria-pressed="true"><i class="icon-trash"></i></button>
+          <button type="button" (click)="deleteUser(u)" class="btn btn-block btn-danger" [disabled]="(u.email===currentUser.email)" aria-pressed="true"><i class="icon-trash"></i></button>
         </div>
       </td>
   </tr>

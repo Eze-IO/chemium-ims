@@ -154,10 +154,10 @@ export class RestAPIService {
     }
   }
 
-  public UpdateUser(_user: user): Promise<any> {
-    if (_user === null || user === undefined) {
+  public UpdateUser(_user: user): Promise<object> {
+    if (_user === null || _user === undefined) {
       _user = new user;
-      _user.email = "";
+      _user.email = "?";
       _user.name = "";
       _user.phone_number = "";
       _user.picture = "";
@@ -170,10 +170,11 @@ export class RestAPIService {
         'token': AuthenticationService.Token
       };
 
-      return this.http.post<any>(restapiurl.updateuser.toString(), request, httpOptions).toPromise<any>()
+      return this.http.post<any>(restapiurl.updateuser.toString(), request, httpOptions).toPromise<object>()
         .then(x => {
             if (x['Success']) {
-              let json = JSON.parse(x['Result']);
+              let json = x['Result'];//JSON.parse(x['Result']);
+              console.log(json);
               return json;
             }
             return null;
@@ -215,6 +216,7 @@ export class RestAPIService {
       };
       return this.http.post<any>(restapiurl.uploaduserpicture.toString(), request, httpOptions).toPromise<boolean>()
         .then(x => {
+          console.log(x);
             console.log(x['Result']);
             return (x['Success']);
           }

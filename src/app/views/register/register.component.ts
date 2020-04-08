@@ -29,8 +29,8 @@ export class RegisterComponent implements OnInit {
     this.mainForm = this.formBuilder.group({
           first_name: ['', Validators.required],
           last_name: ['', Validators.required],
-          email: ['', Validators.required],
-          phone_number: ['', Validators.required],
+          email: ['', Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
+          phone_number: ['', Validators.required, Validators.pattern("[0-9 ]{11}")],
           password: ['', Validators.required],
           repeat_password: ['', Validators.required],
           user_role: ['', Validators.required]
@@ -84,7 +84,6 @@ export class RegisterComponent implements OnInit {
         this.type = Type.Viewer;
         break;
     }
-    console.log(this.type);
     let msg: string[] = [];
     if(ExtensionService.IsEmptyOrNull(this.first_name))
       msg.push("'First Name'");
@@ -121,13 +120,25 @@ export class RegisterComponent implements OnInit {
     return result;
   }
 
-  checkPhoneNumber() {
+  getNumber(e) {
     var cleaned = ('' + document.getElementById("phone_number")).replace(/\D/g, '')
     var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
     if (match) {
       var intlCode = (match[1] ? '+1 ' : '')
       document.getElementById("phone_number").setAttribute("value", [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(''));
     }
+  }
+
+  telInputObject(e) {
+    console.log(e);
+  }
+
+  onCountryChange(e) {
+    console.log(e);
+  }
+
+  onTextChange(e){
+      e.value = "fgf";
   }
 
   onSubmit(){

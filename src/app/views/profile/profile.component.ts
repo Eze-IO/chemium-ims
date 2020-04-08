@@ -6,6 +6,7 @@ import { user } from '../../models/user';
 import { ExtensionService } from '../../helpers/extension.service';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RestAPIService } from "../../services/rest-api.service";
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -38,12 +39,17 @@ export class ProfileComponent implements OnInit {
        email: ['', Validators.required],
        phone_number: ['', Validators.required]
      });
-     this.mainForm.patchValue({
-       first_name: this.cu.FirstName,
-       last_name: this.cu.LastName,
-       email: this.u.email,
-       phone_number: this.u.phone_number
-     });
+    this.fillValues();
+  }
+
+
+  fillValues(){
+    this.mainForm.patchValue({
+      first_name: this.cu.FirstName,
+      last_name: this.cu.LastName,
+      email: this.u.email,
+      phone_number: this.u.phone_number
+    });
   }
 
   async toggleLoadingProfile(){
@@ -87,18 +93,19 @@ export class ProfileComponent implements OnInit {
   onUpload() {
     this.toggleLoadingProfile();
     if (this.dataUrl !== null) {
-      this.cu.UploadPicture(this.dataUrl).then(x => {
+      let x = this.cu.UploadPicture(this.dataUrl);
         if (x) {
           this._success = true;
-          this._status = "Successfully updated profile picture";
           this.toggleLoadingProfile();
+          this._status = "Successfully updated profile picture";
         } else {
           this._success = false;
           this._status = "Failed to update profile picture";
-          this.toggleLoadingProfile();
         }
-      })
     }
+    timer(3000).subscribe((val) => {
+      this.toggleLoadingProfile();
+    });
   }
 
   onSubmit() {
@@ -111,5 +118,6 @@ export class ProfileComponent implements OnInit {
         this._status = "Falied to update information";
       }
     });
+    this.fillValues();
   }
 }

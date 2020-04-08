@@ -4,6 +4,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Ng2TelInputModule } from 'ng2-tel-input';
 
 import { UrlSerializer } from '@angular/router';
 import { CustomUrlSerializer } from './custom-url-serializer';
@@ -69,6 +70,7 @@ import { SupportComponent } from './views/support/support.component';
     ChartsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    Ng2TelInputModule,
     FormsModule
   ],
   declarations: [

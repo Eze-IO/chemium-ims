@@ -1,4 +1,4 @@
-import {Component } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import { navItems } from '../../_nav';
 import { response } from '../../models/response';
 import { CurrentUserService } from '../../services/current-user.service';
@@ -9,13 +9,18 @@ import { SafeHtml } from '@angular/platform-browser';
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html'
 })
-export class DefaultLayoutComponent {
+export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
   public navItems = navItems;
   public HeaderPicture: SafeHtml;
   public Name:string;
 
   constructor(private cu: CurrentUserService) {
+    this.setPicture();
+    this.GetName();
+  }
+
+  ngOnInit(): void {
     this.setPicture();
     this.GetName();
   }
@@ -30,7 +35,8 @@ export class DefaultLayoutComponent {
 
   public async setPicture() {
     let user = this.cu.GetInfo;
-    if(user.picture===undefined)
+    console.log(user.picture);
+    if(user.picture===undefined||ExtensionService.IsEmptyOrNull(user.picture))
       user.picture = "../../../../assets/img/avatars/default.png";
     this.HeaderPicture = "<img src='" + user.picture + "' class='img-avatar' alt='" + user.email + "' />";
   }
