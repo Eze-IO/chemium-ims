@@ -53,6 +53,7 @@ import { ReportComponent } from './views/report/report.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { ClockComponent } from './views/clock/clock.component';
 import { SupportComponent } from './views/support/support.component';
+import { RegisterComponent } from './views/register/register.component';
 
 @NgModule({
   imports: [
@@ -80,6 +81,7 @@ import { SupportComponent } from './views/support/support.component';
     P500Component,
     LoginComponent,
     LogoutComponent,
+    RegisterComponent,
     SupportComponent
   ],
   providers: [

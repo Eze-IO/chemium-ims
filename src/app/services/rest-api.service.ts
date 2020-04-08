@@ -123,6 +123,28 @@ export class RestAPIService {
    }
  }
 
+ public GetUser(token: string): Promise<object> {
+  if (!ExtensionService.IsEmptyOrNull(token)) {
+    const request = {
+      'token': AuthenticationService.Token
+    };
+
+    return this.http.post<any>(restapiurl.getuser.toString(), request, httpOptions).toPromise<object>()
+      .then(x => {
+          if (x['Success']) {
+            let json = JSON.parse(x['Result']);
+            console.log(json);
+            return json;
+          }
+          return null;
+        }
+      ).catch(err => {
+        console.log('Error: ' + err);
+        return null;
+      });
+  }
+}
+
   public UpdateRegister(first_name: string, last_name: string,
     email: string, password: string, phone_number: string, type :Type) : Promise<boolean> {
     if (!ExtensionService.IsEmptyOrNull(first_name) &&
@@ -155,15 +177,8 @@ export class RestAPIService {
   }
 
   public UpdateUser(_user: user): Promise<object> {
-    if (_user === null || _user === undefined) {
-      _user = new user;
-      _user.email = "?";
-      _user.name = "";
-      _user.phone_number = "";
-      _user.picture = "";
-      _user.type = Type.Viewer;
-    }
-    const request = {
+    if (_user !== null || _user !== undefined) {
+      const request = {
         'username': _user.email,
         'name': _user.name,
         'phone_number': _user.phone_number,
@@ -173,7 +188,7 @@ export class RestAPIService {
       return this.http.post<any>(restapiurl.updateuser.toString(), request, httpOptions).toPromise<object>()
         .then(x => {
             if (x['Success']) {
-              let json = x['Result'];//JSON.parse(x['Result']);
+              let json = JSON.parse(x['Result']);
               console.log(json);
               return json;
             }
@@ -183,6 +198,7 @@ export class RestAPIService {
           console.log('Error: ' + err);
           return null;
         });
+    }
   }
 
   public ChangePassword(currentPassword: string, newPassword: string): Promise<boolean> {

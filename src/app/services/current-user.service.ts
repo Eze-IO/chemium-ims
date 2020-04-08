@@ -3,6 +3,7 @@ import { RestAPIService } from './rest-api.service';
 import { user } from "../models/user";
 import { Type } from "../models/type";
 import { ExtensionService } from "../helpers/extension.service";
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,10 +32,10 @@ export class CurrentUserService {
   }
 
   private _getUser() {
-    this.ras.UpdateUser(this.u).then(x => {
+    this.ras.GetUser(AuthenticationService.Token).then(x => {
       console.log(x);
       let u:user = new user();
-      u.email = x['Username'];
+      u.email = x['Email'];
       u.name = x['Name'];
       u.phone_number = x['PhoneNumber'];
       u.picture = x['Picture'];

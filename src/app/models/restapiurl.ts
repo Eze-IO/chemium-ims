@@ -12,6 +12,7 @@ export enum restapiurl {
   updateuser = "https://lzpfp22acf.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_UpdateUser",
   listusers = "https://fxb03z0hg4.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_ListUsers",
   tokenrequester = "https://z2hi5n1z3k.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_TokenRequester",
+  getuser = "https://b6gt162da3.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_GetUser",
   modifyentity = "https://z683ooaz19.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_ModifyEntity",
   updateentity = "https://zd94qb5bta.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_UpdateEntity",
   uploaduserpicture = "https://fxbavhshee.execute-api.us-east-2.amazonaws.com/prod/Chemium_IMS_Functions_UploadUserPicture"

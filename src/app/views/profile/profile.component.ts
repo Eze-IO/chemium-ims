@@ -96,7 +96,6 @@ export class ProfileComponent implements OnInit {
       let x = this.cu.UploadPicture(this.dataUrl);
         if (x) {
           this._success = true;
-          this.toggleLoadingProfile();
           this._status = "Successfully updated profile picture";
         } else {
           this._success = false;

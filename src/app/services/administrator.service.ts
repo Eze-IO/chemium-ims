@@ -23,7 +23,7 @@ export class AdministratorService {
     result.forEach(element => {
         let u:user = new user();
         u.name = element['Name'];
-        u.email = element['Username'];
+        u.email = element['Email'];
         u.phone_number = element['PhoneNumber'];
         u.picture = element['Picture'];
         switch(element['Type']){

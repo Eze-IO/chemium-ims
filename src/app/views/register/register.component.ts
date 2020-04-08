@@ -147,7 +147,7 @@ export class RegisterComponent implements OnInit {
         this._status = null;
         let u:user = new user();
         u.email = this.email;
-        u.name = "${this.first_name} ${this.last_name}";
+        u.name = `${this.first_name} ${this.last_name}`;
         u.phone_number = this.phone_number;
         u.type = this.type;
         if(this.admin.CreateUser(u, this.password)){
