@@ -20,10 +20,8 @@ export class AdministratorService {
   public async GetUsers() {
     let list:user[] = [];
     let result = await this.ras.ListUsers();
-    console.log(result);
     result.forEach(element => {
         let u:user = new user();
-        console.log(element);
         u.name = element['Name'];
         u.email = element['Username'];
         u.phone_number = element['PhoneNumber'];

@@ -19,8 +19,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class RestAPIService {
+
   constructor(private http: HttpClient) {
-    httpOptions.headers.append('X-IMS-ID', AuthenticationService.Token);
+    //httpOptions.headers.append('X-IMS-ID', AuthenticationService.Token);
   }
 
  public GetEntity(entity: string): Promise<any> {
@@ -156,10 +157,10 @@ export class RestAPIService {
   public UpdateUser(_user: user): Promise<any> {
     if (_user === null || user === undefined) {
       _user = new user;
-      _user.email = "?";
-      _user.email = "?";
-      _user.phone_number = "?";
-      _user.picture = "?";
+      _user.email = "";
+      _user.name = "";
+      _user.phone_number = "";
+      _user.picture = "";
       _user.type = Type.Viewer;
     }
     const request = {
@@ -249,8 +250,7 @@ export class RestAPIService {
       return this.http.post<any>(restapiurl.tokenrequester.toString(), request, httpOptions).toPromise<any>()
         .then(x => {
             if (x['Success']) {
-              let json = JSON.parse(x['Result']);
-              return json;
+              return x['Result'];
             }
             return null;
           }

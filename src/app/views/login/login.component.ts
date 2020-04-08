@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   get status(): string {
     return this._status;
   }
+  loading:number = 0;
 
   constructor(private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -46,13 +47,25 @@ export class LoginComponent implements OnInit {
     return result;
   }
 
-  onSubmit(){
+  toggleLoadingScreen(){
+    if(this.loading===0){
+      this.loading=2;
+    } else {
+      this.loading=0;
+    }
+  }
+
+  async onSubmit(){
     if(this.checkValues()){
       if(!this.mainForm.invalid){
-        if(this.auth.Authorize(this.email, this.password)){
+        this.toggleLoadingScreen();
+        let x = await this.auth.Authorize(this.email, this.password);
+        if(x){
+          this._status = "Loading...";
           this.router.navigate(["/"], { relativeTo: this.route });
         } else {
-          this._status = "Failed to login 🥺";
+          this._status = "Failed to login 🥺, incorrect username/password";
+          this.toggleLoadingScreen();
         }
       } else {
         const invalid = [];

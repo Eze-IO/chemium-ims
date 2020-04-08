@@ -1,21 +1,17 @@
 {
-  "name": "@coreui/coreui-free-angular-admin-template",
-  "version": "2.9.0",
+  "name": "Chemium IMS",
+  "version": "1.0.1",
   "description": "CoreUI Free Angular 2+ Admin Template",
   "author": {
-    "name": "Łukasz Holeczek",
-    "url": "http://holeczek.pl",
-    "github": "https://github.com/mrholek",
-    "twitter": "https://twitter.com/lukaszholeczek"
+    "name": "Cloud Solutions Consultants",
+    "url": "http://ims.chemium.com"
   },
   "contributors": [
     {
-      "name": "Andrzej Kopański",
-      "url": "https://github.com/xidedix"
+      "name": "Eze Ahuna, Matt Castaneda, Wei"
     }
   ],
-  "homepage": "https://coreui.io/angular",
-  "copyright": "Copyright 2020 creativeLabs Łukasz Holeczek",
+  "copyright": "Copyright 2020 Cloud Solutions Consultants",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

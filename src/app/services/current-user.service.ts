@@ -10,22 +10,20 @@ import { ExtensionService } from "../helpers/extension.service";
 export class CurrentUserService {
   private u:user = new user();
   constructor(private ras: RestAPIService) {
-    if (ExtensionService.IsEmptyOrNull(this.u.picture))
-      this.u.picture = "https://d1uuza77bngiy9.cloudfront.net/images/user_default.jpg";
     this.ras.UpdateUser(null).then(data => {
+      console.log(data);
       if (data != null) {
-        this.u.name = data['name'];
-        this.email = this.u.email = data['email'];
-        this.u.phone_number = data['phone_number'];
-        this.u.picture = data['picture'];
-        this.u.type = Type['type'];
+        this.u.name = data['Name'];
+        this.email = this.u.email = data['Username'];
+        this.u.phone_number = data['PhoneNumber'];
+        this.u.picture = data['Picture'];
+        this.u.type = Type['Type'];
 
-        let _name = this.u.name;
-        this._firstName = ExtensionService.IsEmptyOrNull(_name.split(' ')[0]) ? null : _name.split(' ')[0];
-        this._lastName = ExtensionService.IsEmptyOrNull(_name.split(' ')[1]) ? null : _name.split(' ')[1];
+        let _name = this.u.name.split(' ');
+        this._firstName = ExtensionService.IsEmptyOrNull(_name[0]) ? null : _name[0];
+        this._lastName = ExtensionService.IsEmptyOrNull(_name[1]) ? null : _name[1];
       }
     });
-
   }
 
   private email: string;

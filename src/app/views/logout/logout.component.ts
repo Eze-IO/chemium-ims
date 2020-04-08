@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Routes, RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { RestAPIService } from '../../services/rest-api.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { DashboardComponent } from '../dashboard/dashboard.component';
 import { timer } from 'rxjs';
+import { user } from '../../models/user';
 
-import { user } from '../../models/user'
 
 @Component({
   selector: 'app-logout',
@@ -14,10 +13,10 @@ import { user } from '../../models/user'
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private ras: RestAPIService,
-  private auth: AuthenticationService,
+  constructor(
   private route: ActivatedRoute,
-  private router: Router) {}
+  private router: Router,
+  private auth: AuthenticationService) {}
 
   ngOnInit(): void {
     timer(3000).subscribe((val) => {

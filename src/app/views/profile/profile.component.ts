@@ -23,14 +23,13 @@ export class ProfileComponent implements OnInit {
     return this._success;
   }
   selectedFile: File;
-  dataUrl: string;
+  dataUrl: string = null;
 
   private u:user = new user();
   picture_content:SafeHtml;
   constructor(private cu: CurrentUserService, private formBuilder: FormBuilder, private ras: RestAPIService) { }
 
   ngOnInit(): void {
-    this.cu.ChangePassword("gfg", "ffdfe").then(x => console.log(x));
     this.u = this.cu.GetInfo;
     this.toggleLoadingProfile();
     this.mainForm = this.formBuilder.group({
@@ -40,8 +39,8 @@ export class ProfileComponent implements OnInit {
        phone_number: ['', Validators.required]
      });
      this.mainForm.patchValue({
-       first_name: this.u.name,
-       last_name: this.u.name,
+       first_name: this.cu.FirstName,
+       last_name: this.cu.LastName,
        email: this.u.email,
        phone_number: this.u.phone_number
      });
@@ -51,7 +50,9 @@ export class ProfileComponent implements OnInit {
     let loader = "<div class='d-flex justify-content-center animated fadeIn' style='margin:auto;'>"
     +"<div class='spinner-border m-5' style='width: 12rem; height: 12rem;' role='status'>"
     +"<span class='sr-only'>Loading...</span></div></div>";
-    let picture = "<img src='[IMAGE]' class='bd-placeholder-img card-img' alt='[EMAIL]' />";
+    let picture = "<img src='[IMAGE]' class='bd-placeholder-img card-img animated fadeIn' alt='[EMAIL]' style='border-radius:5px;'/>";
+    if(ExtensionService.IsEmptyOrNull(this.u.picture)||this.u.picture===undefined)
+      this.u.picture = "../../../../assets/img/avatars/default.png";
     picture = picture.replace("[IMAGE]", this.u.picture).replace('[EMAIL]', this.u.email);
     if(this.picture_content===picture){
       this.picture_content = loader;
@@ -86,15 +87,18 @@ export class ProfileComponent implements OnInit {
   onUpload() {
     this.toggleLoadingProfile();
     if (this.dataUrl !== null) {
-      if (this.cu.UploadPicture(this.dataUrl)) {
-        this._success = true;
-        this._status = "Successfully updated profile picture";
-      } else {
-        this._success = false;
-        this._status = "Failed to update profile picture";
-      }
+      this.cu.UploadPicture(this.dataUrl).then(x => {
+        if (x) {
+          this._success = true;
+          this._status = "Successfully updated profile picture";
+          this.toggleLoadingProfile();
+        } else {
+          this._success = false;
+          this._status = "Failed to update profile picture";
+          this.toggleLoadingProfile();
+        }
+      })
     }
-    this.toggleLoadingProfile();
   }
 
   onSubmit() {

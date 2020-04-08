@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UrlSerializer } from '@angular/router';
 import { CustomUrlSerializer } from './custom-url-serializer';
-//import { JwtInterceptor } from './jwt.interceptor';
+import { JwtInterceptor } from './jwt.interceptor';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -25,7 +25,6 @@ import { DefaultLayoutComponent } from './containers';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
@@ -78,14 +77,13 @@ import { SupportComponent } from './views/support/support.component';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent,
     LogoutComponent,
     SupportComponent
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: UrlSerializer, useClass: CustomUrlSerializer },
-    //{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [ AppComponent ]
 })

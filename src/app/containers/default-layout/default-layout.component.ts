@@ -30,6 +30,8 @@ export class DefaultLayoutComponent {
 
   public async setPicture() {
     let user = this.cu.GetInfo;
+    if(user.picture===undefined)
+      user.picture = "../../../../assets/img/avatars/default.png";
     this.HeaderPicture = "<img src='" + user.picture + "' class='img-avatar' alt='" + user.email + "' />";
   }
 

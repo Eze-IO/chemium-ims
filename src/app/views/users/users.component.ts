@@ -34,9 +34,6 @@ export class UsersComponent implements OnInit {
     this.admin.GetUsers().then(element => {
       this.loading = 2;
       element.forEach(e => {
-        if(this.admin.IsUserConfirmed(e)){
-          e.email = "USER IS NOT CONFIRMED"
-        }
         e.picture = `"${e.picture}"`;
         this.userList.push(e);
       })
@@ -48,11 +45,8 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(u) {
-    this.admin.DeleteUser(u).then(x => {
-      if(u.email===this.cu.GetInfo.email){
-        this._success = false;
-        this._status = `User cannot remove itself!`;
-      } else {
+    if((<user>u).email!==this.cu.GetInfo.email) {
+      this.admin.DeleteUser(u).then(x => {
         if(x){
           this._success = true;
           this._status = `Successfully removed user ${u.name}`;
@@ -61,7 +55,10 @@ export class UsersComponent implements OnInit {
           this._success = false;
           this._status = `Failed to remove user ${u.name}`;
         }
-      }
-    })
+      })
+    } else {
+      this._success = false;
+      this._status = "User cannot remove itself!";
+    }
   }
 }

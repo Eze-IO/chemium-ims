@@ -7,6 +7,7 @@ import { AuthenticationService } from './services/authentication.service';
 export class JwtInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService) { }
 
+  private static auth_token:string;
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // add authorization header with jwt token if available
     let token = AuthenticationService.Token;

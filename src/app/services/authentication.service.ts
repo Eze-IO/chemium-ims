@@ -3,33 +3,33 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable } from 'rxjs';
 import { RestAPIService } from './rest-api.service';
 import { ExtensionService } from '../helpers/extension.service';
+import { JwtInterceptor } from '../jwt.interceptor';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private static _token = null;
   public static get Token(): string {
-    return (this._token===null?'?':this.Token);
+    return sessionStorage.getItem('auth_token');
   }
-  constructor(private ras: RestAPIService,
-              private request: HttpRequest<any>) { }
+  constructor(private ras: RestAPIService) { }
 
   public async Authorize(username: string, password: string) {
     let x = await this.ras.TokenRequester(username, password);
-    if(new String(x)===null){
+    if(x===null){
       return false;
     } else {
-      AuthenticationService._token = x;
+      sessionStorage.setItem('auth_token', x);
+      sessionStorage.setItem('auth_header', `IMS ${x}`);
       return true;
     }
   }
 
   public get IsAuthorized(): boolean {
-    return (this.request.headers.get('Authorization') === `IMS ${AuthenticationService._token}`);
+    return (sessionStorage.getItem('auth_header') === `IMS ${AuthenticationService.Token}`);
   }
 
   public Deauthorize(): void {
-    AuthenticationService._token=null;
+    sessionStorage.setItem('auth_token', null);
   }
 }

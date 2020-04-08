@@ -2,8 +2,13 @@
   <main class="main d-flex align-items-center">
     <div class="container">
       <div class="row">
-        <div class="col-md-8 mx-auto">
-          <div class="card-group">
+        <div [ngSwitch]="loading" class="col-md-8 mx-auto">
+          <div *ngSwitchCase="2" class="d-flex justify-content-center animated fadeIn" style="margin:auto;">
+            <div class="spinner-border m-5" style="width: 12rem; height: 12rem;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+          <div *ngSwitchDefault class="card-group">
             <div class="card p-4">
               <div class="card-body">
                 <form [formGroup]="mainForm" (ngSubmit)="onSubmit()">

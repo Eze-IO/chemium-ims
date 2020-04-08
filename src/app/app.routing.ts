@@ -87,9 +87,14 @@ export const routes: Routes = [
       {
         path: 'report',
         loadChildren: () => import('./views/report/report.module').then(m => m.ReportModule)
+      },
+      {
+        path: 'register',
+        loadChildren: () => import('./views/register/register.module').then(m => m.RegisterModule)
       }
+
     ],
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   { path: '**', component: P404Component }
 ];
