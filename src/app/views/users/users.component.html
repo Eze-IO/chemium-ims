@@ -26,7 +26,7 @@
       <td class="text-center">
         <div class="avatar">
           <img src={{u.picture}} class="img-avatar">
-          <span class="avatar-status badge-success"></span>
+          <span class="avatar-status" [ngClass]="u.enabled?'badge-success':'badge-danger'"></span>
         </div>
       </td>
       <td>

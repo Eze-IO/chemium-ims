@@ -25,7 +25,7 @@ export class AdministratorService {
       console.log(element);
         let u:userinformation = new userinformation();
         u.name = element['Name'];
-        u.name = element['Username'];
+        u.username = element['Username'];
         u.email = element['Email'];
         u.phone_number = element['PhoneNumber'];
         u.lastmodified = element['LastModified'];

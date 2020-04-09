@@ -6,8 +6,9 @@
 
 .contain div {
     flex-basis: auto; /* default auto */
+    flex-grow: 0; 
 }
 
-.card {
-    min-width: 525px !important;
+.main {
+    min-width: 625px !important;
 }

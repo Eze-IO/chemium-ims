@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
         email: ['', Validators.required],
         password: ['', Validators.required]
       });
+      if(this.auth.IsAuthorized)
+        this.router.navigate(["/"], { relativeTo: this.route });
   }
 
   private email: string;

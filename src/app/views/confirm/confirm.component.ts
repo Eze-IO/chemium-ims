@@ -13,7 +13,7 @@ export class ConfirmComponent implements OnInit {
   loading:number = 0;
   title:string = "Enter Your Email";
   confirmInput:string = "none";
-  emailInput:string = "inherit";
+  emailInput:string = "";
   mainForm : FormGroup;
   status:string = null;
   email:string;
@@ -90,7 +90,7 @@ export class ConfirmComponent implements OnInit {
         this.ras.ConfirmUser(this.email, code).then(x => {
           this.toggleLoadingScreen();
           if(x){
-            this.title = "Confirmation Successfull!";
+            this.title = "Confirmation Successful!";
             this.confirmInput = "none";
             this.emailInput = "none";
           } else {

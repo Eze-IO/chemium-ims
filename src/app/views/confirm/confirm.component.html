@@ -19,11 +19,11 @@
                       {{ status }}
                     </div>
                   </div>
-                  <div class="input-group mb-3">
+                  <div class="input-group mb-3" [style.display]="emailInput">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="icon-user"></i></span>
                     </div>
-                    <input type="text" (change)="onTextChange()" [style.display]="emailInput" formControlName="email" class="form-control" placeholder="Email" required>
+                    <input type="text" (change)="onTextChange()" formControlName="email" class="form-control" placeholder="Email" required>
                   </div>
                   <div class="row contain text-center animated fadeIn" [style.display]="confirmInput" >
                     <div class="col-sm-2">
