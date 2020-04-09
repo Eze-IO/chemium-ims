@@ -22,6 +22,7 @@ export class AdministratorService {
     let list:userinformation[] = [];
     let result = await this.ras.ListUsers();
     result.forEach(element => {
+      console.log(element);
         let u:userinformation = new userinformation();
         u.name = element['Name'];
         u.name = element['Username'];

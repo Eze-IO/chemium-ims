@@ -31,22 +31,24 @@ export class CurrentUserService {
     this.ras.GetUser(AuthenticationService.Token).then(x => {
       console.log(x);
       let u:user = new user();
-      u.email = x['Email'];
-      u.name = x['Name'];
-      u.phone_number = x['PhoneNumber'];
-      u.picture = x['Picture'];
-      switch(x['Type']){
-        case '4':
-          this.u.type = Type.Administrator;
-          break;
-        case '2':
-          this.u.type = Type.Editor;
-          break;
-        default:
-          this.u.type = Type.Viewer;
-          break;
+      if(x!==null&&x!==undefined){
+        u.email = x['Email'];
+        u.name = x['Name'];
+        u.phone_number = x['PhoneNumber'];
+        u.picture = x['Picture'];
+        switch(x['Type']){
+          case '4':
+            this.u.type = Type.Administrator;
+            break;
+          case '2':
+            this.u.type = Type.Editor;
+            break;
+          default:
+            this.u.type = Type.Viewer;
+            break;
+        }
+        this.u = u;
       }
-      this.u = u;
     });
   }
 

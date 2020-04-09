@@ -1,52 +1,63 @@
 <div class="app-body">
-    <main class="main d-flex align-items-center">
-      <div class="container">
-        <div class="row">
-          <div [ngSwitch]="loading" class="col-md-8 mx-auto">
-            <div *ngSwitchCase="2" class="d-flex justify-content-center animated fadeIn" style="margin:auto;">
-              <div class="spinner-border m-5" style="width: 12rem; height: 12rem;" role="status">
-                <span class="sr-only">Loading...</span>
-              </div>
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div [ngSwitch]="loading" class="col-md-8 mx-auto">
+          <div *ngSwitchCase="2" class="d-flex justify-content-center animated fadeIn" style="margin:auto;">
+            <div class="spinner-border m-5" style="width: 12rem; height: 12rem;" role="status">
+              <span class="sr-only">Loading...</span>
             </div>
-            <div *ngSwitchDefault class="card-group">
-              <div class="card p-4">
-                <div class="card-body">
-                  <form [formGroup]="mainForm" (ngSubmit)="onSubmit()">
-                    <h1>Login</h1>
-                    <p class="text-muted">Sign In to your account</p>
-                    <div class="input-group mb-3">
-                      <div [ngClass]="{ 'alert alert-danger animated fadeIn': status!==null }" role="alert">
-                        {{ status }}
-                      </div>
+          </div>
+          <div *ngSwitchDefault class="card-group col-lg-8 mx-auto">
+            <div class="card p-3">
+              <div class="card-body">
+                <form [formGroup]="mainForm" (ngSubmit)="onSubmit()">
+                  <h1 class="text-center animated fadeIn">{{ title }}</h1>
+                  <p class="text-muted"></p>
+                  <div class="input-group mb-3">
+                    <div [ngClass]="{ 'alert alert-danger animated fadeIn': status!==null }" role="alert">
+                      {{ status }}
                     </div>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="icon-user"></i></span>
-                      </div>
-                      <input type="text" formControlName="email" class="form-control" placeholder="Email" autocomplete="username" required>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
                     </div>
-                    <div class="input-group mb-4">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="icon-lock"></i></span>
-                      </div>
-                      <input type="password" formControlName="password" class="form-control" placeholder="Password" autocomplete="current-password" required>
+                    <input type="text" (change)="onTextChange()" [style.display]="emailInput" formControlName="email" class="form-control" placeholder="Email" required>
+                  </div>
+                  <div class="row contain text-center animated fadeIn" [style.display]="confirmInput" >
+                    <div class="col-sm-2">
+                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i1" class="form-control" placeholder="1" required>
                     </div>
-                    <div class="row">
-                      <div class="col-6 text-left">
-                        <button type="button" type="submit" class="btn btn-primary px-4">Login</button>
-                      </div>
-                      <div class="col-6 text-right">
-                        <button type="button" routerLink="/confirm" class="btn btn-link px-0">Confirm Account</button><span class="slash"> / </span>
-                        <button type="button" routerLink="/support" class="btn btn-link px-0">Forgot password?</button>
-                      </div>
+                    <div class="col-sm-2">
+                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i2" class="form-control" placeholder="2" required>
                     </div>
-                  </form>
-                </div>
+                    <div class="col-sm-2">
+                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i3" class="form-control" placeholder="3" required>
+                    </div>
+                    <div class="col-sm-2">
+                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i4" class="form-control" placeholder="4" required>
+                    </div>
+                    <div class="col-sm-2">
+                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i5" class="form-control" placeholder="5" required>
+                    </div>
+                    <div class="col-sm-2">
+                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i6" class="form-control" placeholder="6" required>
+                    </div>
+                  </div>
+                  <p class="text-muted"></p>
+                  <p class="text-muted"></p>
+                  <div class="row">
+                    <div class="col-12 text-right">
+                      <button type="button" routerLink="/" class="btn btn-link px-0">Take Me Back!</button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </main>
-  </div>
-  
+    </div>
+  </main>
+</div>

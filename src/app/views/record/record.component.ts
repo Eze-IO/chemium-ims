@@ -16,6 +16,8 @@ export class RecordComponent implements OnInit {
   private Table: string;
   private Link: string;
 
+  private loading:number = 0;
+
   constructor(private activatedRoute: ActivatedRoute,
     private ws: WarehouseService) {
     this.activatedRoute.paramMap.subscribe(params => {

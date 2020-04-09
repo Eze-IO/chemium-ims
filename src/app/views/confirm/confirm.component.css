@@ -1,0 +1,13 @@
+.contain {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.contain div {
+    flex-basis: auto; /* default auto */
+}
+
+.card {
+    min-width: 525px !important;
+}

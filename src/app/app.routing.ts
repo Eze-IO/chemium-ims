@@ -102,7 +102,7 @@ export const routes: Routes = [
       }
 
     ],
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   { path: '**', component: P404Component }
 ];

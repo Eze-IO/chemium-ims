@@ -145,6 +145,26 @@ export class RestAPIService {
   }
 }
 
+public ConfirmUser(email: string, code: string): Promise<boolean> {
+  if (!ExtensionService.IsEmptyOrNull(email)&&
+    !ExtensionService.IsEmptyOrNull(code)) {
+    const request = {
+      'email': email,
+      'code': code
+    };
+
+    return this.http.post<any>(restapiurl.confirmuser.toString(), request, httpOptions).toPromise<boolean>()
+      .then(x => {
+          console.log(x['Result']);
+          return x['Success'];
+        }
+      ).catch(err => {
+        console.log('Error: ' + err);
+        return true;
+      });
+  }
+}
+
   public UpdateRegister(first_name: string, last_name: string,
     email: string, password: string, phone_number: string, type :Type) : Promise<boolean> {
     if (!ExtensionService.IsEmptyOrNull(first_name) &&
