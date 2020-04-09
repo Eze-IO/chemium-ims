@@ -10,11 +10,7 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class CurrentUserService {
   private u:user = new user();
-  constructor(private ras: RestAPIService) {
-    this.ras.UpdateUser(null).then(data => {
-
-    });
-  }
+  constructor(private ras: RestAPIService) { }
 
   private _firstName: string;
   private _lastName: string;

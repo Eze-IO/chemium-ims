@@ -179,7 +179,7 @@ export class RestAPIService {
   public UpdateUser(_user: user): Promise<object> {
     if (_user !== null || _user !== undefined) {
       const request = {
-        'username': _user.email,
+        'email': _user.email,
         'name': _user.name,
         'phone_number': _user.phone_number,
         'token': AuthenticationService.Token

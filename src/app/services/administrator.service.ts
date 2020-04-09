@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RestAPIService } from './rest-api.service';
 import { CurrentUserService } from './current-user.service';
+import { userinformation } from '../models/userinformation';
 import { user } from '../models/user';
 import { Type } from '../models/type';
 
@@ -18,14 +19,19 @@ export class AdministratorService {
   }
 
   public async GetUsers() {
-    let list:user[] = [];
+    let list:userinformation[] = [];
     let result = await this.ras.ListUsers();
     result.forEach(element => {
-        let u:user = new user();
+        let u:userinformation = new userinformation();
         u.name = element['Name'];
+        u.name = element['Username'];
         u.email = element['Email'];
         u.phone_number = element['PhoneNumber'];
+        u.lastmodified = element['LastModified'];
+        u.enabled = element['Enabled'];
+        u.created = element['Created'];
         u.picture = element['Picture'];
+        u.status = element['Status'];
         switch(element['Type']){
           case 'administrator':
           case 4:

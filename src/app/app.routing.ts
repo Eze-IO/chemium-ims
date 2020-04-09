@@ -12,6 +12,7 @@ import { LoginComponent } from './views/login/login.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { RegisterComponent } from './views/register/register.component';
 import { SupportComponent } from './views/support/support.component';
+import { ConfirmComponent } from './views/confirm/confirm.component';
 
 export const routes: Routes = [
   {
@@ -52,6 +53,13 @@ export const routes: Routes = [
     component: RegisterComponent,
     data: {
       title: 'User Register Page'
+    }
+  },
+  {
+    path: 'confirm',
+    component: ConfirmComponent,
+    data: {
+      title: 'User Confirmation'
     }
   },
   {

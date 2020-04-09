@@ -54,6 +54,7 @@ import { LogoutComponent } from './views/logout/logout.component';
 import { ClockComponent } from './views/clock/clock.component';
 import { SupportComponent } from './views/support/support.component';
 import { RegisterComponent } from './views/register/register.component';
+import { ConfirmComponent } from './views/confirm/confirm.component';
 
 @NgModule({
   imports: [
@@ -82,7 +83,8 @@ import { RegisterComponent } from './views/register/register.component';
     LoginComponent,
     LogoutComponent,
     RegisterComponent,
-    SupportComponent
+    SupportComponent,
+    ConfirmComponent
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

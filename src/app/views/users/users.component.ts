@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdministratorService } from '../../services/administrator.service';
 import { RestAPIService } from "../../services/rest-api.service";
 import { user } from "../../models/user";
+import { userinformation } from "../../models/userinformation";
 import { CurrentUserService } from '../../services/current-user.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { CurrentUserService } from '../../services/current-user.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  userList:user[] = [];
+  userList:userinformation[] = [];
   currentUser:user;
   _status: string = null;
   get status(): string {
