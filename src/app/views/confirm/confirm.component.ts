@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExtensionService } from '../../helpers/extension.service';
 import { RestAPIService } from '../../services/rest-api.service';
+declare var $: any;
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,8 @@ export class ConfirmComponent implements OnInit {
   mainForm : FormGroup;
   status:string = null;
   email:string;
+
+  @ViewChild("contain") inputFields: ElementRef;
 
   constructor(private formBuilder: FormBuilder,
     private ras: RestAPIService) { }
@@ -72,6 +75,24 @@ export class ConfirmComponent implements OnInit {
       this.mainForm.controls['i4'].disable();
       this.mainForm.controls['i5'].disable();
       this.mainForm.controls['i6'].disable();
+    }
+  }
+
+  keytab(event, max){
+    var target = event.target || event.srcElement;
+    let id = target.id;
+    let elements = this.inputFields.nativeElement.getElementsByTagName('input');
+    for (var i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      if(element!==null){
+        if(id===element.id){
+           let nextID = "i"+(i+2);
+           if(elements[nextID])
+              if(ExtensionService.IsEmptyOrNull(elements[nextID].value)&&
+              !ExtensionService.IsEmptyOrNull(event.target.value))
+                  elements[nextID].focus();
+        }
+      }
     }
   }
 

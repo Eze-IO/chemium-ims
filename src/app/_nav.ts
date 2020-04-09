@@ -1,4 +1,6 @@
 import { INavData } from '@coreui/angular';
+import { AuthenticationService } from './services/authentication.service';
+import { AdministratorService } from './services/administrator.service';
 
 export const navItems: INavData[] = [
   {
@@ -108,8 +110,7 @@ export const navItems: INavData[] = [
   {
     name: 'User(s)',
     url: '/users',
-    icon: 'icon-people'
-    /*,
-    attributes: { disabled: true },*/
+    icon: 'icon-people',
+    attributes: { disabled: (false) },
   },
 ];

@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
     return this._status;
   }
   password_requirement:string = "Password must be at least 8 character(s), a uppercaseletter,"
-  +"a lowercase letter, a number (0-9), and one special character (ex. ^ $ * .[]{}()?-!@#%&,><':;)";
+  +" a lowercase letter, a number (0-9), and one special character (ex. ^ $ * .[]{}()?-!@#%&,><':;)";
 
   constructor(private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
           first_name: ['', Validators.required],
           last_name: ['', Validators.required],
           email: ['', Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
-          phone_number: ['', Validators.required, Validators.pattern("[0-9 ]{11}")],
+          phone_number: ['', Validators.required, Validators.pattern("[/^(1|)?(\d{3})(\d{3})(\d{4})$/]{11}")],
           password: ['', Validators.required],
           repeat_password: ['', Validators.required],
           user_role: ['', Validators.required]
@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
     this.first_name = this.mainForm.controls.first_name.value;
     this.last_name = this.mainForm.controls.last_name.value;
     this.email = this.mainForm.controls.email.value;
-    this.phone_number = this.mainForm.controls.phone_number.value;
+    //this.phone_number = this.mainForm.controls.phone_number.value;
     this.password = this.mainForm.controls.password.value;
     this.password_repeat = this.mainForm.controls.repeat_password.value;
     switch(this.mainForm.controls.user_role.value){
@@ -120,17 +120,17 @@ export class RegisterComponent implements OnInit {
     return result;
   }
 
+
   getNumber(e) {
-    var cleaned = ('' + document.getElementById("phone_number")).replace(/\D/g, '')
-    var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
-    if (match) {
-      var intlCode = (match[1] ? '+1 ' : '')
-      document.getElementById("phone_number").setAttribute("value", [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(''));
-    }
+    if(!ExtensionService.IsEmptyOrNull(e))
+      this.phone_number = e;
+    else
+      this.phone_number = null;
   }
 
-  telInputObject(e) {
-    console.log(e);
+  pnError:boolean = false;
+  hasError(e) {
+    this.pnError = !e;
   }
 
   onCountryChange(e) {
@@ -138,7 +138,11 @@ export class RegisterComponent implements OnInit {
   }
 
   onTextChange(e){
-      e.value = "fgf";
+      var match = e.target.value.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+      if (match) {
+        var intlCode = (match[1] ? '+1 ' : '')
+        e.target.value=[intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+      }
   }
 
   onSubmit(){

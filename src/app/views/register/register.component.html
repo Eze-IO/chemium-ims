@@ -35,8 +35,8 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-phone"></i></span>
                   </div>
-                  <input type="tel" maxlength="20" id="phone_number" (ng2TelOutput)="getNumber($event)" (intlTelInputObject)="telInputObject($event)" [ng2TelInputOptions]="{initialCountry: 'us'}"
-                  (countryChange)="onCountryChange($event)" formControlName="phone_number" class="form-control" placeholder="Phone Number" ng2TelInput [class.is-invalid]="mainForm.get('phone_number').invalid && mainForm.get('phone_number').touched">
+                  <input type="tel" maxlength="20" id="phone_number" formControlName="phone_number" (ng2TelOutput)="getNumber($event)" [ng2TelInputOptions]="{initialCountry: 'us'}"
+                  (countryChange)="onCountryChange($event)" (change)="onTextChange($event)" class="form-control" placeholder="Phone Number" (hasError)="hasError($event)" ng2TelInput  [class.is-invalid]="pnError">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">

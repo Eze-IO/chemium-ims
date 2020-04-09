@@ -7,6 +7,7 @@ import { ExtensionService } from '../../helpers/extension.service';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RestAPIService } from "../../services/rest-api.service";
 import { timer } from 'rxjs';
+import { Type } from '../../models/type';
 
 @Component({
   selector: 'app-profile',
@@ -36,10 +37,22 @@ export class ProfileComponent implements OnInit {
     this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
        last_name: ['', Validators.required],
-       email: ['', Validators.required],
-       phone_number: ['', Validators.required]
+       email: ['', Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
+       phone_number: ['', Validators.required, Validators.pattern("[/^(1|)?(\d{3})(\d{3})(\d{4})$/]{11}")],
+       role: ['']
      });
     this.fillValues();
+  }
+
+  getRoleName(_type: Type){
+    switch(_type){
+      case 4:
+        return "Administrator";
+      case 2:
+        return "Editor";
+      default:
+        return "Viewer";
+    }
   }
 
 
@@ -48,7 +61,8 @@ export class ProfileComponent implements OnInit {
       first_name: this.cu.FirstName,
       last_name: this.cu.LastName,
       email: this.u.email,
-      phone_number: this.u.phone_number
+      phone_number: this.u.phone_number,
+      role: this.getRoleName(this.u.type)
     });
   }
 
@@ -67,11 +81,33 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  getNumber(e) {
+    if(!ExtensionService.IsEmptyOrNull(e))
+      this.u.phone_number = e;
+    else
+      this.u.phone_number = null;
+  }
+
+  pnError:boolean = false;
+  hasError(e) {
+    this.pnError = !e;
+  }
+
+  onCountryChange(e) {
+    console.log(e);
+  }
+
+  onPHTextChange(e){
+      var match = e.target.value.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+      if (match) {
+        var intlCode = (match[1] ? '+1 ' : '')
+        e.target.value=[intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+      }
+  }
+
   onTextChange(e) {
     if(!ExtensionService.IsEmptyOrNull(this.mainForm.controls.email.value))
       this.u.email = this.mainForm.controls.email.value;
-    if(!ExtensionService.IsEmptyOrNull(this.mainForm.controls.phone_number.value))
-      this.u.phone_number = this.mainForm.controls.phone_number.value;
     let name = (this.mainForm.controls.first_name.value+" "+this.mainForm.controls.last_name.value);
     if(!ExtensionService.IsEmptyOrNull(name))
       this.u.name = name;

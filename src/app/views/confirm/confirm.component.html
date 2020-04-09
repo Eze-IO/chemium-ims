@@ -25,24 +25,24 @@
                     </div>
                     <input type="text" (change)="onTextChange()" formControlName="email" class="form-control" placeholder="Email" required>
                   </div>
-                  <div class="row contain text-center animated fadeIn" [style.display]="confirmInput" >
+                  <div #contain class="row contain text-center animated fadeIn" [style.display]="confirmInput" >
                     <div class="col-sm-2">
-                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i1" class="form-control" placeholder="1" required>
+                      <input type="text" (change)="onInputChange()" (keyup)="keytab($event,1)" maxlength="1" formControlName="i1" id="i1" class="form-control" placeholder="1" required>
                     </div>
                     <div class="col-sm-2">
-                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i2" class="form-control" placeholder="2" required>
+                      <input type="text" (change)="onInputChange()" (keyup)="keytab($event, 1)" maxlength="1" formControlName="i2" id="i2" class="form-control" placeholder="2" required>
                     </div>
                     <div class="col-sm-2">
-                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i3" class="form-control" placeholder="3" required>
+                      <input type="text" (change)="onInputChange()" (keyup)="keytab($event, 1)" maxlength="1" formControlName="i3" id="i3" class="form-control" placeholder="3" required>
                     </div>
                     <div class="col-sm-2">
-                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i4" class="form-control" placeholder="4" required>
+                      <input type="text" (change)="onInputChange()" (keyup)="keytab($event, 1)" maxlength="1" formControlName="i4" id="i4" class="form-control" placeholder="4" required>
                     </div>
                     <div class="col-sm-2">
-                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i5" class="form-control" placeholder="5" required>
+                      <input type="text" (change)="onInputChange()" (keyup)="keytab($event, 1)" maxlength="1" formControlName="i5" id="i5" class="form-control" placeholder="5" required>
                     </div>
                     <div class="col-sm-2">
-                      <input type="text" (change)="onInputChange()" maxlength="1" formControlName="i6" class="form-control" placeholder="6" required>
+                      <input type="text" (change)="onInputChange()" (keyup)="keytab($event, 1)" maxlength="1" formControlName="i6" id="i6" class="form-control" placeholder="6" required>
                     </div>
                   </div>
                   <p class="text-muted"></p>

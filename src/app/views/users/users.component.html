@@ -16,6 +16,7 @@
   <tr>
     <th class="text-center"><i class="icon-people"></i></th>
     <th class="text-center">Name</th>
+    <th class="text-center">Status</th>
     <th class="text-center">Email</th>
     <th class="text-center">Role</th>
     <th class="text-center"></th>
@@ -30,8 +31,17 @@
         </div>
       </td>
       <td>
-        <div class="small text-muted text-center">
+        <div>
           <strong>{{u.name}}</strong>
+        </div>
+        <div class="small text-muted">
+          <span>Registered: {{ formatDate(u.created) }}</span>
+        </div>
+      </td>
+      <td>
+        <div class="text-center">
+          <button type="button" (click)="sendConfirmation(u)" class="btn btn-block btn-ghost-primary" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." 
+          [disabled]="(u.status!=='UNCONFIRMED')" aria-pressed="true"><i [ngClass]="{'icon-envelope-letter':(u.status==='UNCONFIRMED')}"></i> {{u.status}}</button>
         </div>
       </td>
       <td>

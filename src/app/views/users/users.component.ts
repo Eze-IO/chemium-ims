@@ -4,6 +4,7 @@ import { RestAPIService } from "../../services/rest-api.service";
 import { user } from "../../models/user";
 import { userinformation } from "../../models/userinformation";
 import { CurrentUserService } from '../../services/current-user.service';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -32,6 +33,11 @@ export class UsersComponent implements OnInit {
     this.currentUser = this.cu.GetInfo;
   }
 
+  formatDate(date: Date):string {
+    date = new Date(date);
+    return (((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()+" "+date.toLocaleTimeString('en-US'))
+  }
+
   updateView(){
     this.userList = [];
     this.admin.GetUsers().then(element => {
@@ -47,9 +53,31 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  sendConfirmation(u:userinformation){
+    if(u.status.toLocaleLowerCase()==='unconfirmed'){
+      this.ras.SendConfirmation(u.email).then(x =>{
+        timer(8000).subscribe((x)=> {
+          this._status = null;
+          this._success = false;
+        });
+        if(x){
+          this._status = "Confirmation email has been sent 📧";
+          this._success = true;
+        } else {
+          this._status = "Failed to send confirmation email";
+          this._success = false;
+        }
+      });
+    }
+  }
+
   deleteUser(u) {
     if((<user>u).email!==this.cu.GetInfo.email) {
       this.admin.DeleteUser(u).then(x => {
+        timer(8000).subscribe((x)=> {
+          this._status = null;
+          this._success = false;
+        });
         if(x){
           this._success = true;
           this._status = `Successfully removed user ${u.name}`;
@@ -60,6 +88,10 @@ export class UsersComponent implements OnInit {
         }
       })
     } else {
+      timer(8000).subscribe((x)=> {
+        this._status = null;
+        this._success = false;
+      });
       this._success = false;
       this._status = "User cannot remove itself!";
     }

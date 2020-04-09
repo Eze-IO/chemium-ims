@@ -131,11 +131,8 @@ export class RestAPIService {
 
     return this.http.post<any>(restapiurl.getuser.toString(), request, httpOptions).toPromise<object>()
       .then(x => {
-          console.log(token);
-          console.log(x);
           if (x['Success']) {
             let json = JSON.parse(x['Result']);
-            console.log(json);
             return json;
           }
           return null;
@@ -156,6 +153,24 @@ public ConfirmUser(email: string, code: string): Promise<boolean> {
     };
 
     return this.http.post<any>(restapiurl.confirmuser.toString(), request, httpOptions).toPromise<boolean>()
+      .then(x => {
+          console.log(x['Result']);
+          return x['Success'];
+        }
+      ).catch(err => {
+        console.log('Error: ' + err);
+        return true;
+      });
+  }
+}
+
+public SendConfirmation(email: string): Promise<boolean> {
+  if (!ExtensionService.IsEmptyOrNull(email)) {
+    const request = {
+      'email': email,
+    };
+
+    return this.http.post<any>(restapiurl.sendconfirmation.toString(), request, httpOptions).toPromise<boolean>()
       .then(x => {
           console.log(x['Result']);
           return x['Success'];

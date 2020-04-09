@@ -30,6 +30,7 @@ export class AuthenticationService {
   }
 
   public Deauthorize(): void {
+    sessionStorage.setItem('auth_header', null)
     sessionStorage.setItem('auth_token', null);
   }
 }

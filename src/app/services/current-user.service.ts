@@ -29,7 +29,6 @@ export class CurrentUserService {
 
   private _getUser() {
     this.ras.GetUser(AuthenticationService.Token).then(x => {
-      console.log(x);
       let u:user = new user();
       if(x!==null&&x!==undefined){
         u.email = x['Email'];
