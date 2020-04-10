@@ -28,27 +28,28 @@ export class ProfileComponent implements OnInit {
   dataUrl: string = null;
 
   private u:user = new user();
-  picture_content:SafeHtml;
   constructor(private cu: CurrentUserService, private formBuilder: FormBuilder, private ras: RestAPIService) { }
 
   ngOnInit(): void {
     this.u = this.cu.GetInfo;
-    this.toggleLoadingProfile();
     this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
        last_name: ['', Validators.required],
-       email: ['', Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
-       phone_number: ['', Validators.required, Validators.pattern("[/^(1|)?(\d{3})(\d{3})(\d{4})$/]{11}")],
-       role: ['']
+       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+       phone_number: ['', [Validators.required, Validators.pattern("[/^(1|)?(\d{3})(\d{3})(\d{4})$/]{11}")]],
+       role: [{value:'', disabled:true}]
      });
-    this.fillValues();
+     timer(1025).subscribe((val) => {
+      this.toggleLoadingProfile();
+      this.fillValues();
+    });
   }
 
   getRoleName(_type: Type){
     switch(_type){
-      case 4:
+      case Type.Administrator:
         return "Administrator";
-      case 2:
+      case Type.Editor:
         return "Editor";
       default:
         return "Viewer";
@@ -66,18 +67,21 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  email:string = "?";
+  picture:string = "?";
+  loading:number = 0;
   async toggleLoadingProfile(){
     let loader = "<div class='d-flex justify-content-center animated fadeIn' style='margin:auto;'>"
     +"<div class='spinner-border m-5' style='width: 12rem; height: 12rem;' role='status'>"
     +"<span class='sr-only'>Loading...</span></div></div>";
-    let picture = "<img src='[IMAGE]' class='bd-placeholder-img card-img animated fadeIn' alt='[EMAIL]' style='border-radius:5px;'/>";
-    if(ExtensionService.IsEmptyOrNull(this.u.picture)||this.u.picture===undefined)
-      this.u.picture = "../../../../assets/img/avatars/default.png";
-    picture = picture.replace("[IMAGE]", this.u.picture).replace('[EMAIL]', this.u.email);
-    if(this.picture_content===picture){
-      this.picture_content = loader;
+    let picture = "<img src='[IMAGE]' class='bd-placeholder-img card-img animated fadeIn' alt='[EMAIL]' style='border-radius:8px;'/>";
+    if(this.loading===0){
+      this.picture = this.u.picture;
+      if(ExtensionService.IsEmptyOrNull(this.u.picture)||this.u.picture===undefined)
+        this.picture = "../../../../assets/img/avatars/default.png";
+      this.loading=2;
     } else {
-      this.picture_content = picture;
+      this.loading=0;
     }
   }
 

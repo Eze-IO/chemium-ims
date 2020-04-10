@@ -42,7 +42,6 @@ export class DefaultLayoutComponent implements OnInit {
 
   public async setPicture() {
     this.u = this.cu.GetInfo;
-    console.log(this.u.picture);
     if(this.u.picture===undefined||ExtensionService.IsEmptyOrNull(this.u.picture))
       this.u.picture = "../../../../assets/img/avatars/default.png";
     this.HeaderPicture = "<img src='" + this.u.picture + "' class='img-avatar' alt='" + this.u.email + "' />";

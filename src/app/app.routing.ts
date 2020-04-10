@@ -111,8 +111,8 @@ export const routes: Routes = [
       }
 
     ],
-    //canActivate: [AuthGuard]
-    canActivate: [ PageGuard]
+    //canActivate: [AuthGuard, PageGuard]
+    canActivate: [ AuthGuard]
   },
   { path: '**', component: P404Component},
 ];

@@ -35,17 +35,7 @@ export class CurrentUserService {
         u.name = x['Name'];
         u.phone_number = x['PhoneNumber'];
         u.picture = x['Picture'];
-        switch(x['Type']){
-          case '4':
-            this.u.type = Type.Administrator;
-            break;
-          case '2':
-            this.u.type = Type.Editor;
-            break;
-          default:
-            this.u.type = Type.Viewer;
-            break;
-        }
+        u.type = (<Type>x['Type']);
         this.u = u;
       }
     });

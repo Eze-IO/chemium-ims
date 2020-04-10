@@ -27,7 +27,7 @@ export class ConfirmComponent implements OnInit {
   ngOnInit(): void {
     this.toggleLoadingScreen();
     this.mainForm = this.formBuilder.group({
-      email: ['', Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
+      email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
       i1: ['', Validators.required],
       i2: ['', Validators.required],
       i3: ['', Validators.required],
