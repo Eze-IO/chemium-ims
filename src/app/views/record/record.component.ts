@@ -4,11 +4,23 @@ import { WarehouseService } from '../../services/entities/warehouse.service';
 import * as entityService from '../../services/entities';
 import * as entity from '../../models/entities';
 import { ExtensionService } from '../../helpers/extension.service';
+import { trigger, transition, animate, style } from '@angular/animations';
 
 @Component({
   selector: 'app-record',
   templateUrl: './record.component.html',
-  styleUrls: ['./record.component.css']
+  styleUrls: ['./record.component.css'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({transform: 'translateY(-100%)'}),
+        animate('825ms ease-in', style({transform: 'translateY(0%)'}))
+      ]),
+      transition(':leave', [
+        animate('825ms ease-in', style({transform: 'translateY(-100%)'}))
+      ])
+    ])
+  ]
 })
 export class RecordComponent implements OnInit {
 
@@ -56,6 +68,15 @@ export class RecordComponent implements OnInit {
 
   showDefaultPage() {
     this.loading = 0;
+  }
+
+  onDropdownChange(e){
+    console.log(e);
+
+  }
+
+  onDropdownSubmit(e){
+    console.log(e);
   }
 
 }

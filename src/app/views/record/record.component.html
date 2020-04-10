@@ -8,7 +8,42 @@
       </div>
     </div>
     <div *ngSwitchDefault class="col-md-8 mx-auto animated fadeIn">
-      
+      <div class="row">
+        <div class="col-md-10">
+          <span class="display-2">Pick a record from below....</span>
+        </div>
+      </div>
+      <br><br>
+      <div class="row" [@slideInOut]>
+        <div class="col-md-10">
+          <div class="card text-center">
+            <div class="card-header">
+              User Selection:
+              <small> pick an option down below</small>
+            </div>
+            <div class="card-body">
+              <div class="btn-group" dropdown (isOpenChange)="onDropdownChange($event)" placement="top">
+                <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+                  List of Records <span class="caret"></span>
+                </button>
+                <ul *dropdownMenu class="dropdown-menu dropdown-menu-center" role="menu">
+                  <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+                  <li role="menuitem"><a class="dropdown-item" href="#">Another action</a>
+                  </li>
+                  <li role="menuitem"><a class="dropdown-item" href="#">Something else
+                    here</a></li>
+                  <li class="divider dropdown-divider"></li>
+                  <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+                  </li>
+                </ul>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      </div>
     </div>
   </div>
 </div>

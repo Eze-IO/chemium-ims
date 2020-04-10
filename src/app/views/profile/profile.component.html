@@ -13,7 +13,7 @@
           <strong><i class="icon-picture"></i> Profile Picture</strong>
         </div>
         <div class="card-body" [ngSwitch]="loading">
-          <img *ngSwitchCase="2" src='{{ image }}' class='bd-placeholder-img card-img animated fadeIn' alt='{{ email }}' style='border-radius:8px;'/>
+          <img *ngSwitchCase="2" [src]="picture" class='bd-placeholder-img card-img animated fadeIn' [alt]='email' style='border-radius:8px;'/>
           <div *ngSwitchDefault class="d-flex justify-content-center animated fadeIn" style="margin:auto;">
             <div class="spinner-border m-5" style="width: 6rem; height: 6rem;" role="status">
               <span class="sr-only">Loading...</span>

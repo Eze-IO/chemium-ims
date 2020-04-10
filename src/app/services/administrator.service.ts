@@ -20,34 +20,36 @@ export class AdministratorService {
 
   public async GetUsers() {
     let list:userinformation[] = [];
-    let result = await this.ras.ListUsers();
-    result.forEach(element => {
-      console.log(element);
-        let u:userinformation = new userinformation();
-        u.name = element['Name'];
-        u.username = element['Username'];
-        u.email = element['Email'];
-        u.phone_number = element['PhoneNumber'];
-        u.lastmodified = element['LastModified'];
-        u.enabled = element['Enabled'];
-        u.created = element['Created'];
-        u.picture = element['Picture'];
-        u.status = element['Status'];
-        switch(element['Type']){
-          case 'administrator':
-          case 4:
-            u.type = 4;
-            break;
-          case 'editor':
-          case 2:
-            u.type = 2;
-            break;
-          default:
-            u.type = 0;
-            break;
-        }
-        list.push(u);
-    });
+    if(this.IsAdministrator){
+      let result = await this.ras.ListUsers();
+      result.forEach(element => {
+        console.log(element);
+          let u:userinformation = new userinformation();
+          u.name = element['Name'];
+          u.username = element['Username'];
+          u.email = element['Email'];
+          u.phone_number = element['PhoneNumber'];
+          u.lastmodified = element['LastModified'];
+          u.enabled = element['Enabled'];
+          u.created = element['Created'];
+          u.picture = element['Picture'];
+          u.status = element['Status'];
+          switch(element['Type']){
+            case 'administrator':
+            case 4:
+              u.type = 4;
+              break;
+            case 'editor':
+            case 2:
+              u.type = 2;
+              break;
+            default:
+              u.type = 0;
+              break;
+          }
+          list.push(u);
+      });
+    }
     return list;
   }
 

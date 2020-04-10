@@ -68,7 +68,7 @@ export class ProfileComponent implements OnInit {
   }
 
   email:string = "?";
-  picture:string = "?";
+  picture:string;
   loading:number = 0;
   async toggleLoadingProfile(){
     let loader = "<div class='d-flex justify-content-center animated fadeIn' style='margin:auto;'>"
@@ -171,6 +171,5 @@ export class ProfileComponent implements OnInit {
       }
       this._status += invalid.join(", ");
     }
-    this.fillValues();
   }
 }

@@ -59,8 +59,5 @@ export class CurrentUserService {
   public LastPage(): string {
     return localStorage.getItem('last_page');
   }
-
-  public IsConfirmed(): boolean {
-    return !(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/.test(this.GetInfo.email));
-  }
+  
 }
