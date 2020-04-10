@@ -7,12 +7,14 @@ import { AuthGuard } from './auth.guard';
 import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
+import { P403Component } from './views/error/403.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { RegisterComponent } from './views/register/register.component';
 import { SupportComponent } from './views/support/support.component';
 import { ConfirmComponent } from './views/confirm/confirm.component';
+import { PageGuard } from './page.guard';
 
 export const routes: Routes = [
   {
@@ -25,6 +27,13 @@ export const routes: Routes = [
     component: P404Component,
     data: {
       title: 'Page 404'
+    }
+  },
+  {
+    path: '403',
+    component: P403Component,
+    data: {
+      title: 'Page 403'
     }
   },
   {
@@ -102,9 +111,10 @@ export const routes: Routes = [
       }
 
     ],
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
+    canActivate: [ PageGuard]
   },
-  { path: '**', component: P404Component }
+  { path: '**', component: P404Component},
 ];
 
 @NgModule({

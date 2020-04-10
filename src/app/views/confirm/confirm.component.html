@@ -23,7 +23,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="icon-user"></i></span>
                     </div>
-                    <input type="text" (change)="onTextChange()" formControlName="email" class="form-control" placeholder="Email" required>
+                    <input type="text" (change)="onTextChange()" formControlName="email" class="form-control" placeholder="Email" ngModel [email]="true" [class.is-invalid]="mainForm.get('email').invalid && mainForm.get('email').touched">
                   </div>
                   <div #contain class="row contain text-center animated fadeIn" [style.display]="confirmInput" >
                     <div class="col-sm-2">

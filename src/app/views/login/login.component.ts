@@ -80,6 +80,7 @@ export class LoginComponent implements OnInit {
                 invalid.push(name.replace("_", " "));
             }
         }
+        this._status += invalid.join();
       }
     }
   }

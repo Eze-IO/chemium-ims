@@ -169,7 +169,7 @@ export class RegisterComponent implements OnInit {
                 invalid.push(name.replace("_", " "));
             }
         }
-        this._status+=invalid.join();
+        this._status+=invalid.join(", ");
       }
     }
   }

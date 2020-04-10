@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WarehouseService } from '../../services/entities/warehouse.service';
+import * as entityService from '../../services/entities';
 import * as entity from '../../models/entities';
 import { ExtensionService } from '../../helpers/extension.service';
 
@@ -16,7 +17,7 @@ export class RecordComponent implements OnInit {
   private Table: string;
   private Link: string;
 
-  private loading:number = 0;
+  loading:number = 2;
 
   constructor(private activatedRoute: ActivatedRoute,
     private ws: WarehouseService) {
@@ -35,21 +36,26 @@ export class RecordComponent implements OnInit {
           this.RecordName = "Agent";
           break;
         default:
-          this.RecordName = "?";
+          this.showDefaultPage();
           break;
       }
-    }
-    if (!ExtensionService.IsEmptyOrNull(this.Link)) {
+    } else if (!ExtensionService.IsEmptyOrNull(this.Link)) {
       this.Link = this.Link.toLowerCase();
       switch (this.Link) {
         case 'warehouse':
           this.RecordName = WarehouseService.Name;
           break;
         default:
-          this.RecordName = "?";
+          this.showDefaultPage();
           break;
       }
+    } else {
+      this.showDefaultPage();
     }
+  }
+
+  showDefaultPage() {
+    this.loading = 0;
   }
 
 }

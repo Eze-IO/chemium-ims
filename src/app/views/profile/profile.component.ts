@@ -144,15 +144,29 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    this.cu.UpdateInfo(this.u).then(x => {
-      if(x){
-        this._success = true;
-        this._status = "Successfully updated information";
-      } else {
-        this._success = false;
-        this._status = "Falied to update information";
+    if(!this.mainForm.invalid){
+      this.cu.UpdateInfo(this.u).then(x => {
+        if(x){
+          this._success = true;
+          this._status = "Successfully updated information";
+        } else {
+          this._success = false;
+          this._status = "Falied to update information";
+        }
+        this.fillValues();
+      });
+    } else {
+      const invalid = [];
+      this._success = false;
+      this._status = "These fields are not valid: ";
+      const controls = this.mainForm.controls;
+      for (const name in controls) {
+          if (controls[name].invalid) {
+              invalid.push(name.replace("_", " "));
+          }
       }
-    });
+      this._status += invalid.join(", ");
+    }
     this.fillValues();
   }
 }

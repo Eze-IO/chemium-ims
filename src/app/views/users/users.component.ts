@@ -5,6 +5,7 @@ import { user } from "../../models/user";
 import { userinformation } from "../../models/userinformation";
 import { CurrentUserService } from '../../services/current-user.service';
 import { timer } from 'rxjs';
+import { ExtensionService } from '../../helpers/extension.service';
 
 @Component({
   selector: 'app-users',
@@ -43,7 +44,8 @@ export class UsersComponent implements OnInit {
     this.admin.GetUsers().then(element => {
       this.loading = 2;
       element.forEach(e => {
-        e.picture = `"${e.picture}"`;
+        if(ExtensionService.IsEmptyOrNull(e.picture))
+          e.picture = "../../../../assets/img/avatars/default.png";
         this.userList.push(e);
       })
       if(this.userList.length<=0)
@@ -73,6 +75,7 @@ export class UsersComponent implements OnInit {
 
   deleteUser(u) {
     if((<user>u).email!==this.cu.GetInfo.email) {
+      this.loading = 2;
       this.admin.DeleteUser(u).then(x => {
         timer(8000).subscribe((x)=> {
           this._status = null;
@@ -86,6 +89,7 @@ export class UsersComponent implements OnInit {
           this._success = false;
           this._status = `Failed to remove user ${u.name}`;
         }
+        this.loading = 0;
       })
     } else {
       timer(8000).subscribe((x)=> {
@@ -94,6 +98,8 @@ export class UsersComponent implements OnInit {
       });
       this._success = false;
       this._status = "User cannot remove itself!";
+      this.loading = 0;
     }
+    this.loading = 0;
   }
 }
