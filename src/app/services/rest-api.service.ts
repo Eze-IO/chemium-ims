@@ -12,6 +12,7 @@ import { Type } from '../models/type';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
+    timeout: `${20000}`
   })
 }
 
@@ -21,7 +22,7 @@ const httpOptions = {
 export class RestAPIService {
 
   constructor(private http: HttpClient) {
-    //httpOptions.headers.append('X-IMS-ID', AuthenticationService.Token);
+    httpOptions.headers.append('X-IMS-ID', AuthenticationService.Token);
   }
 
  public GetEntity(entity: string): Promise<any> {

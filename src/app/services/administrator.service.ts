@@ -15,6 +15,7 @@ export class AdministratorService {
 
   public get IsAdministrator(): boolean {
     let result = this.cu.GetInfo;
+    console.log(result)
     return (result.type===Type.Administrator);
   }
 
