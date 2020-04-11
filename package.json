@@ -1,7 +1,7 @@
 {
   "name": "Chemium-IMS",
   "version": "1.0.1",
-  "description": "CoreUI Free Angular 2+ Admin Template",
+  "description": "A cloud based application for managing and storing inventory information for Chemium",
   "author": {
     "name": "Cloud Solutions Consultants",
     "url": "http://ims.chemium.com"

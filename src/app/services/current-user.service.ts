@@ -10,7 +10,8 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class CurrentUserService {
   private u:user = new user();
-  constructor(private ras: RestAPIService) { }
+  constructor(private ras: RestAPIService,
+  private auth: AuthenticationService) { }
 
   private _firstName: string;
   private _lastName: string;
@@ -53,11 +54,11 @@ export class CurrentUserService {
 
   public async UploadPicture(picture: string) {
     let result = await this.ras.UploadUserPicture(this.u.email, picture);
-    return
+    return result;
   }
 
   public LastPage(): string {
     return localStorage.getItem('last_page');
   }
-  
+
 }

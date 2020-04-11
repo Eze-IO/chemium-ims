@@ -10,8 +10,7 @@ const routes: Routes = [
       title: 'List of Records 🗄️'
     }
   },
-  { path: 'table/:table', component: RecordComponent, data: { title:'Record(s) 🗄️'}},
-  { path: 'link/:link', component: RecordComponent, data: { title: 'Linked Record(s) 🗄️' }}
+  { path: 'table/:table', component: RecordComponent, data: { title:'Record(s) 🗄️'}}
 ];
 
 @NgModule({

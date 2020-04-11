@@ -40,7 +40,7 @@
       </td>
       <td>
         <div class="text-center">
-          <button type="button" (click)="sendConfirmation(u)" class="btn btn-block btn-ghost-primary" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." 
+          <button type="button" (click)="sendConfirmation(u)" class="btn btn-block btn-ghost-primary" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
           [disabled]="(u.status!=='UNCONFIRMED')" aria-pressed="true"><i [ngClass]="{'icon-envelope-letter':(u.status==='UNCONFIRMED')}"></i> {{u.status}}</button>
         </div>
       </td>
@@ -63,7 +63,7 @@
 </tbody>
 </table>
 </div>
-<div class="card row">
+<div class="card row" *ngIf="this.admin.IsAdministrator">
   <button type="button" class="btn btn-block btn-success active" aria-pressed="true" routerLink="/register">ADD USER</button>
 </div>
 </div>

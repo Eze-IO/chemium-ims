@@ -14,7 +14,6 @@ import { LogoutComponent } from './views/logout/logout.component';
 import { RegisterComponent } from './views/register/register.component';
 import { SupportComponent } from './views/support/support.component';
 import { ConfirmComponent } from './views/confirm/confirm.component';
-import { PageGuard } from './page.guard';
 
 export const routes: Routes = [
   {
@@ -111,7 +110,6 @@ export const routes: Routes = [
       }
 
     ],
-    //canActivate: [AuthGuard, PageGuard]
     canActivate: [ AuthGuard]
   },
   { path: '**', component: P404Component},

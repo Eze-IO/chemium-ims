@@ -26,7 +26,7 @@ export class DefaultLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.setPicture();
     this.GetName();
-    timer(3000, 10000).subscribe((val) => {
+    timer(1750, 10000).subscribe((val) => {
       this.setPicture();
       this.GetName();
     });

@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 
 import { UrlSerializer } from '@angular/router';
-import { CustomUrlSerializer } from './custom-url-serializer';
 import { JwtInterceptor } from './jwt.interceptor';
 import { HttpErrorInterceptor } from './http.interceptor';
 
@@ -91,7 +90,6 @@ import { ConfirmComponent } from './views/confirm/confirm.component';
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: UrlSerializer, useClass: CustomUrlSerializer },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
   ],

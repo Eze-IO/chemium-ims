@@ -36,7 +36,7 @@ export class ProfileComponent implements OnInit {
        first_name: ['', Validators.required],
        last_name: ['', Validators.required],
        email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
-       phone_number: ['', [Validators.required, Validators.pattern("[/^(1|)?(\d{3})(\d{3})(\d{4})$/]{11}")]],
+       phone_number: ['', Validators.required],
        role: [{value:'', disabled:true}]
      });
      timer(1025).subscribe((val) => {

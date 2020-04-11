@@ -30,8 +30,10 @@ export class UsersComponent implements OnInit {
     private cu: CurrentUserService) { }
 
   ngOnInit(): void {
-    this.updateView();
-    this.currentUser = this.cu.GetInfo;
+    timer(1025, 25500).subscribe(x => {
+      this.currentUser = this.cu.GetInfo;
+      this.updateView();
+    })
   }
 
   formatDate(date: Date):string {
@@ -43,15 +45,17 @@ export class UsersComponent implements OnInit {
     this.userList = [];
     this.admin.GetUsers().then(element => {
       this.loading = 2;
-      element.forEach(e => {
-        if(ExtensionService.IsEmptyOrNull(e.picture))
-          e.picture = "../../../../assets/img/avatars/default.png";
-        this.userList.push(e);
+      timer(2000).subscribe(x => {
+        element.forEach(e => {
+          if(ExtensionService.IsEmptyOrNull(e.picture))
+            e.picture = "../../../../assets/img/avatars/default.png";
+          this.userList.push(e);
+        })
+        if(this.userList.length<=0)
+          this.loading = 1;
+        else
+          this.loading = 0;
       })
-      if(this.userList.length<=0)
-        this.loading = 1;
-      else
-        this.loading = 0;
     });
   }
 

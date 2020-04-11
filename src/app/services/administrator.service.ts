@@ -58,14 +58,20 @@ export class AdministratorService {
   }
 
   public async CreateUser(user: user, password: string) {
-    let fn = user.name.split(' ')[0];
-    let ln = user.name.split(' ')[1];
-    let result = await this.ras.UpdateRegister(fn, ln, user.email, password, user.phone_number, user.type);
-    return result;
+    if(this.IsAdministrator){
+      let fn = user.name.split(' ')[0];
+      let ln = user.name.split(' ')[1];
+      let result = await this.ras.UpdateRegister(fn, ln, user.email, password, user.phone_number, user.type);
+      return result;
+    }
+    return false;
   }
 
   public async DeleteUser(user: user) {
-    let result = await this.ras.DeleteUser(user.email).then(x => { return x; });
-    return result;
+    if(this.IsAdministrator){
+      let result = await this.ras.DeleteUser(user.email).then(x => { return x; });
+      return result;
+    }
+    return false;
   }
 }

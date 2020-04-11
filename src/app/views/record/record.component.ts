@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { WarehouseService } from '../../services/entities/warehouse.service';
 import * as entityService from '../../services/entities';
 import * as entity from '../../models/entities';
 import { ExtensionService } from '../../helpers/extension.service';
 import { trigger, transition, animate, style } from '@angular/animations';
+import { navItems } from '../../_nav';
+import { INavData } from '@coreui/angular';
+import { row } from '../../models/row';
+import { timer } from 'rxjs';
+
 
 @Component({
   selector: 'app-record',
@@ -19,7 +23,7 @@ import { trigger, transition, animate, style } from '@angular/animations';
       transition(':leave', [
         animate('825ms ease-in', style({transform: 'translateY(-100%)'}))
       ])
-    ])
+    ]),
   ]
 })
 export class RecordComponent implements OnInit {
@@ -27,35 +31,34 @@ export class RecordComponent implements OnInit {
   RecordName:string;
   private test: entity.warehouse[];
   private Table: string;
-  private Link: string;
+  private _navItems: INavData[];
 
   loading:number = 2;
 
-  constructor(private activatedRoute: ActivatedRoute,
-    private ws: WarehouseService) {
+  constructor(private activatedRoute: ActivatedRoute) {
     this.activatedRoute.paramMap.subscribe(params => {
           this.Table = params.get('table');
-          this.Link = params.get('link');
     });
   }
 
   ngOnInit(): void {
-    this.test = this.ws.GetEntries();
+    let _time = 2075;
+    this._navItems = [];
+    navItems[2].children.forEach(x => {
+      setTimeout(() => {
+         this._navItems.push(x);
+       }, _time);
+      _time+=1750;
+    })
+
     if (!ExtensionService.IsEmptyOrNull(this.Table)) {
       this.Table = this.Table.toLowerCase();
       switch (this.Table) {
         case 'agent':
-          this.RecordName = "Agent";
-          break;
-        default:
-          this.showDefaultPage();
-          break;
-      }
-    } else if (!ExtensionService.IsEmptyOrNull(this.Link)) {
-      this.Link = this.Link.toLowerCase();
-      switch (this.Link) {
-        case 'warehouse':
-          this.RecordName = WarehouseService.Name;
+          let entity = entityService.AgentService;
+          //entity
+          this.RecordName = entity.Name;
+          this.generateTable([])
           break;
         default:
           this.showDefaultPage();
@@ -66,13 +69,18 @@ export class RecordComponent implements OnInit {
     }
   }
 
+  columns: string[];
+  _row: row;
+  generateTable(columns: string[]){
+    this.loading = 1;
+  }
+
   showDefaultPage() {
     this.loading = 0;
   }
 
   onDropdownChange(e){
     console.log(e);
-
   }
 
   onDropdownSubmit(e){

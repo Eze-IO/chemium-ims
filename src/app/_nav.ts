@@ -13,7 +13,7 @@ export const navItems: INavData[] = [
     name: 'Option(s)'
   },
   {
-    name: 'Primary Record(s)',
+    name: 'Record(s)',
     url: '/record',
     icon: 'icon-layers',
     children: [
@@ -72,32 +72,25 @@ export const navItems: INavData[] = [
         name: 'Contract(s)',
         url: '/record/table/contract',
         icon: 'icon-doc'
-      }
-    ]
-  },
-  {
-    name: 'Linked Record(s)',
-    url: '/record/type/linked',
-    icon: 'icon-layers',
-    children: [
+      },
       {
         name: 'Trader(s)',
-        url: '/record/link/trader',
+        url: '/record/table/trader',
         icon: 'icon-doc'
       },
       {
         name: 'Warehouse(s)',
-        url: '/record/link/warehouse',
+        url: '/record/table/warehouse',
         icon: 'icon-doc'
       },
       {
         name: 'Product(s)',
-        url: '/record/link/product',
+        url: '/record/table/product',
         icon: 'icon-doc'
       },
       {
         name: 'Measurement(s)',
-        url: '/record/link/unit_measurement',
+        url: '/record/table/unit_measurement',
         icon: 'icon-doc'
       }
     ]

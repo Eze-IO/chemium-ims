@@ -213,7 +213,7 @@ public SendConfirmation(email: string): Promise<boolean> {
     }
   }
 
-  public UpdateUser(_user: user): Promise<object> {
+  public UpdateUser(_user: user): Promise<boolean> {
     if (_user !== null || _user !== undefined) {
       const request = {
         'email': _user.email,
@@ -222,18 +222,14 @@ public SendConfirmation(email: string): Promise<boolean> {
         'token': `"${AuthenticationService.Token}"`
       };
 
-      console.log(request);
-      return this.http.post<any>(restapiurl.updateuser.toString(), request, httpOptions).toPromise<object>()
+      return this.http.post<any>(restapiurl.updateuser.toString(), request, httpOptions).toPromise<boolean>()
         .then(x => {
-            if (x['Success']) {
-              let json = JSON.parse(x['Result']);
-              return json;
-            }
-            return null;
+            console.log(x['Result']);
+            return x['Success'];
           }
         ).catch(err => {
           console.log('Error: ' + err);
-          return null;
+          return false;
         });
     }
   }
