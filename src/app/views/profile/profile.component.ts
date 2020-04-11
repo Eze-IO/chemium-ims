@@ -27,21 +27,21 @@ export class ProfileComponent implements OnInit {
   selectedFile: File;
   dataUrl: string = null;
 
-  private u:user = new user();
+  u:user = new user();
   constructor(private cu: CurrentUserService, private formBuilder: FormBuilder, private ras: RestAPIService) { }
 
   ngOnInit(): void {
-    this.u = this.cu.GetInfo;
-    this.mainForm = this.formBuilder.group({
+    timer(1025).subscribe((val) => {
+     this.u = this.cu.GetInfo;
+     this.toggleLoadingProfile();
+     this.fillValues();
+   });
+   this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
        last_name: ['', Validators.required],
        email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
        phone_number: ['', Validators.required],
        role: [{value:'', disabled:true}]
-     });
-     timer(1025).subscribe((val) => {
-      this.toggleLoadingProfile();
-      this.fillValues();
     });
   }
 

@@ -68,6 +68,9 @@ export class LoginComponent implements OnInit {
           this._status = "Loading...";
           this.router.navigate(["/"], { relativeTo: this.route });
         } else {
+          this.mainForm.patchValue({
+            password: ""
+          });
           this._status = "Failed to login 🥺, incorrect email/password";
           this.toggleLoadingScreen();
         }

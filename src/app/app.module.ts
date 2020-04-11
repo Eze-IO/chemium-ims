@@ -89,7 +89,7 @@ import { ConfirmComponent } from './views/confirm/confirm.component';
     ConfirmComponent
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    //{ provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
   ],

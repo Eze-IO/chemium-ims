@@ -10,7 +10,7 @@ import { JwtInterceptor } from '../jwt.interceptor';
 })
 export class AuthenticationService {
   public static get Token(): string {
-    return sessionStorage.getItem('auth_token');
+    return localStorage.getItem('auth_token');
   }
   constructor(private ras: RestAPIService) { }
 
@@ -19,18 +19,18 @@ export class AuthenticationService {
     if(x===null){
       return false;
     } else {
-      sessionStorage.setItem('auth_token', x);
-      sessionStorage.setItem('auth_header', `IMS ${x}`);
+      localStorage.setItem('auth_token', x);
+      localStorage.setItem('auth_header', `IMS ${x}`);
       return true;
     }
   }
 
   public get IsAuthorized(): boolean {
-    return (sessionStorage.getItem('auth_header') === `IMS ${AuthenticationService.Token}`);
+    return (localStorage.getItem('auth_header') === `IMS ${AuthenticationService.Token}`);
   }
 
   public Deauthorize(): void {
-    sessionStorage.setItem('auth_header', null)
-    sessionStorage.setItem('auth_token', null);
+    localStorage.setItem('auth_header', null)
+    localStorage.setItem('auth_token', null);
   }
 }
