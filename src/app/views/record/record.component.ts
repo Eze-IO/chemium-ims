@@ -128,7 +128,14 @@ export class RecordComponent implements OnInit {
   }
 
   deleteRow(d){
-    console.log(d);
+    if((<number>this.u.type)>0){
+      switch (this.Table) {
+        case 'agent':
+          break;
+        default:
+          break;
+      }
+    }
   }
 
   addEntry() {

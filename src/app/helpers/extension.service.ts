@@ -11,4 +11,9 @@ export class ExtensionService {
   public static IsEmptyOrNull(str: string) {
     return (!str || 0 === str.length);
   }
+
+  //check if internet connection exits
+  public static IsConnected() {
+    return navigator.onLine;
+  }
 }
