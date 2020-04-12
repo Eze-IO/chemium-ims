@@ -2,21 +2,15 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="card">
-        <div *ngIf="showNews" class="card-body">
+        <div class="card-body">
           Mission
           To create significant value for stakeholders by providing customers and suppliers with world-class products and services while also carving out a niche for the company in the global petrochemical and hydrocarbon industry.
           Vision
           To achieve year-over-year growth, both organically and through asset acquisition, while becoming the most trusted and recognized petrochemical trading company.
         </div>
-        <div *ngIf="!showNews" class="card-body display-3">
-          Your're Not Connected to the Internet! 
-        </div>
         <div class="card-footer">
-          <button *ngIf="showNews" routerLink="/record" type="button" class="btn btn-block btn-primary">
+          <button (click)="GoToRecords($event)" type="button" class="btn btn-block btn-primary">
             Go to records
-          </button>
-          <button *ngIf="!showNews" (click)="RefreshPage($event)" type="button" class="btn btn-block btn-success">
-            Try Refreshing the Page
           </button>
         </div>
       </div>

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <app-header class="animated fadeIn" *ngIf="showHeaderInfo"
+=======
+<app-header
+>>>>>>> parent of 68f5a1c... Added check for internet connection
   [navbarBrandRouterLink]="['/dashboard']"
   [fixed]="true"
   [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 60, height: 45, alt: 'Chemium Logo'}"
@@ -30,7 +34,11 @@
   <!--?-->
 </app-header>
 <div class="app-body">
+<<<<<<< HEAD
   <app-sidebar *ngIf="showHeaderInfo"  class="animated fadeIn" #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
+=======
+  <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
+>>>>>>> parent of 68f5a1c... Added check for internet connection
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
