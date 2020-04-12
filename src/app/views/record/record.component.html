@@ -37,7 +37,12 @@
           </tbody>
         </table>
         <div class="card-footer text-center">
-          <button *ngIf="toggleAddButton" type="button" (click)="addEntry()" class="btn btn-block btn-primary" [disabled]="(u.type===0)" aria-pressed="true">ADD ENTRY</button>
+          <button type="button" (click)="addEntry()"
+          class="btn btn-block btn-primary" [disabled]="(u.type===0)||toggleAddButton"
+          aria-pressed="true">ADD ENTRY</button>
+          <button type="button" class="btn btn-info mr-1" data-toggle="modal" (click)="infoModal.show()">
+            Info modal
+          </button>
         </div>
         </div>
       </div>
@@ -62,3 +67,23 @@
     </div>
   </div>
 </div>
+
+<div bsModal #infoModal class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
+        <button type="button" class="btn btn-info">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

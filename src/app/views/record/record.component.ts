@@ -11,6 +11,7 @@ import { row } from '../../models/tables/row';
 import { timer } from 'rxjs';
 import { user } from '../../models/user';
 import { CurrentUserService } from '../../services/current-user.service';
+import {ModalDirective} from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -30,7 +31,7 @@ import { CurrentUserService } from '../../services/current-user.service';
   ]
 })
 export class RecordComponent implements OnInit {
-
+  @ViewChild('infoModal') public infoModal: ModalDirective;
   RecordName:string;
   private Table: string;
   private _navItems: INavData[];
@@ -120,13 +121,27 @@ export class RecordComponent implements OnInit {
   onCellInput(e, columnName){
     switch (this.Table) {
       case 'agent':
-        this.as.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
-          if(x){
-          } else {
-            alert('Failed to update entry');
-          }
-          this.selectView();
-        });
+        if(this._newID!==0){
+          let _agent = new entity.agent();
+          _agent.agent_id = this._newID;
+          //_agent.
+          this.as.AddEntry(null).then(x => {
+            if(x){
+            } else {
+              alert('Failed to update entry');
+            }
+            this.toggleAddButton = true;
+            this.selectView();
+          });
+        } else {
+          this.as.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+            if(x){
+            } else {
+              alert('Failed to update entry');
+            }
+            this.selectView();
+          });
+        }
         break;
       default:
         break;
@@ -175,12 +190,13 @@ export class RecordComponent implements OnInit {
 
 
  _newID:number = 0;
- toggleAddButton:boolean = true;
+ toggleAddButton:boolean = false;
   addEntry() {
+    this.infoModal.show();
     //this.loading = 2;
     let r = this.getNewRow();
     this._newID = r.id;
-    this.toggleAddButton = false;
+    this.toggleAddButton = true;
     this.rows.push(r);
     //this.loading = 1;
   }
