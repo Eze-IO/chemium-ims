@@ -1,63 +1,25 @@
-<div>
-  <div class="row" [ngSwitch]="loading">
-    <div *ngSwitchCase="2" class="col-md-8 mx-auto animated fadeIn">
-      <div class="d-flex justify-content-center" style="margin:auto;">
-        <div class="spinner-border m-5" style="width: 12rem; height: 12rem;" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-    </div>
-    <div #scrollContainer *ngSwitchCase="1" class="col-md-12 mx-auto animated fadeIn">
-      <div class="card">
-        <div class="card-header">
-          <i class="fa fa-align-justify"></i> {{ RecordName }} Record
-        </div>
-        <div class="card-body">
-        <table class="table table-striped">
-          <thead>
-            <tr >
-              <th>#</th>
-              <th *ngFor="let column of columns">
-                {{ column.toUpperCase().replace('_', ' ') }}
-              </th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody >
-            <tr *ngFor="let row of rows; let i = index">
-              <td [attr.id]="i">{{i+1}}.</td>
-              <td *ngFor="let d of row.data"><input
-                class="table-cell" value="{{ d.data }}" (keyup.enter)="onCellInput(d.columnName)"
-                (focus)="onCellFocus(rowid, d.columnName)"
-                required/>
-              </td>
-              <td><button type="button" (click)="deleteRow(row)" class="btn btn-pill btn-danger" [disabled]="(u.type===0)" aria-pressed="true">X</button></td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="card-footer text-center">
-          <button type="button" (click)="addEntry()" class="btn btn-block btn-primary" [disabled]="(u.type===0)" aria-pressed="true">ADD ENTRY</button>
-        </div>
-        </div>
-      </div>
-    </div>
-    <div *ngSwitchDefault class="col-md-8 mx-auto animated fadeIn">
-      <div class="row">
-        <div class="col-md-12">
-          <span class="display-2">Pick a record from below....</span>
-        </div>
-      </div>
-      <br><br>
-      <div class="row animated fadeIn" [@slideInOut]>
-        <div class="col-md-12">
-          <div *ngFor="let item of _navItems" class="records-sliding">
-            <a class="records-sliding record-text h5" routerLink="{{ item.url }}">
-              {{ item.name }}
-              <img class="" width="240" height="240" src="../../../../assets/img/record.gif"/>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ConfirmComponent } from './confirm.component';
+
+describe('ConfirmComponent', () => {
+  let component: ConfirmComponent;
+  let fixture: ComponentFixture<ConfirmComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ConfirmComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ConfirmComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

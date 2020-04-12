@@ -1,21 +1,17 @@
 {
-  "name": "@coreui/coreui-free-angular-admin-template",
-  "version": "2.9.0",
-  "description": "CoreUI Free Angular 2+ Admin Template",
+  "name": "Chemium-IMS",
+  "version": "1.0.1",
+  "description": "A cloud based application for managing and storing inventory information for Chemium",
   "author": {
-    "name": "Łukasz Holeczek",
-    "url": "http://holeczek.pl",
-    "github": "https://github.com/mrholek",
-    "twitter": "https://twitter.com/lukaszholeczek"
+    "name": "Cloud Solutions Consultants",
+    "url": "http://ims.chemium.com"
   },
   "contributors": [
     {
-      "name": "Andrzej Kopański",
-      "url": "https://github.com/xidedix"
+      "name": "Eze Ahuna, Matt Castaneda, Wei"
     }
   ],
-  "homepage": "https://coreui.io/angular",
-  "copyright": "Copyright 2020 creativeLabs Łukasz Holeczek",
+  "copyright": "Copyright 2020 Cloud Solutions Consultants",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -43,13 +39,16 @@
     "bootstrap": "^4.3.1",
     "chart.js": "^2.9.2",
     "core-js": "^2.6.11",
+    "decimal.js": "^10.2.0",
     "flag-icon-css": "^3.4.6",
     "font-awesome": "^4.7.0",
-    "moment": "^2.24.0",
+    "intl-tel-input": "^16.0.15",
     "mutationobserver-shim": "^0.3.3",
     "ng2-charts": "^2.3.0",
+    "ng2-tel-input": "^2.3.0",
     "ngx-bootstrap": "^5.2.0",
     "ngx-perfect-scrollbar": "^8.0.0",
+    "primeng": "^9.0.5",
     "rxjs": "^6.5.3",
     "simple-line-icons": "^2.4.1",
     "ts-helpers": "^1.1.2",

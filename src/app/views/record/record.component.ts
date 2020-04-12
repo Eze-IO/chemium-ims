@@ -11,6 +11,7 @@ import { row } from '../../models/tables/row';
 import { timer } from 'rxjs';
 import { user } from '../../models/user';
 import { CurrentUserService } from '../../services/current-user.service';
+import {ModalDirective} from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -30,8 +31,7 @@ import { CurrentUserService } from '../../services/current-user.service';
   ]
 })
 export class RecordComponent implements OnInit {
-  @ViewChild('scrollContainer') private tableContainer: ElementRef;
-
+  @ViewChild('infoModal') public infoModal: ModalDirective;
   RecordName:string;
   private Table: string;
   private _navItems: INavData[];
@@ -69,7 +69,6 @@ export class RecordComponent implements OnInit {
           let rows:row[] = [];
           this.as.GetEntries().then(x => {
             x.forEach(a => {
-              console.log(a);
               let r = new row();
               r.id = a.agent_id;
               let c = new cell();
@@ -81,7 +80,6 @@ export class RecordComponent implements OnInit {
               c.columnName = "agent_country";
               c.data = a.agent_country;
               r.data.push(c);
-              console.log(r)
               rows.push(r);
             })
             this.generateTable(rows);
@@ -96,13 +94,6 @@ export class RecordComponent implements OnInit {
     }
   }
 
-  scrollToBottom() {
-    try{
-      this.tableContainer.nativeElement.scrollToTop = this.tableContainer.nativeElement.scrollHeight;
-    }
-    catch (err) { console.log(err) }
-  }
-
   count:number[];
   currentID:number;
   currentColumn:string;
@@ -111,7 +102,6 @@ export class RecordComponent implements OnInit {
   rows: row[];
   generateTable(rows: row[]){
     this.columns = [];
-    console.log(rows[0].data);
     rows[0].data.forEach(x => {
       this.columns.push(x.columnName);
     })
@@ -123,39 +113,92 @@ export class RecordComponent implements OnInit {
     this.loading = 1;
   }
 
-  onCellFocus(rowid :number, columnName: string) {
+  onCellFocus(e, rowid :number, columnName: string) {
       this.currentID = rowid;
       this.currentColumn = columnName;
   }
 
-  onCellInput(columnName: String){
-    console.log(columnName);
-  }
-
-  deleteRow(d){
-    if((<number>this.u.type)>0){
-      switch (this.Table) {
-        case 'agent':
-          this.as.DeleteEntry(d.id).then(x => {
+  onCellInput(e, columnName){
+    switch (this.Table) {
+      case 'agent':
+        if(this._newID!==0){
+          let _agent = new entity.agent();
+          _agent.agent_id = this._newID;
+          //_agent.
+          this.as.AddEntry(null).then(x => {
             if(x){
-
             } else {
-
+              alert('Failed to update entry');
             }
-          })
-          break;
-        default:
-          break;
-      }
+            this.toggleAddButton = true;
+            this.selectView();
+          });
+        } else {
+          this.as.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+            if(x){
+            } else {
+              alert('Failed to update entry');
+            }
+            this.selectView();
+          });
+        }
+        break;
+      default:
+        break;
     }
   }
 
+  onCellFocusOut(e){
+    if(this._newID!==0){
+      this.rows = this.rows.filter(function(item) {
+          return item.id !== this._newID
+      })
+      this._newID!==0;
+      this.toggleAddButton = true;
+    }
+  }
+
+  deleteRow(d){
+    switch (this.Table) {
+      case 'agent':
+        this.as.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            alert('Failed to delete entry');
+          }
+        })
+        break;
+      default:
+        break;
+    }
+  }
+
+  getNewRow(): row {
+    let ids = []
+    let cells = this.rows.shift().data.length;
+    this.rows.forEach(x => ids.push(x.id));
+    let lastID:number = Math.max.apply(Math, ids);
+    let r = new row();
+    r.id = (lastID+1);
+    r.data = [];
+    for(let c=0;c<cells;c++){
+      r.data.push(new cell());
+    }
+    return r;
+  }
+
+
+ _newID:number = 0;
+ toggleAddButton:boolean = false;
   addEntry() {
-    this.loading = 2;
-    timer(2075).subscribe(x => {
-      this.loading = 1;
-      this.scrollToBottom();
-    })
+    this.infoModal
+    //this.loading = 2;
+    let r = this.getNewRow();
+    this._newID = r.id;
+    this.toggleAddButton = true;
+    this.rows.push(r);
+    //this.loading = 1;
   }
 
   showDefaultPage() {

@@ -8,11 +8,26 @@
   <meta name="description" content="web application for managing the Chemium's inventory system.">
   <meta name="author" content="Cloud Consultants">
   <meta name="keyword" content="Chemium,IMS,Cloud,Consultants">
-	<link rel="shortcut icon" href="assets/favicon.ico">
-	<title>Chemium IMS - Inventory Management System</title>
+  <link rel="shortcut icon" href="assets/img/favicon.ico">
+  <script src="assets/js/moment.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded',
+      () =>
+      requestAnimationFrame(updateTime)
+    );
+
+    function updateTime() {
+      document.documentElement.style.setProperty('--timer-day', "'" + moment().format("dd") + "'");
+      document.documentElement.style.setProperty('--timer-hours', "'" + moment().format("hh") + "'");
+      document.documentElement.style.setProperty('--timer-minutes', "'" + moment().format("mm") + "'");
+      document.documentElement.style.setProperty('--timer-seconds', "'" + moment().format("ss") + "'");
+      requestAnimationFrame(updateTime);
+    }
+  </script>
+  <title>Chemium IMS - Inventory Management System</title>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     // Shared ID
     gtag('config', 'UA-118965717-3');
