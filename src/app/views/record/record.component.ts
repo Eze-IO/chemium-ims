@@ -11,6 +11,7 @@ import { row } from '../../models/tables/row';
 import { timer } from 'rxjs';
 import { user } from '../../models/user';
 import { CurrentUserService } from '../../services/current-user.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 
 @Component({
@@ -56,7 +57,9 @@ export class RecordComponent implements OnInit {
        }, _time);
       _time+=(Math.floor(Math.random() * 5000) + 2500);
     })
-    this.u = this.cu.GetInfo;
+    this.cu.GetInfo().then(x => {
+      this.u = x;
+    })
     this.selectView();
   }
 

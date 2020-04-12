@@ -32,7 +32,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     timer(1025).subscribe((val) => {
-     this.u = this.cu.GetInfo;
+      this.cu.GetInfo().then(x => {
+        this.u = x;
+      })
      this.toggleLoadingProfile();
      this.fillValues();
    });

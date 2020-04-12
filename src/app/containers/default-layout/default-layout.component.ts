@@ -19,7 +19,7 @@ export class DefaultLayoutComponent implements OnInit {
   public HeaderPicture: SafeHtml;
   private u:user = new user();
   public Name:string;
-  showHeaderInfo:boolean = false;
+  showHeaderInfo:boolean = true;
 
   constructor(private cu: CurrentUserService,
   private admin: AdministratorService) {
@@ -42,7 +42,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   private async GetName() {
-    this.u = this.cu.GetInfo;
+    this.u = await this.cu.GetInfo();
     if(ExtensionService.IsEmptyOrNull(this.u.name)||this.u.name===undefined)
       this.Name = "Hello 👋 and Welcome!";
     else
@@ -50,7 +50,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   public async setPicture() {
-    this.u = this.cu.GetInfo;
+    this.u = await this.cu.GetInfo();
     if(this.u.picture===undefined||ExtensionService.IsEmptyOrNull(this.u.picture))
       this.u.picture = "../../../../assets/img/avatars/default.png";
     this.HeaderPicture = "<img src='" + this.u.picture + "' class='img-avatar' alt='" + this.u.email + "' />";

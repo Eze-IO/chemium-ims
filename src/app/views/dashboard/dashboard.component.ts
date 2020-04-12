@@ -10,7 +10,7 @@ import { timer } from 'rxjs';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  showNews:boolean = false;
+  showNews:boolean = true;
   radioModel: string = 'Month';
 
   public RefreshPage(event) {

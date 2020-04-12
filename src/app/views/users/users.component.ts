@@ -31,7 +31,9 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     timer(1025, 60000).subscribe(x => {
-      this.currentUser = this.cu.GetInfo;
+     this.cu.GetInfo().then(x => {
+       this.currentUser = x;
+     })
       this.updateView();
     })
   }
@@ -43,19 +45,19 @@ export class UsersComponent implements OnInit {
 
   updateView(){
     this.userList = [];
-    this.admin.GetUsers().then(element => {
+    this.admin.GetUsers().then(elements => {
       this.loading = 2;
       timer(2000).subscribe(x => {
-        element.forEach(e => {
+        elements.forEach(e => {
           if(ExtensionService.IsEmptyOrNull(e.picture))
             e.picture = "../../../../assets/img/avatars/default.png";
-          this.userList.push(e);
-        })
-        if(this.userList.length<=0)
-          this.loading = 1;
-        else
-          this.loading = 0;
-      })
+            this.userList.push(e);
+          })
+          if(this.userList.length<=0)
+            this.loading = 1;
+          else
+            this.loading = 0;
+          })
     });
   }
 
@@ -78,7 +80,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(u) {
-    if((<user>u).email!==this.cu.GetInfo.email) {
+    if((<user>u).email!==this.currentUser.email) {
       this.loading = 2;
       this.admin.DeleteUser(u).then(x => {
         timer(8000).subscribe((x)=> {

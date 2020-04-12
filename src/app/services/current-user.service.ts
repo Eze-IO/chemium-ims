@@ -20,34 +20,24 @@ export class CurrentUserService {
   public get LastName(): string { return this._lastName; }
 
 
-  private _timer = null;
-  public get GetInfo(): user {
-    if(this._timer==null){
-      this._timer = timer(750, 30000).subscribe(x => {
-        this._getUser();
-      })
-    }
-    return this.u;
-  }
-  
-  private _getUser() {
-    this.ras.GetUser(AuthenticationService.Token).then(x => {
-      let u:user = new user();
+  public async GetInfo() {
+    await this.ras.GetUser(AuthenticationService.Token).then(x => {
+      this.u = new user();
       if(x!==null&&x!==undefined){
-        u.email = x['Email'];
-        u.name = x['Name'];
-        u.phone_number = x['PhoneNumber'];
-        u.picture = x['Picture'];
-        u.type = (<Type>x['Type']);
-        this.u = u;
+        this.u.email = x['Email'];
+        this.u.name = x['Name'];
+        this.u.phone_number = x['PhoneNumber'];
+        this.u.picture = x['Picture'];
+        this.u.type = (<Type>x['Type']);
 
-        if(!ExtensionService.IsEmptyOrNull(u.name)){
-          let _name = u.name.split(' ');
+        if(!ExtensionService.IsEmptyOrNull(this.u.name)){
+          let _name = this.u.name.split(' ');
           this._firstName = ExtensionService.IsEmptyOrNull(_name[0]) ? null : _name[0];
           this._lastName = ExtensionService.IsEmptyOrNull(_name[1]) ? null : _name[1];
         }
       }
     });
+    return this.u;
   }
 
   public async UpdateInfo(user: user) {

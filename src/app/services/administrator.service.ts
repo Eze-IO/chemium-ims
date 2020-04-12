@@ -15,31 +15,20 @@ export class AdministratorService {
   private u: user = new user();
   constructor(private ras: RestAPIService,
               private cu: CurrentUserService) { 
-                this.u = this.cu.GetInfo;
+                this._list = [];
               }
 
-   private _timer;
-  public get IsAdministrator(): boolean {
-    if(this._timer==null){
-      this._timer = timer(750, 30000).subscribe(x => {
-        this._getUser();
-      })
-    }
-    return (this.userType===Type.Administrator);
-  }
-
-  private userType:Type;
-  private _getUser(){
-    this.ras.GetUser(AuthenticationService.Token).then(x => {
-      if(x!==null){
-        this.userType = (<Type>x['Type']);
-      }
+  public get IsAdministrator() {
+    this.cu.GetInfo().then(x => {
+      this.u = x;
     })
+    return (this.u.type===Type.Administrator);
   }
 
+  private _list:userinformation[];
   public async GetUsers() {
-    let list:userinformation[] = [];
     if(this.IsAdministrator){
+      this._list = [];
       let result = await this.ras.ListUsers();
       result.forEach(element => {
           let u:userinformation = new userinformation();
@@ -65,14 +54,14 @@ export class AdministratorService {
               u.type = 0;
               break;
           }
-          list.push(u);
+          this._list.push(u);
       });
     }
-    return list;
+    return this._list;
   }
 
-  public IsUserConfirmed(u:user): boolean {
-    return !(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/.test(u.email));
+  public IsUserConfirmed(ui:userinformation): boolean {
+    return (ui.status.toLowerCase()==='confirmed');
   }
 
   public async CreateUser(user: user, password: string) {
