@@ -14,7 +14,7 @@ import { AdministratorService } from '../../services/administrator.service';
 })
 export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
-  public navItems;
+  public navItems = navItems;
   public HeaderPicture: SafeHtml;
   private u:user = new user();
   public Name:string;
@@ -30,18 +30,6 @@ export class DefaultLayoutComponent implements OnInit {
       this.setPicture();
       this.GetName();
     });
-    this.loadNav();
-  }
-
-  private loadNav(){
-    navItems.forEach(x => {
-      console.log(x);
-      if(x.url==='/users'){
-        console.log(x.attributes['disabled']);
-        x.attributes['disabled'] = (this.admin.IsAdministrator);
-      }
-    })
-    this.navItems = navItems;
   }
 
   private async GetName() {

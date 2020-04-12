@@ -12,7 +12,6 @@ import { Type } from '../models/type';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    timeout: `${20000}`
   })
 }
 
@@ -22,7 +21,7 @@ const httpOptions = {
 export class RestAPIService {
 
   constructor(private http: HttpClient) {
-    httpOptions.headers.append('X-IMS-ID', AuthenticationService.Token);
+    httpOptions.headers.append('X-IMS-ID', AuthenticationService.ID);
   }
 
  public GetEntity(entity: string): Promise<any> {
@@ -301,8 +300,10 @@ public SendConfirmation(email: string): Promise<boolean> {
       };
       return this.http.post<any>(restapiurl.tokenrequester.toString(), request, httpOptions).toPromise<any>()
         .then(x => {
+          console.log(x);
             if (x['Success']) {
-              return x['Result'];
+              let json = JSON.parse(x['Result']);
+              return json;
             }
             return null;
           }

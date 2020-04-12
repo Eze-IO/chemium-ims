@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as entityService from '../../services/entities/index';
 import * as entity from '../../models/entities/index';
@@ -9,6 +9,8 @@ import { INavData } from '@coreui/angular';
 import { cell } from '../../models/tables/cell';
 import { row } from '../../models/tables/row';
 import { timer } from 'rxjs';
+import { user } from '../../models/user';
+import { CurrentUserService } from '../../services/current-user.service';
 
 
 @Component({
@@ -28,15 +30,18 @@ import { timer } from 'rxjs';
   ]
 })
 export class RecordComponent implements OnInit {
+  @ViewChild('scrollContainer') private tableContainer: ElementRef;
 
   RecordName:string;
   private Table: string;
   private _navItems: INavData[];
+  private u: user = new user();
 
   loading:number = 2;
 
   constructor(private activatedRoute: ActivatedRoute,
-  private as: entityService.AgentService) {
+  private as: entityService.AgentService,
+  private cu: CurrentUserService) {
     this.activatedRoute.paramMap.subscribe(params => {
           this.Table = params.get('table');
     });
@@ -51,6 +56,7 @@ export class RecordComponent implements OnInit {
        }, _time);
       _time+=(Math.floor(Math.random() * 5000) + 2500);
     })
+    this.u = this.cu.GetInfo;
     this.selectView();
   }
 
@@ -59,6 +65,7 @@ export class RecordComponent implements OnInit {
       this.Table = this.Table.toLowerCase();
       switch (this.Table) {
         case 'agent':
+          this.RecordName = entityService.AgentService.Name;
           let rows:row[] = [];
           this.as.GetEntries().then(x => {
             x.forEach(a => {
@@ -89,6 +96,13 @@ export class RecordComponent implements OnInit {
     }
   }
 
+  scrollToBottom() {
+    try{
+      this.tableContainer.nativeElement.scrollToTop = this.tableContainer.nativeElement.scrollHeight;
+    }
+    catch (err) { console.log(err) }
+  }
+
   currentID:number;
   currentColumn:string;
   currentRow: row;
@@ -102,6 +116,27 @@ export class RecordComponent implements OnInit {
     })
     this.rows = rows;
     this.loading = 1;
+  }
+
+  onCellFocus(rowid :number, columnName: string) {
+      this.currentID = rowid;
+      this.currentColumn = columnName;
+  }
+
+  onCellInput(columnName: String){
+    console.log(columnName);
+  }
+
+  deleteRow(d){
+    console.log(d);
+  }
+
+  addEntry() {
+    this.loading = 2;
+    timer(2075).subscribe(x => {
+      this.loading = 1;
+      this.scrollToBottom();
+    })
   }
 
   showDefaultPage() {

@@ -9,6 +9,9 @@ import { JwtInterceptor } from '../jwt.interceptor';
   providedIn: 'root'
 })
 export class AuthenticationService {
+  public static get ID(): string {
+    return localStorage.getItem('auth_token_id');
+  }
   public static get Token(): string {
     return localStorage.getItem('auth_token');
   }
@@ -19,8 +22,9 @@ export class AuthenticationService {
     if(x===null){
       return false;
     } else {
-      localStorage.setItem('auth_token', x);
-      localStorage.setItem('auth_header', `IMS ${x}`);
+      localStorage.setItem('auth_token_id', x['ID']);
+      localStorage.setItem('auth_token', x['AccessKey']);
+      localStorage.setItem('auth_header', `IMS ${x['AccessKey']}`);
       return true;
     }
   }

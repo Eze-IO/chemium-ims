@@ -7,20 +7,36 @@
         </div>
       </div>
     </div>
-    <div *ngSwitchCase="1" class="col-md-12 mx-auto animated fadeIn">
+    <div #scrollContainer *ngSwitchCase="1" class="col-md-12 mx-auto animated fadeIn">
       <div class="card">
-        <table class="table">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> {{ RecordName }} Record
+        </div>
+        <div class="card-body">
+        <table class="table table-striped">
           <thead>
-            <tr *ngFor="let column of columns">
-              <th scope="col">{{ column }}</th>
+            <tr >
+              <th *ngFor="let column of columns">
+                {{ column.toUpperCase().replace('_', ' ') }}
+              </th>
+              <th></th>
             </tr>
           </thead>
-          <tbody *ngFor="let row of rows">
-            <tr *ngFor="let d of row.data">
-              <td scope="row"><input value="{{ d.data }}" required/></td>
+          <tbody >
+            <tr *ngFor="let row of rows">
+              <td *ngFor="let d of row.data"><input  
+                class="table-cell" value="{{ d.data }}" (keyup.enter)="onCellInput(d.columnName)" 
+                (focus)="onCellFocus(rowid, d.columnName)"
+                required/>
+              </td>
+              <td><button type="button" (click)="deleteRow(row)" class="btn btn-pill btn-danger" [disabled]="(u.type===0)" aria-pressed="true">X</button></td>
             </tr>
           </tbody>
         </table>
+        <div class="card-footer text-center">
+          <button type="button" (click)="addEntry()" class="btn btn-block btn-primary" [disabled]="(u.type===0)" aria-pressed="true">ADD ENTRY</button>
+        </div>
+        </div>
       </div>
     </div>
     <div *ngSwitchDefault class="col-md-8 mx-auto animated fadeIn">

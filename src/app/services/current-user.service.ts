@@ -4,6 +4,7 @@ import { user } from "../models/user";
 import { Type } from "../models/type";
 import { ExtensionService } from "../helpers/extension.service";
 import { AuthenticationService } from '../services/authentication.service';
+import { timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +19,17 @@ export class CurrentUserService {
   public get FirstName(): string { return this._firstName; }
   public get LastName(): string { return this._lastName; }
 
+
+  private _timer = null;
   public get GetInfo(): user {
-    this._getUser();
-    if(!ExtensionService.IsEmptyOrNull(this.u.name)){
-      let _name = this.u.name.split(' ');
-      this._firstName = ExtensionService.IsEmptyOrNull(_name[0]) ? null : _name[0];
-      this._lastName = ExtensionService.IsEmptyOrNull(_name[1]) ? null : _name[1];
+    if(this._timer==null){
+      this._timer = timer(750, 30000).subscribe(x => {
+        this._getUser();
+      })
     }
     return this.u;
   }
-
+  
   private _getUser() {
     this.ras.GetUser(AuthenticationService.Token).then(x => {
       let u:user = new user();
@@ -38,6 +40,12 @@ export class CurrentUserService {
         u.picture = x['Picture'];
         u.type = (<Type>x['Type']);
         this.u = u;
+
+        if(!ExtensionService.IsEmptyOrNull(u.name)){
+          let _name = u.name.split(' ');
+          this._firstName = ExtensionService.IsEmptyOrNull(_name[0]) ? null : _name[0];
+          this._lastName = ExtensionService.IsEmptyOrNull(_name[1]) ? null : _name[1];
+        }
       }
     });
   }

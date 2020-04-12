@@ -4,19 +4,37 @@ import { CurrentUserService } from './current-user.service';
 import { userinformation } from '../models/userinformation';
 import { user } from '../models/user';
 import { Type } from '../models/type';
+import { AuthenticationService } from './authentication.service';
+import { timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdministratorService {
 
+  private u: user = new user();
   constructor(private ras: RestAPIService,
-              private cu: CurrentUserService) { }
+              private cu: CurrentUserService) { 
+                this.u = this.cu.GetInfo;
+              }
 
+   private _timer;
   public get IsAdministrator(): boolean {
-    let result = this.cu.GetInfo;
-    console.log(result)
-    return (result.type===Type.Administrator);
+    if(this._timer==null){
+      this._timer = timer(750, 30000).subscribe(x => {
+        this._getUser();
+      })
+    }
+    return (this.userType===Type.Administrator);
+  }
+
+  private userType:Type;
+  private _getUser(){
+    this.ras.GetUser(AuthenticationService.Token).then(x => {
+      if(x!==null){
+        this.userType = (<Type>x['Type']);
+      }
+    })
   }
 
   public async GetUsers() {
@@ -24,7 +42,6 @@ export class AdministratorService {
     if(this.IsAdministrator){
       let result = await this.ras.ListUsers();
       result.forEach(element => {
-        console.log(element);
           let u:userinformation = new userinformation();
           u.name = element['Name'];
           u.username = element['Username'];

@@ -147,7 +147,22 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  toggleProfileInfoEnable() {
+    if(!this.mainForm.controls.first_name.disabled){
+      this.mainForm.controls.first_name.disable();
+      this.mainForm.controls.last_name.disable();
+      this.mainForm.controls.email.disable();
+      this.mainForm.controls.phone_number.disable();
+    } else {
+      this.mainForm.controls.first_name.enable();
+      this.mainForm.controls.last_name.enable();
+      this.mainForm.controls.email.enable();
+      this.mainForm.controls.phone_number.enable();
+    }
+  }
+
   onSubmit() {
+    this.toggleProfileInfoEnable();
     if(!this.mainForm.invalid){
       this.cu.UpdateInfo(this.u).then(x => {
         if(x){
@@ -157,6 +172,7 @@ export class ProfileComponent implements OnInit {
           this._success = false;
           this._status = "Falied to update information";
         }
+        this.toggleProfileInfoEnable();
         this.fillValues();
       });
     } else {
@@ -170,6 +186,7 @@ export class ProfileComponent implements OnInit {
           }
       }
       this._status += invalid.join(", ");
+      this.toggleProfileInfoEnable();
     }
   }
 }
