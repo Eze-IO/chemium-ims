@@ -1,1 +1,80 @@
-<p>profile works!</p>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert animated fadeIn" [ngClass]="{ 'alert-danger': (status!==null&&!success), 'alert-success': (status!==null&&success) }" role="alert">
+        {{ status }}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <strong><i class="icon-picture"></i> Profile Picture</strong>
+        </div>
+        <div class="card-body" [ngSwitch]="loading">
+          <img *ngSwitchCase="2" [src]="picture" class='bd-placeholder-img card-img animated fadeIn' [alt]='email' style='border-radius:8px;'/>
+          <div *ngSwitchDefault class="d-flex justify-content-center animated fadeIn" style="margin:auto;">
+            <div class="spinner-border m-5" style="width: 6rem; height: 6rem;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="text-center">
+            <ul style="text-align:left;list-style-type:none;">
+              <li><input (change)="onFileSelected($event)" type="file" class="col-sm-10" value="?" accept="image/png,image/gif,image/jpeg" /></li>
+              &nbsp;
+              <li><button (click)="onUpload()" class="btn btn-sm btn-primary col-sm-10">Upload</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <form class="card" [formGroup]="mainForm" (ngSubmit)="onSubmit()">
+        <div class="card-header">
+          <strong><i class="icon-note"></i> User Information</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="vat">First Name</label>
+            <div class="input-group">
+              <input type="text" formControlName="first_name" (input)="onTextChange($event.target.value)" class="form-control" placeholder="?">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="vat">Last Name</label>
+            <div class="input-group">
+              <input type="text" formControlName="last_name" (input)="onTextChange($event.target.value)" class="form-control" placeholder="?">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="company">Email</label>
+            <div class="input-group">
+              <input type="text" formControlName="email" (input)="onTextChange($event.target.value)" class="form-control" placeholder="?" [email]="true" [class.is-invalid]="mainForm.get('email').invalid && mainForm.get('email').touched">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="company">Phone Number</label>
+            <div class="input-group">
+              <input type="tel" formControlName="phone_number" (ng2TelOutput)="getNumber($event)" [ng2TelInputOptions]="{initialCountry: 'us'}"
+              (countryChange)="onCountryChange($event)" (change)="onPHTextChange($event)" class="form-control" placeholder="?" (hasError)="hasError($event)" ng2TelInput  [class.is-invalid]="pnError">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="company">Role</label>
+            <div class="input-group">
+              <input type="text" formControlName="role" id="role" placeholder="?" class="form-control" style="font-weight:bold;color:black !important;">
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+          &nbsp;
+          <button type="reset" routerLink="/support" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset Password</button>
+        </div>
+      </form>
+    </div><!--/.col-->
+  </div>
+</div><!--/.row-->

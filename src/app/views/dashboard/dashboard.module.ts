@@ -3,9 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { CommonModule } from '@angular/common';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { ClockComponent } from '../clock/clock.component';
 
 @NgModule({
   imports: [
@@ -13,8 +15,12 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     DashboardRoutingModule,
     ChartsModule,
     BsDropdownModule,
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    CommonModule
   ],
-  declarations: [ DashboardComponent ]
+  declarations: [
+    DashboardComponent,
+    ClockComponent
+  ]
 })
 export class DashboardModule { }

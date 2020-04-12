@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthGuard } from './auth.guard';
+
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
+import { P403Component } from './views/error/403.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
+import { LogoutComponent } from './views/logout/logout.component';
 import { RegisterComponent } from './views/register/register.component';
+import { SupportComponent } from './views/support/support.component';
+import { ConfirmComponent } from './views/confirm/confirm.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +26,13 @@ export const routes: Routes = [
     component: P404Component,
     data: {
       title: 'Page 404'
+    }
+  },
+  {
+    path: '403',
+    component: P403Component,
+    data: {
+      title: 'Page 403'
     }
   },
   {
@@ -37,10 +50,31 @@ export const routes: Routes = [
     }
   },
   {
+    path: 'logout',
+    component: LogoutComponent,
+    data: {
+      title: 'Loading...'
+    }
+  },
+  {
     path: 'register',
     component: RegisterComponent,
     data: {
-      title: 'Register Page'
+      title: 'User Register Page'
+    }
+  },
+  {
+    path: 'confirm',
+    component: ConfirmComponent,
+    data: {
+      title: 'User Confirmation'
+    }
+  },
+  {
+    path: 'support',
+    component: SupportComponent,
+    data: {
+      title: 'Chemium IMS | Technical Support'
     }
   },
   {
@@ -51,36 +85,8 @@ export const routes: Routes = [
     },
     children: [
       {
-        path: 'base',
-        loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)
-      },
-      {
-        path: 'buttons',
-        loadChildren: () => import('./views/buttons/buttons.module').then(m => m.ButtonsModule)
-      },
-      {
-        path: 'charts',
-        loadChildren: () => import('./views/chartjs/chartjs.module').then(m => m.ChartJSModule)
-      },
-      {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
-      },
-      {
-        path: 'icons',
-        loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule)
-      },
-      {
-        path: 'notifications',
-        loadChildren: () => import('./views/notifications/notifications.module').then(m => m.NotificationsModule)
-      },
-      {
-        path: 'theme',
-        loadChildren: () => import('./views/theme/theme.module').then(m => m.ThemeModule)
-      },
-      {
-        path: 'widgets',
-        loadChildren: () => import('./views/widgets/widgets.module').then(m => m.WidgetsModule)
       },
       {
         path: 'users',
@@ -99,12 +105,14 @@ export const routes: Routes = [
         loadChildren: () => import('./views/report/report.module').then(m => m.ReportModule)
       },
       {
-        path: 'settings',
-        loadChildren: () => import('./views/settings/settings.module').then(m => m.SettingsModule)
+        path: 'register',
+        loadChildren: () => import('./views/register/register.module').then(m => m.RegisterModule)
       }
-    ]
+
+    ],
+    canActivate: [ AuthGuard]
   },
-  { path: '**', component: P404Component }
+  { path: '**', component: P404Component},
 ];
 
 @NgModule({

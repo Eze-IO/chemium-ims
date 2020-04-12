@@ -1,0 +1,14 @@
+.contain {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.contain div {
+    flex-basis: auto; /* default auto */
+    flex-grow: 0; 
+}
+
+.main {
+    min-width: 625px !important;
+}

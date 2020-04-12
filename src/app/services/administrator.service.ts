@@ -14,18 +14,27 @@ export class AdministratorService {
 
   private u: user = new user();
   constructor(private ras: RestAPIService,
-              private cu: CurrentUserService) {
+              private cu: CurrentUserService) { 
                 this.u = this.cu.GetInfo;
               }
 
-  private _timer = null;
+   private _timer;
   public get IsAdministrator(): boolean {
     if(this._timer==null){
       this._timer = timer(750, 30000).subscribe(x => {
-        this.u = this.cu.GetInfo;
+        this._getUser();
       })
     }
-    return (this.u.type===Type.Administrator);
+    return (this.userType===Type.Administrator);
+  }
+
+  private userType:Type;
+  private _getUser(){
+    this.ras.GetUser(AuthenticationService.Token).then(x => {
+      if(x!==null){
+        this.userType = (<Type>x['Type']);
+      }
+    })
   }
 
   public async GetUsers() {

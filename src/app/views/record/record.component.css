@@ -1,0 +1,27 @@
+.record-slideshow {
+  position: relative;
+  overflow: hidden;
+}
+.record-text {
+  color: black;
+  font-weight: bold;
+  position: absolute;
+  text-align: center;
+  font-weight: 30%;
+}
+.records-sliding {
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: slideshow 24s linear infinite;
+}
+@keyframes slideshow {
+  0%    { left: 200%; }
+  100%  { left: -200%; }
+}
+
+.table-cell{
+  border: 0;
+  background-color: inherit;
+  outline: none;
+}
