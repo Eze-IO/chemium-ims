@@ -31,13 +31,6 @@ export class ProfileComponent implements OnInit {
   constructor(private cu: CurrentUserService, private formBuilder: FormBuilder, private ras: RestAPIService) { }
 
   ngOnInit(): void {
-    timer(1025).subscribe((val) => {
-      this.cu.GetInfo().then(x => {
-        this.u = x;
-      })
-     this.toggleLoadingProfile();
-     this.fillValues();
-   });
    this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
        last_name: ['', Validators.required],
@@ -45,6 +38,13 @@ export class ProfileComponent implements OnInit {
        phone_number: ['', Validators.required],
        role: [{value:'', disabled:true}]
     });
+    timer(250).subscribe(x => {
+      this.cu.GetInfo().then(x => {
+        this.u = x;
+      });
+      this.toggleLoadingProfile();
+      this.fillValues();
+    })
   }
 
   getRoleName(_type: Type){
