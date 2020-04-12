@@ -69,7 +69,6 @@ export class RecordComponent implements OnInit {
           let rows:row[] = [];
           this.as.GetEntries().then(x => {
             x.forEach(a => {
-              console.log(a);
               let r = new row();
               r.id = a.agent_id;
               let c = new cell();
@@ -81,7 +80,6 @@ export class RecordComponent implements OnInit {
               c.columnName = "agent_country";
               c.data = a.agent_country;
               r.data.push(c);
-              console.log(r)
               rows.push(r);
             })
             this.generateTable(rows);
@@ -133,20 +131,18 @@ export class RecordComponent implements OnInit {
   }
 
   deleteRow(d){
-    if((<number>this.u.type)>0){
-      switch (this.Table) {
-        case 'agent':
-          this.as.DeleteEntry(d.id).then(x => {
-            if(x){
+    switch (this.Table) {
+      case 'agent':
+        this.as.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
 
-            } else {
-
-            }
-          })
-          break;
-        default:
-          break;
-      }
+          }
+        })
+        break;
+      default:
+        break;
     }
   }
 
