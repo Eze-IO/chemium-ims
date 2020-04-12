@@ -7,13 +7,13 @@
         </div>
       </div>
     </div>
-    <div #scrollContainer *ngSwitchCase="1" class="col-md-12 mx-auto animated fadeIn">
+    <div *ngSwitchCase="1" class="col-md-12 mx-auto animated fadeIn">
       <div class="card">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> {{ RecordName }} Record
         </div>
         <div class="card-body">
-        <table class="table table-striped">
+        <table class="table table-striped animated fadeIn">
           <thead>
             <tr >
               <th>#</th>
@@ -27,8 +27,9 @@
             <tr *ngFor="let row of rows; let i = index">
               <td [attr.id]="i">{{i+1}}.</td>
               <td *ngFor="let d of row.data"><input
-                class="table-cell" value="{{ d.data }}" (keyup.enter)="onCellInput(d.columnName)"
-                (focus)="onCellFocus(rowid, d.columnName)"
+                class="table-cell" value="{{ d.data }}" (keyup.enter)="onCellInput($event, d.columnName)"
+                (focus)="onCellFocus($event, row.id, d.columnName)"
+                (focusout)="onCellFocusOut($event)"
                 required/>
               </td>
               <td><button type="button" (click)="deleteRow(row)" class="btn btn-pill btn-danger" [disabled]="(u.type===0)" aria-pressed="true">X</button></td>
@@ -36,7 +37,7 @@
           </tbody>
         </table>
         <div class="card-footer text-center">
-          <button type="button" (click)="addEntry()" class="btn btn-block btn-primary" [disabled]="(u.type===0)" aria-pressed="true">ADD ENTRY</button>
+          <button *ngIf="toggleAddButton" type="button" (click)="addEntry()" class="btn btn-block btn-primary" [disabled]="(u.type===0)" aria-pressed="true">ADD ENTRY</button>
         </div>
         </div>
       </div>

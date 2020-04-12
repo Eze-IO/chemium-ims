@@ -30,7 +30,6 @@ import { CurrentUserService } from '../../services/current-user.service';
   ]
 })
 export class RecordComponent implements OnInit {
-  @ViewChild('scrollContainer') private tableContainer: ElementRef;
 
   RecordName:string;
   private Table: string;
@@ -94,13 +93,6 @@ export class RecordComponent implements OnInit {
     }
   }
 
-  scrollToBottom() {
-    try{
-      this.tableContainer.nativeElement.scrollToTop = this.tableContainer.nativeElement.scrollHeight;
-    }
-    catch (err) { console.log(err) }
-  }
-
   count:number[];
   currentID:number;
   currentColumn:string;
@@ -109,7 +101,6 @@ export class RecordComponent implements OnInit {
   rows: row[];
   generateTable(rows: row[]){
     this.columns = [];
-    console.log(rows[0].data);
     rows[0].data.forEach(x => {
       this.columns.push(x.columnName);
     })
@@ -121,13 +112,35 @@ export class RecordComponent implements OnInit {
     this.loading = 1;
   }
 
-  onCellFocus(rowid :number, columnName: string) {
+  onCellFocus(e, rowid :number, columnName: string) {
       this.currentID = rowid;
       this.currentColumn = columnName;
   }
 
-  onCellInput(columnName: String){
-    console.log(columnName);
+  onCellInput(e, columnName){
+    switch (this.Table) {
+      case 'agent':
+        this.as.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            alert('Failed to update entry');
+          }
+          this.selectView();
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  onCellFocusOut(e){
+    if(this._newID!==0){
+      this.rows = this.rows.filter(function(item) {
+          return item.id !== this._newID
+      })
+      this._newID!==0;
+      this.toggleAddButton = true;
+    }
   }
 
   deleteRow(d){
@@ -137,7 +150,7 @@ export class RecordComponent implements OnInit {
           if(x){
             this.selectView();
           } else {
-
+            alert('Failed to delete entry');
           }
         })
         break;
@@ -146,12 +159,30 @@ export class RecordComponent implements OnInit {
     }
   }
 
+  getNewRow(): row {
+    let ids = []
+    let cells = this.rows.shift().data.length;
+    this.rows.forEach(x => ids.push(x.id));
+    let lastID:number = Math.max.apply(Math, ids);
+    let r = new row();
+    r.id = (lastID+1);
+    r.data = [];
+    for(let c=0;c<cells;c++){
+      r.data.push(new cell());
+    }
+    return r;
+  }
+
+
+ _newID:number = 0;
+ toggleAddButton:boolean = true;
   addEntry() {
-    this.loading = 2;
-    timer(2075).subscribe(x => {
-      this.loading = 1;
-      this.scrollToBottom();
-    })
+    //this.loading = 2;
+    let r = this.getNewRow();
+    this._newID = r.id;
+    this.toggleAddButton = false;
+    this.rows.push(r);
+    //this.loading = 1;
   }
 
   showDefaultPage() {

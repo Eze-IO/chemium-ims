@@ -41,6 +41,14 @@ export class AgentService {
     return null;
   }
 
+  public async AddEntry(agent: agent) {
+    if(this.u.type!==Type.Viewer){
+      let result = await this.ras.AddToEntity("agent", agent);
+      return result;
+    }
+    return false;
+  }
+
   public async UpdateEntry(id: number, columnName: string, value: string) {
     if(this.u.type!==Type.Viewer){
       let result = await this.ras.UpdateEntity("agent", id, columnName, value);
