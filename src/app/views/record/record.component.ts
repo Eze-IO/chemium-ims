@@ -11,7 +11,6 @@ import { row } from '../../models/tables/row';
 import { timer } from 'rxjs';
 import { user } from '../../models/user';
 import { CurrentUserService } from '../../services/current-user.service';
-import { AuthenticationService } from '../../services/authentication.service';
 
 
 @Component({
@@ -57,9 +56,7 @@ export class RecordComponent implements OnInit {
        }, _time);
       _time+=(Math.floor(Math.random() * 5000) + 2500);
     })
-    this.cu.GetInfo().then(x => {
-      this.u = x;
-    })
+    this.u = this.cu.GetInfo;
     this.selectView();
   }
 
@@ -106,6 +103,7 @@ export class RecordComponent implements OnInit {
     catch (err) { console.log(err) }
   }
 
+  count:number[];
   currentID:number;
   currentColumn:string;
   currentRow: row;
@@ -118,6 +116,10 @@ export class RecordComponent implements OnInit {
       this.columns.push(x.columnName);
     })
     this.rows = rows;
+    this.count = [];
+    for(let i=0;i<rows.length;i++){
+      this.count.push(++i);
+    }
     this.loading = 1;
   }
 
@@ -131,7 +133,21 @@ export class RecordComponent implements OnInit {
   }
 
   deleteRow(d){
-    console.log(d);
+    if((<number>this.u.type)>0){
+      switch (this.Table) {
+        case 'agent':
+          this.as.DeleteEntry(d.id).then(x => {
+            if(x){
+
+            } else {
+
+            }
+          })
+          break;
+        default:
+          break;
+      }
+    }
   }
 
   addEntry() {

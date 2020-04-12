@@ -6,6 +6,7 @@ import { ExtensionService } from '../../helpers/extension.service';
 import { AdministratorService } from '../../services/administrator.service';
 import { Type } from '../../models/type';
 import { user } from '../../models/user';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,11 @@ export class RegisterComponent implements OnInit {
   get status(): string {
     return this._status;
   }
+  _success: boolean = false;
+  get success(): boolean {
+    return this._success;
+  }
+
   password_requirement:string = "Password must be at least 8 character(s), a uppercaseletter,"
   +" a lowercase letter, a number (0-9), and one special character (ex. ^ $ * .[]{}()?-!@#%&,><':;)";
 
@@ -114,6 +120,7 @@ export class RegisterComponent implements OnInit {
         if(this.checkPassword(this.password))
           result = true;
       } else{
+        this._success = false;
         this._status = "Password(s) don't match!";
       }
     }
@@ -155,13 +162,19 @@ export class RegisterComponent implements OnInit {
         u.phone_number = this.phone_number;
         u.type = this.type;
         if(this.admin.CreateUser(u, this.password)){
-          this.router.navigate(["/users"], { relativeTo: this.route });
+          timer(3500).subscribe(x => {
+            this.router.navigate(["/users"], { relativeTo: this.route });
+          })
+          this._success = true;
+          this._status = "Successfully registered user!";
         } else {
+          this._success = false;
           this._status = "Failed to register user 🥺";
           const invalid = [];
         }
       } else {
         const invalid = [];
+        this._success = false;
         this._status = "These fields are not valid: ";
         const controls = this.mainForm.controls;
         for (const name in controls) {

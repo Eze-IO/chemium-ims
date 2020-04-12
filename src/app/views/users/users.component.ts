@@ -25,15 +25,13 @@ export class UsersComponent implements OnInit {
   }
   loading:number = 2;
 
-  constructor(private admin:AdministratorService,
+  constructor(public admin:AdministratorService,
     private ras: RestAPIService,
     private cu: CurrentUserService) { }
 
   ngOnInit(): void {
     timer(1025, 60000).subscribe(x => {
-     this.cu.GetInfo().then(x => {
-       this.currentUser = x;
-     })
+      this.currentUser = this.cu.GetInfo;
       this.updateView();
     })
   }
@@ -45,19 +43,19 @@ export class UsersComponent implements OnInit {
 
   updateView(){
     this.userList = [];
-    this.admin.GetUsers().then(elements => {
+    this.admin.GetUsers().then(element => {
       this.loading = 2;
       timer(2000).subscribe(x => {
-        elements.forEach(e => {
+        element.forEach(e => {
           if(ExtensionService.IsEmptyOrNull(e.picture))
             e.picture = "../../../../assets/img/avatars/default.png";
-            this.userList.push(e);
-          })
-          if(this.userList.length<=0)
-            this.loading = 1;
-          else
-            this.loading = 0;
-          })
+          this.userList.push(e);
+        })
+        if(this.userList.length<=0)
+          this.loading = 1;
+        else
+          this.loading = 0;
+      })
     });
   }
 
@@ -80,7 +78,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(u) {
-    if((<user>u).email!==this.currentUser.email) {
+    if((<user>u).email!==this.cu.GetInfo.email) {
       this.loading = 2;
       this.admin.DeleteUser(u).then(x => {
         timer(8000).subscribe((x)=> {

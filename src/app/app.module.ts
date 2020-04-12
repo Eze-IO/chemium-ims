@@ -9,9 +9,6 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
 import { UrlSerializer } from '@angular/router';
 import { JwtInterceptor } from './jwt.interceptor';
 import { HttpErrorInterceptor } from './http.interceptor';
-import { CacheInterceptor } from './cache.interceptor';
-
-import { RequestCacheService } from './services/request-cache.service';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -93,7 +90,6 @@ import { ConfirmComponent } from './views/confirm/confirm.component';
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: [HTTP_INTERCEPTORS, RequestCacheService], useClass: CacheInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
   ],

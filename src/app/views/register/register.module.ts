@@ -19,6 +19,6 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
     CommonModule,
     FormsModule
   ],
-  declarations: [ RegisterComponent ]
+  declarations: [ ]
 })
 export class RegisterModule { }

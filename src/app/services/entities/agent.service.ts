@@ -14,12 +14,11 @@ export class AgentService {
 
   private u:user;
   constructor(private ras: RestAPIService,
-  private cu: CurrentUserService) {}
+  private cu: CurrentUserService) {
+    this.u = this.cu.GetInfo;
+  }
 
   public async GetEntries() {
-    this.cu.GetInfo().then(x => {
-      this.u = x;
-    });
     let arr: agent[] = new Array();
     if(this.u.type!==Type.Viewer){
       let agents = await this.ras.GetEntity("agent");
@@ -35,9 +34,6 @@ export class AgentService {
   }
 
   public async GetEntry(id: number) {
-    this.cu.GetInfo().then(x => {
-      this.u = x;
-    });
     if(this.u.type!==Type.Viewer){
       let all = await this.GetEntries();
       return all.find(x => x.agent_id === id);
@@ -46,9 +42,6 @@ export class AgentService {
   }
 
   public async UpdateEntry(id: number, columnName: string, value: string) {
-    this.cu.GetInfo().then(x => {
-      this.u = x;
-    });
     if(this.u.type!==Type.Viewer){
       let result = await this.ras.UpdateEntity("agent", id, columnName, value);
       return result;
@@ -57,9 +50,6 @@ export class AgentService {
   }
 
   public async DeleteEntry(id:number) {
-    this.cu.GetInfo().then(x => {
-      this.u = x;
-    });
     if(this.u.type!==Type.Viewer){
       let result = this.ras.ModifyEntity("agent", id);
       return result;

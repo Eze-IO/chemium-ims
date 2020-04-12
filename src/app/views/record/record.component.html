@@ -16,6 +16,7 @@
         <table class="table table-striped">
           <thead>
             <tr >
+              <th>#</th>
               <th *ngFor="let column of columns">
                 {{ column.toUpperCase().replace('_', ' ') }}
               </th>
@@ -23,9 +24,10 @@
             </tr>
           </thead>
           <tbody >
-            <tr *ngFor="let row of rows">
-              <td *ngFor="let d of row.data"><input  
-                class="table-cell" value="{{ d.data }}" (keyup.enter)="onCellInput(d.columnName)" 
+            <tr *ngFor="let row of rows; let i = index">
+              <td [attr.id]="i">{{i+1}}.</td>
+              <td *ngFor="let d of row.data"><input
+                class="table-cell" value="{{ d.data }}" (keyup.enter)="onCellInput(d.columnName)"
                 (focus)="onCellFocus(rowid, d.columnName)"
                 required/>
               </td>
@@ -33,29 +35,8 @@
             </tr>
           </tbody>
         </table>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="card-footer text-center">
-          <button type="button" (click)="addEntry()" class="btn btn-block btn-primary" 
-          [disabled]="(u.type===0)" aria-pressed="true" data-toggle="modal" data-target="#exampleModal">ADD ENTRY</button>
+          <button type="button" (click)="addEntry()" class="btn btn-block btn-primary" [disabled]="(u.type===0)" aria-pressed="true">ADD ENTRY</button>
         </div>
         </div>
       </div>
@@ -63,7 +44,7 @@
     <div *ngSwitchDefault class="col-md-8 mx-auto animated fadeIn">
       <div class="row">
         <div class="col-md-12">
-          <span class="display-2">Pick a record from below.... </span>
+          <span class="display-2">Pick a record from below....</span>
         </div>
       </div>
       <br><br>

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 <app-header class="animated fadeIn" *ngIf="showHeaderInfo"
-=======
-<app-header
->>>>>>> parent of 68f5a1c... Added check for internet connection
   [navbarBrandRouterLink]="['/dashboard']"
   [fixed]="true"
   [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 60, height: 45, alt: 'Chemium Logo'}"
@@ -12,12 +8,12 @@
   [asideMenuToggler]="false">
   <ul class="nav navbar-nav d-md-down-none">
   </ul>
-  <ul class="nav navbar-nav ml-auto animated fadeIn">
+  <ul class="nav navbar-nav ml-auto">
     <li class="nav-item d-md-down-none" style="margin-right:10px;">
       <!--<a class="nav-link" href="#">Users</a>-->
       <span href="#">{{ Name }}</span>
     </li>
-    <li class="nav-item dropdown" dropdown placement="bottom right" style="margin-right:15px;">
+    <li class="nav-item dropdown animated fadeIn" dropdown placement="bottom right" style="margin-right:15px;">
       <a [innerHtml]="HeaderPicture" class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
@@ -34,11 +30,7 @@
   <!--?-->
 </app-header>
 <div class="app-body">
-<<<<<<< HEAD
-  <app-sidebar *ngIf="showHeaderInfo"  class="animated fadeIn" #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
-=======
-  <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
->>>>>>> parent of 68f5a1c... Added check for internet connection
+  <app-sidebar *ngIf="showHeaderInfo" #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
