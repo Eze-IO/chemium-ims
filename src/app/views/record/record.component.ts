@@ -248,6 +248,24 @@ export class RecordComponent implements OnInit {
           });
         }
         break;
+      case 'bl':
+        break;
+      case 'bridge-finance':
+        break;
+      case 'contract':
+        break;
+      case 'counterparty':
+        break;
+      case 'inventory-schedule':
+        break;
+      case 'inventory':
+        break;
+      case 'lc':
+        break;
+      case 'measurement':
+        break;
+      case 'payment-terms':
+        break;
       default:
         break;
     }
