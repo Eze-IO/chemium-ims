@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Type } from '../../models/type';
+import { bl } from '../../models/entities/bl';
+import { CurrentUserService } from '../current-user.service';
 import { user } from '../../models/user';
 import { RestAPIService } from '../rest-api.service';
-import { CurrentUserService } from '../current-user.service';
-import { bl } from '../../models/entities/bl';
-import { Type } from '../../models/type';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BLService {
 
-  public static Name:string = "Bill Of Landing";
+  public static Name:string = "Bill of Lading";
 
   private u:user = new user();
   constructor(private ras: RestAPIService,
@@ -23,7 +23,7 @@ export class BLService {
   }
 
   public CorrespondingRecords(): String[] {
-    return ["Contract"];
+    return ["bl_status", "link"];
   }
 
   public async GetEntries() {
@@ -34,9 +34,10 @@ export class BLService {
         let b = new bl();
         b.bl_id = item['bl_id'];
         b.bl_status_id = item['bl_status_id'];
-        b.port_of_discharge = item['port_of_discharge']
+        b.vessel = item['vessel'];
+        b.port_of_discharge = item['port_of_discharge'];
         b.port_of_loading = item['port_of_loading'];
-        b.bl_date = item["bl_date"];
+        b.bl_date = item['bl_date']
         arr.push(b);
       });
     }
@@ -51,9 +52,9 @@ export class BLService {
     return null;
   }
 
-  public async AddEntry(agent: bl) {
+  public async AddEntry(bl: bl) {
     if(this.u.type!==Type.Viewer){
-      let result = await this.ras.AddToEntity("bl", agent);
+      let result = await this.ras.AddToEntity("bl", bl);
       return result;
     }
     return false;

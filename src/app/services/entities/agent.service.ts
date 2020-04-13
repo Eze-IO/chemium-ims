@@ -23,7 +23,7 @@ export class AgentService {
   }
 
   public CorrespondingRecords(): String[] {
-    return ["Contract"];
+    return ["contract"];
   }
 
   public async GetEntries() {
