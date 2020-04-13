@@ -20,38 +20,38 @@ export class CurrentUserService {
   public get LastName(): string { return this._lastName; }
 
 
-  private _timer = null;
-  public get GetInfo(): user {
-    if(this._timer===null&&
-    this.u===undefined){
-      this._getUser();
-    }
-    if(this._timer===null){
-      this._timer = timer(750, 10000).subscribe(x => {
-        this._getUser();
-      })
+
+  public async GetInfo()  {
+    this.u = new user();
+    let result = await this.ras.GetUser(AuthenticationService.Token);
+    if(result!==null&&result!==undefined){
+      this.u.email = result['Email'];
+      this.u.name = result['Name'];
+      this.u.phone_number = result['PhoneNumber'];
+      this.u.picture = result['Picture'];
+      switch(result['Type']){
+        case 'administrator':
+        case 4:
+          this.u.type = 4;
+          break;
+        case 'editor':
+        case 2:
+          this.u.type = 2;
+          break;
+        default:
+          this.u.type = 0;
+          break;
+      }
+
+      if(!ExtensionService.IsEmptyOrNull(this.u.name)){
+        let _name = this.u.name.split(' ');
+        this._firstName = ExtensionService.IsEmptyOrNull(_name[0]) ? null : _name[0];
+        this._lastName = ExtensionService.IsEmptyOrNull(_name[1]) ? null : _name[1];
+      }
+    } else {
+      this.auth.Deauthorize();
     }
     return this.u;
-  }
-
-  private _getUser() {
-    this.ras.GetUser(AuthenticationService.Token).then(x => {
-      let u:user = new user();
-      if(x!==null&&x!==undefined){
-        u.email = x['Email'];
-        u.name = x['Name'];
-        u.phone_number = x['PhoneNumber'];
-        u.picture = x['Picture'];
-        u.type = (<Type>x['Type']);
-        this.u = u;
-
-        if(!ExtensionService.IsEmptyOrNull(u.name)){
-          let _name = u.name.split(' ');
-          this._firstName = ExtensionService.IsEmptyOrNull(_name[0]) ? null : _name[0];
-          this._lastName = ExtensionService.IsEmptyOrNull(_name[1]) ? null : _name[1];
-        }
-      }
-    });
   }
 
   public async UpdateInfo(user: user) {

@@ -12,6 +12,7 @@ import { timer } from 'rxjs';
 import { user } from '../../models/user';
 import { CurrentUserService } from '../../services/current-user.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Type } from '../../models/type';
 
 
 @Component({
@@ -36,15 +37,21 @@ export class RecordComponent implements OnInit {
   private Table: string;
   private _navItems: INavData[];
   private u: user = new user();
+  tableMessage: string;
 
   loading:number = 2;
 
   constructor(private activatedRoute: ActivatedRoute,
   private as: entityService.AgentService,
   private cu: CurrentUserService) {
+    this.loadUser();
     this.activatedRoute.paramMap.subscribe(params => {
           this.Table = params.get('table');
     });
+  }
+
+  get IsViewer(){
+    return (this.u.type===Type.Viewer);
   }
 
   ngOnInit(): void {
@@ -56,11 +63,15 @@ export class RecordComponent implements OnInit {
        }, _time);
       _time+=(Math.floor(Math.random() * 5000) + 2500);
     })
-    this.u = this.cu.GetInfo;
+    this.tableMessage = "Click any cell of data to edit it and press enter save any modifications!";
     this.selectView();
   }
 
-  selectView(){
+  async loadUser(){
+    this.u = await this.cu.GetInfo();
+  }
+
+  async selectView(){
     if (!ExtensionService.IsEmptyOrNull(this.Table)) {
       this.Table = this.Table.toLowerCase();
       switch (this.Table) {

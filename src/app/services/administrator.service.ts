@@ -15,16 +15,12 @@ export class AdministratorService {
   private u: user = new user();
   constructor(private ras: RestAPIService,
               private cu: CurrentUserService) { 
-                this.u = this.cu.GetInfo;
               }
 
-   private _timer;
-  public get IsAdministrator(): boolean {
-    if(this._timer==null){
-      this._timer = timer(750, 30000).subscribe(x => {
-        this._getUser();
-      })
-    }
+  public async IsAdministrator() {
+    this.cu.GetInfo().then(x =>{
+      this.u = x;
+    });
     return (this.userType===Type.Administrator);
   }
 

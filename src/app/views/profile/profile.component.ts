@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CurrentUserService } from '../../services/current-user.service';
 import { SafeHtml } from '@angular/platform-browser';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -8,6 +8,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { RestAPIService } from "../../services/rest-api.service";
 import { timer } from 'rxjs';
 import { Type } from '../../models/type';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-profile',
@@ -32,9 +33,8 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     timer(1025).subscribe((val) => {
-     this.u = this.cu.GetInfo;
-     this.toggleLoadingProfile();
      this.fillValues();
+     this.toggleLoadingProfile();
    });
    this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
@@ -57,7 +57,9 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  fillValues(){
+  async fillValues(){
+    this.u = await this.cu.GetInfo();
+    console.log(this.u);
     this.mainForm.patchValue({
       first_name: this.cu.FirstName,
       last_name: this.cu.LastName,
@@ -70,7 +72,7 @@ export class ProfileComponent implements OnInit {
   email:string = "?";
   picture:string;
   loading:number = 0;
-  async toggleLoadingProfile(){
+  toggleLoadingProfile(){
     let loader = "<div class='d-flex justify-content-center animated fadeIn' style='margin:auto;'>"
     +"<div class='spinner-border m-5' style='width: 12rem; height: 12rem;' role='status'>"
     +"<span class='sr-only'>Loading...</span></div></div>";
@@ -137,7 +139,8 @@ export class ProfileComponent implements OnInit {
     } catch {}
   }
 
-  onUpload() {
+  async onUpload() {
+    this.u = await this.cu.GetInfo();
     this.toggleLoadingProfile();
     if (this.dataUrl !== null) {
       let x = this.cu.UploadPicture(this.dataUrl);
@@ -197,4 +200,10 @@ export class ProfileComponent implements OnInit {
       this.toggleProfileInfoEnable();
     }
   }
+
+  @HostListener('unloaded')
+  ngOnDestroy() {
+    console.log('Items destroyed');
+  }
+
 }

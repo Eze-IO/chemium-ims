@@ -30,8 +30,8 @@ export class UsersComponent implements OnInit {
     private cu: CurrentUserService) { }
 
   ngOnInit(): void {
-    timer(1025).subscribe(x => {
-      this.currentUser = this.cu.GetInfo;
+    timer(1025).subscribe(async() => {
+      this.currentUser = await this.cu.GetInfo();
       this.updateView();
     })
   }
@@ -82,7 +82,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(u) {
-    if((<user>u).email!==this.cu.GetInfo.email) {
+    if((<user>u).email!==this.currentUser.email) {
       this.loading = 2;
       this.admin.DeleteUser(u).then(x => {
         timer(8000).subscribe((x)=> {

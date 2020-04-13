@@ -13,6 +13,9 @@
           <i class="fa fa-align-justify"></i> {{ RecordName }} Record
         </div>
         <div class="card-body">
+          <div class="alert alert-info animated fadeIn" role="alert">
+            {{ tableMessage }}
+          </div>
         <table class="table table-striped animated fadeIn">
           <thead>
             <tr >
@@ -27,13 +30,18 @@
             <tr *ngFor="let row of rows; let i = index">
               <td [attr.id]="i">{{i+1}}.</td>
               <td *ngFor="let d of row.data"><input
-                class="table-cell" value="{{ d.data }}" (keyup.enter)="onCellInput($event, d.columnName)"
+                class="table-cell" value="{{ d.data }}" [readonly]="IsViewer"
+                (keyup.enter)="onCellInput($event, d.columnName)"
                 (focus)="onCellFocus($event, row.id, d.columnName)"
                 (focusout)="onCellFocusOut($event)"
                 (change)="onCellTextChange($event)"
                 required/>
               </td>
-              <td><button type="button" (click)="deleteRow(row)" class="btn btn-pill btn-danger" [disabled]="(u.type===0)" aria-pressed="true">X</button></td>
+              <td>
+                <button type="button"  class="btn btn-pill btn-danger" *ngIf="IsViewer" aria-pressed="true">
+                  <i (click)="deleteRow(row)" class="cui-circle-x icons font-4xl mt-2"></i>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>

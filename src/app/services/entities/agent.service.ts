@@ -12,10 +12,14 @@ export class AgentService {
 
   public static Name:string = "Agent";
 
-  private u:user;
+  private u:user = new user();
   constructor(private ras: RestAPIService,
   private cu: CurrentUserService) {
-    this.u = this.cu.GetInfo;
+    this.getUser();
+  }
+
+  private async getUser() {
+    this.u = await this.cu.GetInfo();
   }
 
   public async GetEntries() {
