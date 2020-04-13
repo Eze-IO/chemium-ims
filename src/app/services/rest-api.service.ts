@@ -256,11 +256,11 @@ public SendConfirmation(email: string): Promise<boolean> {
     }
 
 
-  public UploadUserPicture(username: string, picture: string): Promise<boolean> {
-    if (!ExtensionService.IsEmptyOrNull(username) &&
+  public UploadUserPicture(email: string, picture: string): Promise<boolean> {
+    if (!ExtensionService.IsEmptyOrNull(email) &&
       !ExtensionService.IsEmptyOrNull(picture)) {
       const request = {
-        'username': username,
+        'email': email,
         'picture': picture
       };
       return this.http.post<any>(restapiurl.uploaduserpicture.toString(), request, httpOptions).toPromise<boolean>()

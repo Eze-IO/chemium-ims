@@ -122,17 +122,19 @@ export class ProfileComponent implements OnInit {
     let _file = this.selectedFile = <File>e.target.files[0];
     if(e.target.value.length===0)
       this.uploadButtonToggle = false;
-    var reader = new FileReader();
-    let promise = new Promise<string>(function (resolve, reject) {
-      reader.onloadend = () => resolve(reader.result.toString());
-      reader.onerror = reject;
-      if (_file!== null || typeof(_file)!== undefined)
-        reader.readAsDataURL(_file);
-    });
-    if (this.selectedFile!==null){
-      this.dataUrl = await promise;
-      this.uploadButtonToggle = true;
-    }
+    try{
+      var reader = new FileReader();
+      let promise = new Promise<string>(function (resolve, reject) {
+        reader.onloadend = () => resolve(reader.result.toString());
+        reader.onerror = reject;
+        if (_file!== null || typeof(_file)!== undefined)
+          reader.readAsDataURL(_file);
+      });
+      if (this.selectedFile!==null){
+        this.dataUrl = await promise;
+        this.uploadButtonToggle = true;
+      }
+    } catch {}
   }
 
   onUpload() {
