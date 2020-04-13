@@ -48,6 +48,19 @@ export class RecordComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
   private as: entityService.AgentService,
   private bls: entityService.BLService,
+  private bfs: entityService.BridgeFinanceService,
+  private cs: entityService.ContractService,
+  private cps: entityService.CounterpartyService,
+  private iss: entityService.InventoryScheduleService,
+  private is: entityService.InventoryService,
+  private lcs: entityService.LCService,
+  private ls: entityService.LinkService,
+  private pts: entityService.PaymentTermsService,
+  private ps: entityService.ProductService,
+  private ts: entityService.TraderService,
+  private trs: entityService.TruckerService,
+  private ums: entityService.UnitMeasurementService,
+  private ws: entityService.WarehouseService,
   private cu: CurrentUserService) {
     this.activatedRoute.paramMap.subscribe(params => {
           this.Table = params.get('table');
@@ -229,6 +242,14 @@ export class RecordComponent implements OnInit {
         });
         break;
       case 'bl':
+        this.as.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'bridge-finance':
         break;
@@ -286,32 +307,187 @@ export class RecordComponent implements OnInit {
         })
         break;
       case 'bl':
+        this.bls.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this record isn't being used in the ";
+            this.bls.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'bridge-finance':
+        this.bfs.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this record isn't being used in the ";
+            this.bfs.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'contract':
+        this.cs.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this record isn't being used in the ";
+            this.cs.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'counterparty':
+        this.cps.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this record isn't being used in the ";
+            this.cps.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'inventory-schedule':
+        this.iss.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that you have the proper permissions";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'inventory':
+        this.is.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this record isn't being used in the ";
+            this.is.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'lc':
-        break;
-      case 'measurement':
+        this.lcs.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this record isn't being used in the ";
+            this.lcs.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'payment-terms':
+        this.pts.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this record isn't being used in the ";
+            this.pts.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'product':
+        this.ps.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this record isn't being used in the ";
+            this.ps.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'trader':
+        this.ts.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that you have the proper permissions";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'trucker':
+        this.trs.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that you have the proper permissions";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'unit_measurement':
+        this.ums.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this record isn't being used in the ";
+            this.ums.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
+          }
+        })
         break;
       case 'warehouse':
+        this.ws.DeleteEntry(d.id).then(x => {
+          if(x){
+            this.selectView();
+          } else {
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this record isn't being used in the ";
+            this.ws.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
+          }
+        })
         break;
       default:
         break;

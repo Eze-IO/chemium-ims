@@ -23,7 +23,7 @@ export class UnitMeasurementService {
   }
 
   public CorrespondingRecords(): String[] {
-    return ["lc"];
+    return ["Line of Credit"];
   }
 
   public async GetEntries() {

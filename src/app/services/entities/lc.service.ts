@@ -23,7 +23,7 @@ export class LCService {
   }
 
   public CorrespondingRecords(): String[] {
-    return ["link"];
+    return ["Link"];
   }
 
   public async GetEntries() {

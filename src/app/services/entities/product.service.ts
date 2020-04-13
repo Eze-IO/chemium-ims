@@ -23,7 +23,7 @@ export class ProductService {
   }
 
   public CorrespondingRecords(): String[] {
-    return ["inventory_schedule"];
+    return ["Inventory Schedule"];
   }
 
   public async GetEntries() {

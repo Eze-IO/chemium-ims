@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { warehouse } from '../../models/entities/warehouse';
 import { RestAPIService } from '../rest-api.service';
+import { Type } from '../../models/type';
+import { user } from '../../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,12 @@ export class WarehouseService {
 
   public static Name:string = "Warehouse";
 
+  private u:user = new user();
   constructor(private ras: RestAPIService) { }
+
+  public CorrespondingRecords(): String[] {
+    return ["Trucker", "Inventory"];
+  }
 
   public GetEntries(): warehouse[] {
     let arr: warehouse[] = new Array();
@@ -28,16 +35,35 @@ export class WarehouseService {
     return arr;
   }
 
-  public GetEntry(id: number): warehouse {
-    let all = this.GetEntries();
-    return all.find(x => x.warehouse_id === id);
+  public async GetEntry(id: number) {
+    if(this.u.type!==Type.Viewer){
+      let all = await this.GetEntries();
+      return all.find(x => x.unit_measurement_id === id);
+    }
+    return null;
   }
 
-  public UpdateEntry(warehouse: warehouse): boolean {
+  public async AddEntry(unit_measurement: warehouse) {
+    if(this.u.type!==Type.Viewer){
+      let result = await this.ras.AddToEntity("warehouse", unit_measurement);
+      return result;
+    }
     return false;
   }
 
-  public DeleteEntry(id:number): boolean {
+  public async UpdateEntry(id: number, columnName: string, value: string) {
+    if(this.u.type!==Type.Viewer){
+      let result = await this.ras.UpdateEntity("warehouse", id, columnName, value);
+      return result;
+    }
+    return false;
+  }
+
+  public async DeleteEntry(id:number) {
+    if(this.u.type!==Type.Viewer){
+      let result = this.ras.ModifyEntity("unit_measurement", id);
+      return result;
+    }
     return false;
   }
 }

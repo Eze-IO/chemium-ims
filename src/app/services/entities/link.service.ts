@@ -23,7 +23,7 @@ export class LinkService {
   }
 
   public CorrespondingRecords(): String[] {
-    return ["contract"];
+    return ["Contract"];
   }
 
   public async GetEntries() {
