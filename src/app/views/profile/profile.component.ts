@@ -117,8 +117,11 @@ export class ProfileComponent implements OnInit {
       this.u.name = name;
   }
 
+  uploadButtonToggle:boolean = false;
   async onFileSelected(e) {
     let _file = this.selectedFile = <File>e.target.files[0];
+    if(e.target.value.length===0)
+      this.uploadButtonToggle = false;
     var reader = new FileReader();
     let promise = new Promise<string>(function (resolve, reject) {
       reader.onloadend = () => resolve(reader.result.toString());
@@ -126,8 +129,10 @@ export class ProfileComponent implements OnInit {
       if (_file!== null || typeof(_file)!== undefined)
         reader.readAsDataURL(_file);
     });
-    if (this.selectedFile!==null)
+    if (this.selectedFile!==null){
       this.dataUrl = await promise;
+      this.uploadButtonToggle = true;
+    }
   }
 
   onUpload() {
@@ -141,6 +146,7 @@ export class ProfileComponent implements OnInit {
           this._success = false;
           this._status = "Failed to update profile picture";
         }
+        this.uploadButtonToggle = false;
     }
     timer(3000).subscribe((val) => {
       this.toggleLoadingProfile();

@@ -124,7 +124,7 @@ export class RecordComponent implements OnInit {
         if(this._newID!==0){
           let _agent = new entity.agent();
           _agent.agent_id = this._newID;
-          _agent.agent_commission =
+          //_agent.agent_commission =
           this.as.AddEntry(null).then(x => {
             if(x){
             } else {
