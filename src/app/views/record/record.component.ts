@@ -33,7 +33,7 @@ import { Decimal } from 'decimal.js';
   ]
 })
 export class RecordComponent implements OnInit {
-  @ViewChild('infoModal') public infoModal: ModalDirective;
+  //
   RecordName:string;
   private Table: string;
   private _navItems: INavData[];
@@ -97,6 +97,34 @@ export class RecordComponent implements OnInit {
             this.generateTable(rows);
           })
           break;
+        case 'bl':
+          break;
+        case 'bridge-finance':
+          break;
+        case 'contract':
+          break;
+        case 'counterparty':
+          break;
+        case 'inventory-schedule':
+          break;
+        case 'inventory':
+          break;
+        case 'lc':
+          break;
+        case 'measurement':
+          break;
+        case 'payment-terms':
+          break;
+        case 'product':
+          break;
+        case 'trader':
+          break;
+        case 'trucker':
+          break;
+        case 'unit_measurement':
+          break;
+        case 'warehouse':
+          break;
         default:
           this.showDefaultPage();
           break;
@@ -142,6 +170,34 @@ export class RecordComponent implements OnInit {
           this.selectView();
         });
         break;
+      case 'bl':
+        break;
+      case 'bridge-finance':
+        break;
+      case 'contract':
+        break;
+      case 'counterparty':
+        break;
+      case 'inventory-schedule':
+        break;
+      case 'inventory':
+        break;
+      case 'lc':
+        break;
+      case 'measurement':
+        break;
+      case 'payment-terms':
+        break;
+      case 'product':
+        break;
+      case 'trader':
+        break;
+      case 'trucker':
+        break;
+      case 'unit_measurement':
+        break;
+      case 'warehouse':
+          break;
       default:
         break;
     }
@@ -172,6 +228,34 @@ export class RecordComponent implements OnInit {
             alert('Failed to delete entry');
           }
         })
+        break;
+      case 'bl':
+        break;
+      case 'bridge-finance':
+        break;
+      case 'contract':
+        break;
+      case 'counterparty':
+        break;
+      case 'inventory-schedule':
+        break;
+      case 'inventory':
+        break;
+      case 'lc':
+        break;
+      case 'measurement':
+        break;
+      case 'payment-terms':
+        break;
+      case 'product':
+        break;
+      case 'trader':
+        break;
+      case 'trucker':
+        break;
+      case 'unit_measurement':
+        break;
+      case 'warehouse':
         break;
       default:
         break;
@@ -265,6 +349,16 @@ export class RecordComponent implements OnInit {
       case 'measurement':
         break;
       case 'payment-terms':
+        break;
+      case 'product':
+        break;
+      case 'trader':
+        break;
+      case 'trucker':
+        break;
+      case 'unit_measurement':
+        break;
+      case 'warehouse':
         break;
       default:
         break;

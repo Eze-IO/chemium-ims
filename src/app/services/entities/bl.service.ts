@@ -30,12 +30,14 @@ export class BLService {
     let arr: bl[] = new Array();
     if(this.u.type!==Type.Viewer){
       let bls = await this.ras.GetEntity("bl");
-      agents.forEach(function(item) {
+      bls.forEach(function(item) {
         let b = new bl();
         b.bl_id = item['bl_id'];
-        b.bl_status_id = item['agent_country'];
-        a.agent_commission = item['agent_commission'];
-        arr.push(a);
+        b.bl_status_id = item['bl_status_id'];
+        b.port_of_discharge = item['port_of_discharge']
+        b.port_of_loading = item['port_of_loading'];
+        b.bl_date = item["bl_date"];
+        arr.push(b);
       });
     }
     return arr;
@@ -49,9 +51,9 @@ export class BLService {
     return null;
   }
 
-  public async AddEntry(agent: agent) {
+  public async AddEntry(agent: bl) {
     if(this.u.type!==Type.Viewer){
-      let result = await this.ras.AddToEntity("agent", agent);
+      let result = await this.ras.AddToEntity("bl", agent);
       return result;
     }
     return false;

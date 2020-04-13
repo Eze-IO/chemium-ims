@@ -38,9 +38,7 @@
                 required/>
               </td>
               <td>
-                <button type="button"  class="btn btn-pill btn-danger" *ngIf="!IsViewer" aria-pressed="true">
-                  <i (click)="deleteRow(row)" class="cui-circle-x icons font-4xl mt-2"></i>
-                </button>
+                <i (click)="deleteRow(row)" class="cui-circle-x icons font-4xl mt-2" *ngIf="!IsViewer"></i>
               </td>
             </tr>
           </tbody>
