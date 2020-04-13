@@ -14,6 +14,7 @@ import { LogoutComponent } from './views/logout/logout.component';
 import { RegisterComponent } from './views/register/register.component';
 import { SupportComponent } from './views/support/support.component';
 import { ConfirmComponent } from './views/confirm/confirm.component';
+import { ModalsComponent } from './views/modals/modals.component';
 
 export const routes: Routes = [
   {
@@ -75,6 +76,13 @@ export const routes: Routes = [
     component: SupportComponent,
     data: {
       title: 'Chemium IMS | Technical Support'
+    }
+  },
+  {
+    path: 'modals',
+    component: ModalsComponent,
+    data: {
+      title: 'modals'
     }
   },
   {

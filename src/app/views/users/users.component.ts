@@ -6,6 +6,7 @@ import { userinformation } from "../../models/userinformation";
 import { CurrentUserService } from '../../services/current-user.service';
 import { timer } from 'rxjs';
 import { ExtensionService } from '../../helpers/extension.service';
+import { Type } from '../../models/type';
 
 @Component({
   selector: 'app-users',
@@ -14,7 +15,7 @@ import { ExtensionService } from '../../helpers/extension.service';
 })
 export class UsersComponent implements OnInit {
   userList:userinformation[] = [];
-  currentUser:user;
+  currentUser:user = new user();;
   _status: string = null;
   get status(): string {
     return this._status;
@@ -22,6 +23,9 @@ export class UsersComponent implements OnInit {
   _success: boolean = false;
   get success(): boolean {
     return this._success;
+  }
+  get IsAdministrator(): boolean {
+    return (this.currentUser.type===Type.Administrator);
   }
   loading:number = 2;
 
@@ -43,7 +47,7 @@ export class UsersComponent implements OnInit {
 
   updateView(){
     this.userList = [];
-    this.admin.GetUsers().then(element => {
+    this.admin.GetUsers().then((element) => {
       this.loading = 2;
       timer(2000).subscribe(x => {
         element.forEach(e => {
@@ -51,7 +55,7 @@ export class UsersComponent implements OnInit {
             e.picture = "../../../../assets/img/avatars/default.png";
           this.userList.push(e);
         })
-        if(this.userList.length<=0)
+        if(this.userList.length<=0||!this.IsAdministrator)
           this.loading = 1;
         else
           this.loading = 0;

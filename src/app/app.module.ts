@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2TelInputModule } from 'ng2-tel-input';
+import { ModalModule } from "ngx-bootstrap/modal";
 
 import { UrlSerializer } from '@angular/router';
 import { JwtInterceptor } from './jwt.interceptor';
@@ -55,6 +56,7 @@ import { ClockComponent } from './views/clock/clock.component';
 import { SupportComponent } from './views/support/support.component';
 import { RegisterComponent } from './views/register/register.component';
 import { ConfirmComponent } from './views/confirm/confirm.component';
+import { ModalsComponent } from './views/modals/modals.component';
 
 @NgModule({
   imports: [
@@ -73,7 +75,8 @@ import { ConfirmComponent } from './views/confirm/confirm.component';
     HttpClientModule,
     ReactiveFormsModule,
     Ng2TelInputModule,
-    FormsModule
+    FormsModule,
+    ModalModule 
   ],
   declarations: [
     AppComponent,
@@ -85,7 +88,9 @@ import { ConfirmComponent } from './views/confirm/confirm.component';
     LogoutComponent,
     RegisterComponent,
     SupportComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    ModalsComponent    
+
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

@@ -50,7 +50,6 @@ export class RecordComponent implements OnInit {
   }
 
   get IsViewer(){
-    console.log(this.u.type);
     return (this.u.type===Type.Viewer);
   }
 
@@ -209,13 +208,10 @@ export class RecordComponent implements OnInit {
  _newID:number = 0;
  toggleAddButton:boolean = false;
   addEntry() {
-    this.infoModal
-    //this.loading = 2;
     let r = this.getNewRow();
     this._newID = r.id;
     this.toggleAddButton = true;
-    this.rows.push(r);
-    //this.loading = 1;
+    this.infoModal.show();
   }
 
   showDefaultPage() {
