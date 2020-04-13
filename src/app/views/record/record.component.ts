@@ -13,6 +13,7 @@ import { user } from '../../models/user';
 import { CurrentUserService } from '../../services/current-user.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Type } from '../../models/type';
+import { Decimal } from 'decimal.js';
 
 
 @Component({
@@ -122,6 +123,7 @@ export class RecordComponent implements OnInit {
       this.count.push(++i);
     }
     this.loading = 1;
+    this.NewRow = this.getNewRow();
   }
 
   onCellFocus(e, rowid :number, columnName: string) {
@@ -132,27 +134,13 @@ export class RecordComponent implements OnInit {
   onCellInput(e, columnName){
     switch (this.Table) {
       case 'agent':
-        if(this._newID!==0){
-          let _agent = new entity.agent();
-          _agent.agent_id = this._newID;
-          //_agent.agent_commission =
-          this.as.AddEntry(null).then(x => {
-            if(x){
-            } else {
-              alert('Failed to update entry');
-            }
-            this.toggleAddButton = true;
-            this.selectView();
-          });
-        } else {
-          this.as.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
-            if(x){
-            } else {
-              alert('Failed to update entry');
-            }
-            this.selectView();
-          });
-        }
+        this.as.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            alert('Failed to update entry');
+          }
+          this.selectView();
+        });
         break;
       default:
         break;
@@ -161,17 +149,17 @@ export class RecordComponent implements OnInit {
 
   private _agent:entity.agent = new entity.agent();
   onCellTextChange(e) {
-    e.target.value
+    //e.target.value
   }
 
   onCellFocusOut(e){
-    if(this._newID!==0||this._newID===undefined){
+    /*if(this._newID!==0||this._newID===undefined){
       this.rows = this.rows.filter(function(item) {
           return item.id !== this._newID
       })
       this._newID=0;
       this.toggleAddButton = true;
-    }
+    }*/
   }
 
   deleteRow(d){
@@ -190,6 +178,7 @@ export class RecordComponent implements OnInit {
     }
   }
 
+  NewRow:row = new row();
   getNewRow(): row {
     let ids = []
     let cells = this.rows.shift().data.length;
@@ -199,7 +188,10 @@ export class RecordComponent implements OnInit {
     r.id = (lastID+1);
     r.data = [];
     for(let c=0;c<cells;c++){
-      r.data.push(new cell());
+      let _c = new cell();
+      let da = this.rows.shift().data;
+      _c.columnName = (da[c].columnName);
+      r.data.push(_c);
     }
     return r;
   }
@@ -207,11 +199,58 @@ export class RecordComponent implements OnInit {
 
  _newID:number = 0;
  toggleAddButton:boolean = false;
-  addEntry() {
-    let r = this.getNewRow();
-    this._newID = r.id;
-    this.toggleAddButton = true;
-    this.infoModal.show();
+
+  addCellInput(e, columnName) {
+
+  }
+
+  focusedColumnName:string;
+  addCellFocus(e, id, columnName) {
+    this._newID = id;
+    this.focusedColumnName = columnName;
+  }
+
+  addCellFocusOut(e) {
+
+  }
+
+  addCellTextChange(e, columnName) {
+    console.log(e.target.value);
+    if(this.NewRow===null)
+      this.NewRow = this.getNewRow();
+    let results:cell = null;
+    try {
+      this.NewRow.data.forEach(x => {
+        if(x.columnName === columnName)
+          x.data = e.target.value;
+      });
+    } catch { }
+    console.log(this.NewRow);
+  }
+
+  saveChanges(){
+    switch (this.Table) {
+      case 'agent':
+        if(this._newID!==0){
+          let _agent = new entity.agent();
+          _agent.agent_id = this.NewRow.id;
+          console.log(this.NewRow);
+          let ac = this.NewRow.data.find(x => x.columnName === 'agent_commission').data;
+          _agent.agent_commission = ac;
+          _agent.agent_country = this.NewRow.data.find(x => x.columnName === 'agent_country').data;
+          this.as.AddEntry(_agent).then(x => {
+            if(x){
+              alert('Successfully updated');
+            } else {
+              alert('Failed to update entry');
+            }
+            this.selectView();
+          });
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   showDefaultPage() {

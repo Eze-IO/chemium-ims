@@ -46,9 +46,11 @@
           </tbody>
         </table>
         <div class="card-footer text-center">
-          <button type="button" 
-          class="btn btn-block btn-primary" [disabled]="IsViewer||toggleAddButton"
-          aria-pressed="true" (click)="addEntry">ADD ENTRY</button>
+          <button type="button"
+          class="btn btn-block btn-primary" data-toggle="modal"
+          (click)="infoModal.show()">
+          ADD ENTRY
+          </button>
         </div>
         </div>
       </div>
@@ -85,7 +87,6 @@
           <table class="table table-striped animated fadeIn">
             <thead>
               <tr >
-                <th>#</th>
                 <th *ngFor="let column of columns">
                   {{ column.toUpperCase().replace('_', ' ') }}
                 </th>
@@ -93,14 +94,13 @@
               </tr>
             </thead>
             <tbody >
-              <tr *ngFor="let row of rows; let i = index">
-                <td [attr.id]="i">{{i+1}}.</td>
-                <td *ngFor="let d of row.data"><input
-                  class="table-cell" value="{{ d.data }}" [readonly]="IsViewer"
-                  (keyup.enter)="onCellInput($event, d.columnName)"
-                  (focus)="onCellFocus($event, row.id, d.columnName)"
-                  (focusout)="onCellFocusOut($event)"
-                  (change)="onCellTextChange($event)"
+              <tr>
+                <td *ngFor="let d of NewRow.data"><input
+                  class="table-cell" value="{{ d.data }}"
+                  (keyup.enter)="addCellInput($event, d.columnName)"
+                  (focus)="addCellFocus($event, NewRow.id, d.columnName)"
+                  (focusout)="addCellFocusOut($event)"
+                  (change)="addCellTextChange($event, d.columnName)"
                   required/>
                 </td>
               </tr>
@@ -109,7 +109,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
-          <button type="button" class="btn btn-info">Save changes</button>
+          <button type="button" class="btn btn-info" (click)="saveChanges()">Save changes</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
