@@ -50,7 +50,6 @@ import { ChartsModule } from 'ng2-charts';
 import { UsersComponent } from './views/users/users.component';
 import { RecordComponent } from './views/record/record.component';
 import { ProfileComponent } from './views/profile/profile.component';
-import { ReportComponent } from './views/report/report.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { ClockComponent } from './views/clock/clock.component';
 import { SupportComponent } from './views/support/support.component';

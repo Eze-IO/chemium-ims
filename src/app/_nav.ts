@@ -96,11 +96,6 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name: 'Generate Report',
-    url: '/report',
-    icon: 'icon-chart',
-  },
-  {
     name: 'User(s)',
     url: '/users',
     icon: 'icon-people',

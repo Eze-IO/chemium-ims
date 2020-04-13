@@ -101,10 +101,6 @@ export const routes: Routes = [
         loadChildren: () => import('./views/record/record.module').then(m => m.RecordModule)
       },
       {
-        path: 'report',
-        loadChildren: () => import('./views/report/report.module').then(m => m.ReportModule)
-      },
-      {
         path: 'register',
         loadChildren: () => import('./views/register/register.module').then(m => m.RegisterModule)
       }

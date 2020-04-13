@@ -30,7 +30,7 @@ export class UsersComponent implements OnInit {
     private cu: CurrentUserService) { }
 
   ngOnInit(): void {
-    timer(1025, 60000).subscribe(x => {
+    timer(1025).subscribe(x => {
       this.currentUser = this.cu.GetInfo;
       this.updateView();
     })
@@ -57,6 +57,10 @@ export class UsersComponent implements OnInit {
           this.loading = 0;
       })
     });
+  }
+
+  refreshList() {
+    this.updateView();
   }
 
   sendConfirmation(u:userinformation){

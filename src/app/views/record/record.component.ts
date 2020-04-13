@@ -11,7 +11,7 @@ import { row } from '../../models/tables/row';
 import { timer } from 'rxjs';
 import { user } from '../../models/user';
 import { CurrentUserService } from '../../services/current-user.service';
-import {ModalDirective} from 'ngx-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 
 @Component({

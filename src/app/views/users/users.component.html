@@ -11,57 +11,65 @@
 <div *ngSwitchCase="1" class="alert animated fadeIn text-center" role="alert">
   <strong>There are no user(s) to manage</strong>
 </div>
-<table *ngSwitchDefault class="table table-responsive-sm table-hover table-outline mb-0">
-<thead class="thead-light">
-  <tr>
-    <th class="text-center"><i class="icon-people"></i></th>
-    <th class="text-center">Name</th>
-    <th class="text-center">Status</th>
-    <th class="text-center">Email</th>
-    <th class="text-center">Role</th>
-    <th class="text-center"></th>
-  </tr>
-</thead>
-<tbody *ngFor="let u of userList">
-  <tr>
-      <td class="text-center">
-        <div class="avatar">
-          <img src={{u.picture}} class="img-avatar">
-          <span class="avatar-status" [ngClass]="u.enabled?'badge-success':'badge-danger'"></span>
-        </div>
-      </td>
-      <td>
-        <div>
-          <strong>{{u.name}}</strong>
-        </div>
-        <div class="small text-muted">
-          <span>Registered: {{ formatDate(u.created) }}</span>
-        </div>
-      </td>
-      <td>
-        <div class="text-center">
-          <button type="button" (click)="sendConfirmation(u)" class="btn btn-block btn-ghost-primary" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-          [disabled]="(u.status!=='UNCONFIRMED')" aria-pressed="true"><i [ngClass]="{'icon-envelope-letter':(u.status==='UNCONFIRMED')}"></i> {{u.status}}</button>
-        </div>
-      </td>
-      <td>
-        <div class="clearfix text-center" [ngClass]="{ 'alert alert-warning': u.email==='USER IS NOT CONFIRMED'}">
-          {{u.email}}
-        </div>
-      </td>
-      <td [ngSwitch]="u.type" class="text-center">
-        <i *ngSwitchCase="4" class="fa fa-user-circle" style="font-size:18px"> Administrator</i>
-        <i *ngSwitchCase="2" class="fa fa-edit" style="font-size:18px"> Editor</i>
-        <i *ngSwitchDefault class="fa fa-eye" style="font-size:18px"> Viewer</i>
-      </td>
-      <td>
-        <div class="text-center">
-          <button type="button" (click)="deleteUser(u)" class="btn btn-block btn-danger" [disabled]="(u.email===currentUser.email)" aria-pressed="true"><i class="icon-trash"></i></button>
-        </div>
-      </td>
-  </tr>
-</tbody>
-</table>
+<div>
+  <table *ngSwitchDefault class="table table-responsive-sm table-hover table-outline mb-0">
+  <thead class="thead-light">
+    <tr>
+      <th class="text-center"><i class="icon-people"></i></th>
+      <th class="text-center">Name</th>
+      <th class="text-center">Status</th>
+      <th class="text-center">Email</th>
+      <th class="text-center">Role</th>
+      <th class="text-center">
+        <a class="refresh-btn" (click)="refreshList()">
+          <img class="animated fadeIn" 
+          style="width:16px;height:16px;" src="../../../assets/img/refresh.png"
+          alt="Refresh Page" />
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let u of userList">
+    <tr>
+        <td class="text-center">
+          <div class="avatar">
+            <img src={{u.picture}} class="img-avatar">
+            <span class="avatar-status" [ngClass]="u.enabled?'badge-success':'badge-danger'"></span>
+          </div>
+        </td>
+        <td>
+          <div>
+            <strong>{{u.name}}</strong>
+          </div>
+          <div class="small text-muted">
+            <span>Registered: {{ formatDate(u.created) }}</span>
+          </div>
+        </td>
+        <td>
+          <div class="text-center">
+            <button type="button" (click)="sendConfirmation(u)" class="btn btn-block btn-ghost-primary" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+            [disabled]="(u.status!=='UNCONFIRMED')" aria-pressed="true"><i [ngClass]="{'icon-envelope-letter':(u.status==='UNCONFIRMED')}"></i> {{u.status}}</button>
+          </div>
+        </td>
+        <td>
+          <div class="clearfix text-center" [ngClass]="{ 'alert alert-warning': u.email==='USER IS NOT CONFIRMED'}">
+            {{u.email}}
+          </div>
+        </td>
+        <td [ngSwitch]="u.type" class="text-center">
+          <i *ngSwitchCase="4" class="fa fa-user-circle" style="font-size:18px"> Administrator</i>
+          <i *ngSwitchCase="2" class="fa fa-edit" style="font-size:18px"> Editor</i>
+          <i *ngSwitchDefault class="fa fa-eye" style="font-size:18px"> Viewer</i>
+        </td>
+        <td>
+          <div class="text-center">
+            <button type="button" (click)="deleteUser(u)" class="btn btn-block btn-danger" [disabled]="(u.email===currentUser.email)" aria-pressed="true"><i class="icon-trash"></i></button>
+          </div>
+        </td>
+    </tr>
+  </tbody>
+  </table>
+</div>
 </div>
 <div class="card row" *ngIf="this.admin.IsAdministrator">
   <button type="button" class="btn btn-block btn-success active" aria-pressed="true" routerLink="/register">ADD USER</button>
