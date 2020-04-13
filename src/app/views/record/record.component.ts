@@ -33,17 +33,21 @@ import { Decimal } from 'decimal.js';
   ]
 })
 export class RecordComponent implements OnInit {
-  //
+  @ViewChild('successModal') public successModal: ModalDirective;
+  @ViewChild('dangerModal') public dangerModal: ModalDirective;
   RecordName:string;
   private Table: string;
   private _navItems: INavData[];
   private u: user = new user();
   tableMessage: string;
+  successMsg:string;
+  dangerMsg:string;
 
   loading:number = 2;
 
   constructor(private activatedRoute: ActivatedRoute,
   private as: entityService.AgentService,
+  private bls: entityService.BLService,
   private cu: CurrentUserService) {
     this.activatedRoute.paramMap.subscribe(params => {
           this.Table = params.get('table');
@@ -63,7 +67,7 @@ export class RecordComponent implements OnInit {
        }, _time);
       _time+=(Math.floor(Math.random() * 5000) + 2500);
     })
-    this.tableMessage = "Click any cell of data to edit it and press enter save any modifications!";
+    this.tableMessage = "Click any cell to edit and press enter to save modifications!";
     timer(50).subscribe(async() => {
       this.u = await this.cu.GetInfo();
       timer(3000).subscribe(async() => {
@@ -73,12 +77,13 @@ export class RecordComponent implements OnInit {
   }
 
   async selectView(){
+    let rows:row[] = [];
     if (!ExtensionService.IsEmptyOrNull(this.Table)) {
       this.Table = this.Table.toLowerCase();
       switch (this.Table) {
         case 'agent':
           this.RecordName = entityService.AgentService.Name;
-          let rows:row[] = [];
+          rows = [];
           this.as.GetEntries().then(x => {
             x.forEach(a => {
               let r = new row();
@@ -98,6 +103,38 @@ export class RecordComponent implements OnInit {
           })
           break;
         case 'bl':
+          this.RecordName = entityService.BLService.Name;
+          rows = [];
+          this.bls.GetEntries().then(x => {
+            x.forEach(bl => {
+              let r = new row();
+              r.id = bl.bl_id;
+              let c = new cell();
+              r.data = [];
+              c.columnName = "bl_status_id";
+              c.data = bl.bl_status_id.toString();
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "port_of_loading";
+              c.data = bl.port_of_loading.toString();
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "port_of_discharge";
+              c.data = bl.port_of_discharge.toString();
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "vessel";
+              c.data = bl.vessel.toString();
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "bl_date";
+              c.data = this.formatDate(bl.bl_date);
+              r.data.push(c);
+              rows.push(r);
+            })
+            console.log(rows);
+            this.generateTable(rows);
+          })
           break;
         case 'bridge-finance':
           break;
@@ -134,6 +171,18 @@ export class RecordComponent implements OnInit {
     }
   }
 
+  formatName(str: string){
+    if(!ExtensionService.IsEmptyOrNull(str))
+      return str.toUpperCase().replace(/_/g,' ');
+    else
+      return str;
+  }
+
+  formatDate(date: Date):string {
+    date = new Date(date);
+    return (((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()+" "+date.toLocaleTimeString('en-US'))
+  }
+
   count:number[];
   currentID:number;
   currentColumn:string;
@@ -142,9 +191,17 @@ export class RecordComponent implements OnInit {
   rows: row[];
   generateTable(rows: row[]){
     this.columns = [];
-    rows[0].data.forEach(x => {
-      this.columns.push(x.columnName);
+    let _fin = false;
+    rows.forEach(x => {
+      if(x!==undefined&&x!==null&&!_fin){
+        x.data.forEach(i => {
+          if(i!==undefined&&i!==null)
+            this.columns.push(i.columnName);
+        })
+        _fin = true;
+      }
     })
+    console.log(this.columns);
     this.rows = rows;
     this.count = [];
     for(let i=0;i<rows.length;i++){
@@ -165,7 +222,8 @@ export class RecordComponent implements OnInit {
         this.as.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            alert('Failed to update entry');
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
           }
           this.selectView();
         });
@@ -205,17 +263,9 @@ export class RecordComponent implements OnInit {
 
 
   onCellTextChange(e) {
-    //e.target.value
   }
 
   onCellFocusOut(e){
-    /*if(this._newID!==0||this._newID===undefined){
-      this.rows = this.rows.filter(function(item) {
-          return item.id !== this._newID
-      })
-      this._newID=0;
-      this.toggleAddButton = true;
-    }*/
   }
 
   deleteRow(d){
@@ -225,7 +275,13 @@ export class RecordComponent implements OnInit {
           if(x){
             this.selectView();
           } else {
-            alert('Failed to delete entry');
+            this.dangerMsg = 'Failed to delete entry: ';
+            this.dangerMsg+="\n Please check that this table isn't being used in the ";
+            this.as.CorrespondingRecords().forEach(el => {
+              this.dangerMsg+=("''"+el.toUpperCase()+"'' - ");
+            });
+            this.dangerMsg+=" record(s)";
+            this.dangerModal.show();
           }
         })
         break;
@@ -265,7 +321,12 @@ export class RecordComponent implements OnInit {
   NewRow:row = new row();
   getNewRow(): row {
     let ids = []
-    let cells = this.rows.shift().data.length;
+    let cells = 0;
+    this.rows.forEach(x => {
+      if(x!==undefined&&x!==null){
+        cells = x.data.length;
+      }
+    })
     this.rows.forEach(x => ids.push(x.id));
     let lastID:number = Math.max.apply(Math, ids);
     let r = new row();
@@ -285,7 +346,6 @@ export class RecordComponent implements OnInit {
  toggleAddButton:boolean = false;
 
   addCellInput(e, columnName) {
-
   }
 
   focusedColumnName:string;
@@ -295,7 +355,6 @@ export class RecordComponent implements OnInit {
   }
 
   addCellFocusOut(e) {
-
   }
 
   addCellTextChange(e, columnName) {
@@ -324,9 +383,11 @@ export class RecordComponent implements OnInit {
           _agent.agent_country = this.NewRow.data.find(x => x.columnName === 'agent_country').data;
           this.as.AddEntry(_agent).then(x => {
             if(x){
-              alert('Successfully updated');
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
             } else {
-              alert('Failed to update entry');
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
             }
             this.selectView();
           });

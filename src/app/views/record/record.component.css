@@ -20,6 +20,11 @@
   100%  { left: -200%; }
 }
 
+.box {
+  overflow:auto;
+  overflow-y: scroll;
+}
+
 .table-cell{
   border: 0;
   background-color: inherit;

@@ -300,7 +300,6 @@ public SendConfirmation(email: string): Promise<boolean> {
       };
       return this.http.post<any>(restapiurl.tokenrequester.toString(), request, httpOptions).toPromise<any>()
         .then(x => {
-          console.log(x);
             if (x['Success']) {
               let json = JSON.parse(x['Result']);
               return json;
