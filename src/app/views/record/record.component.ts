@@ -124,7 +124,7 @@ export class RecordComponent implements OnInit {
         if(this._newID!==0){
           let _agent = new entity.agent();
           _agent.agent_id = this._newID;
-          //_agent.
+          _agent.agent_commission =
           this.as.AddEntry(null).then(x => {
             if(x){
             } else {
@@ -148,12 +148,17 @@ export class RecordComponent implements OnInit {
     }
   }
 
+  private _agent:entity.agent = new entity.agent();
+  onCellTextChange(e) {
+    e.target.value
+  }
+
   onCellFocusOut(e){
-    if(this._newID!==0){
+    if(this._newID!==0||this._newID===undefined){
       this.rows = this.rows.filter(function(item) {
           return item.id !== this._newID
       })
-      this._newID!==0;
+      this._newID=0;
       this.toggleAddButton = true;
     }
   }
