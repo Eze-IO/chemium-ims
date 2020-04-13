@@ -44,13 +44,13 @@ export class RecordComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
   private as: entityService.AgentService,
   private cu: CurrentUserService) {
-    this.loadUser();
     this.activatedRoute.paramMap.subscribe(params => {
           this.Table = params.get('table');
     });
   }
 
   get IsViewer(){
+    console.log(this.u.type);
     return (this.u.type===Type.Viewer);
   }
 
@@ -64,11 +64,12 @@ export class RecordComponent implements OnInit {
       _time+=(Math.floor(Math.random() * 5000) + 2500);
     })
     this.tableMessage = "Click any cell of data to edit it and press enter save any modifications!";
-    this.selectView();
-  }
-
-  async loadUser(){
-    this.u = await this.cu.GetInfo();
+    timer(50).subscribe(async() => {
+      this.u = await this.cu.GetInfo();
+      timer(3000).subscribe(async() => {
+        this.selectView();
+      })
+    })
   }
 
   async selectView(){

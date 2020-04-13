@@ -34,7 +34,6 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     timer(1025).subscribe((val) => {
      this.fillValues();
-     this.toggleLoadingProfile();
    });
    this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
@@ -67,16 +66,13 @@ export class ProfileComponent implements OnInit {
       phone_number: this.u.phone_number,
       role: this.getRoleName(this.u.type)
     });
+    this.toggleLoadingProfile();
   }
 
   email:string = "?";
   picture:string;
   loading:number = 0;
   toggleLoadingProfile(){
-    let loader = "<div class='d-flex justify-content-center animated fadeIn' style='margin:auto;'>"
-    +"<div class='spinner-border m-5' style='width: 12rem; height: 12rem;' role='status'>"
-    +"<span class='sr-only'>Loading...</span></div></div>";
-    let picture = "<img src='[IMAGE]' class='bd-placeholder-img card-img animated fadeIn' alt='[EMAIL]' style='border-radius:8px;'/>";
     if(this.loading===0){
       this.picture = this.u.picture;
       if(ExtensionService.IsEmptyOrNull(this.u.picture)||this.u.picture===undefined)
@@ -199,11 +195,6 @@ export class ProfileComponent implements OnInit {
       this._status += invalid.join(", ");
       this.toggleProfileInfoEnable();
     }
-  }
-
-  @HostListener('unloaded')
-  ngOnDestroy() {
-    console.log('Items destroyed');
   }
 
 }

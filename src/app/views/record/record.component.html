@@ -38,7 +38,7 @@
                 required/>
               </td>
               <td>
-                <button type="button"  class="btn btn-pill btn-danger" *ngIf="IsViewer" aria-pressed="true">
+                <button type="button"  class="btn btn-pill btn-danger" *ngIf="!IsViewer" aria-pressed="true">
                   <i (click)="deleteRow(row)" class="cui-circle-x icons font-4xl mt-2"></i>
                 </button>
               </td>
@@ -47,7 +47,7 @@
         </table>
         <div class="card-footer text-center">
           <button type="button" (click)="addEntry()"
-          class="btn btn-block btn-primary" [disabled]="(u.type===0)||toggleAddButton"
+          class="btn btn-block btn-primary" [disabled]="IsViewer||toggleAddButton"
           aria-pressed="true">ADD ENTRY</button>
         </div>
         </div>
