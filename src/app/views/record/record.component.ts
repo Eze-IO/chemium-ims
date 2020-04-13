@@ -147,7 +147,7 @@ export class RecordComponent implements OnInit {
     }
   }
 
-  private _agent:entity.agent = new entity.agent();
+
   onCellTextChange(e) {
     //e.target.value
   }

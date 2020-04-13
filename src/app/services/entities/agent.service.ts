@@ -22,6 +22,10 @@ export class AgentService {
     this.u = await this.cu.GetInfo();
   }
 
+  public CorrespondingRecords(): String[] {
+    return ["Contract"];
+  }
+
   public async GetEntries() {
     let arr: agent[] = new Array();
     if(this.u.type!==Type.Viewer){
