@@ -242,7 +242,7 @@ export class RecordComponent implements OnInit {
         });
         break;
       case 'bl':
-        this.as.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+        this.bls.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
             this.dangerMsg = 'Failed to update entry';
@@ -252,14 +252,54 @@ export class RecordComponent implements OnInit {
         });
         break;
       case 'bridge-finance':
+        this.bfs.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'contract':
+        this.cs.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'counterparty':
+        this.cps.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'inventory-schedule':
+        this.iss.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'inventory':
+        this.is.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'lc':
         break;
@@ -553,7 +593,6 @@ export class RecordComponent implements OnInit {
         if(this._newID!==0){
           let _agent = new entity.agent();
           _agent.agent_id = this.NewRow.id;
-          console.log(this.NewRow);
           let ac = this.NewRow.data.find(x => x.columnName === 'agent_commission').data;
           _agent.agent_commission = ac;
           _agent.agent_country = this.NewRow.data.find(x => x.columnName === 'agent_country').data;
@@ -570,6 +609,23 @@ export class RecordComponent implements OnInit {
         }
         break;
       case 'bl':
+        if(this._newID!==0){
+          let _bl = new entity.bl();
+          _bl.bl_id = this.NewRow.id;
+          let ac = this.NewRow.data.find(x => x.columnName === 'agent_commission').data;
+          _agent.agent_commission = ac;
+          _agent.agent_country = this.NewRow.data.find(x => x.columnName === 'agent_country').data;
+          this.as.AddEntry(_agent).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'bridge-finance':
         break;

@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     timer(1025).subscribe((val) => {
      this.fillValues();
+     this.toggleLoadingProfile();
    });
    this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
@@ -66,7 +67,6 @@ export class ProfileComponent implements OnInit {
       phone_number: this.u.phone_number,
       role: this.getRoleName(this.u.type)
     });
-    this.toggleLoadingProfile();
   }
 
   email:string = "?";
