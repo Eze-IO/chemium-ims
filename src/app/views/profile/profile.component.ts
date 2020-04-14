@@ -34,7 +34,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     timer(1025).subscribe((val) => {
      this.fillValues();
-     this.toggleLoadingProfile();
+     timer(2025).subscribe((val) => {
+      this.toggleLoadingProfile();
+    });
    });
    this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],

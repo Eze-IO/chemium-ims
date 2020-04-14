@@ -145,13 +145,74 @@ export class RecordComponent implements OnInit {
               r.data.push(c);
               rows.push(r);
             })
-            console.log(rows);
             this.generateTable(rows);
           })
           break;
         case 'bridge-finance':
+          this.RecordName = entityService.BridgeFinanceService.Name;
+          rows = [];
+          this.bfs.GetEntries().then(x => {
+            x.forEach(bf => {
+              let r = new row();
+              r.id = (bf.cost+bf.inventory_id);
+              let c = new cell();
+              r.data = [];
+              c.columnName = "inventory_id";
+              c.data = bf.inventory_id.toString();
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "cost";
+              c.data = bf.cost.toString();
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'contract':
+          this.RecordName = entityService.ContractService.Name;
+          rows = [];
+          this.cs.GetEntries().then(x => {
+            x.forEach(cc => {
+              let r = new row();
+              r.id = cc.contract_id;
+              let c = new cell();
+              r.data = [];
+              c.columnName = "agent_id";
+              c.data = cc.agent_id.toString();
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "contract_status_id";
+              c.data = cc.contract_status_id.toString();
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "contract_type_id";
+              c.data = cc.contract_type_id.toString();
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "contract_date";
+              c.data = this.formatDate(cc.contract_date);
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "counterparty_id";
+              c.data = cc.counterparty_id;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "incoterms_id";
+              c.data = cc.incoterms_id;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "link_id";
+              c.data = cc.link_id;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "bl_id";
+              c.data = cc.bl_id;
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'counterparty':
           break;
@@ -302,20 +363,74 @@ export class RecordComponent implements OnInit {
         });
         break;
       case 'lc':
-        break;
-      case 'measurement':
+        this.lcs.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'payment-terms':
+        this.pts.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'product':
+        this.ps.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'trader':
+        this.ts.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'trucker':
+        this.trs.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'unit_measurement':
+        this.ums.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
         break;
       case 'warehouse':
+        this.ws.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
+          if(x){
+          } else {
+            this.dangerMsg = 'Failed to update entry';
+            this.dangerModal.show();
+          }
+          this.selectView();
+        });
           break;
       default:
         break;
@@ -612,10 +727,12 @@ export class RecordComponent implements OnInit {
         if(this._newID!==0){
           let _bl = new entity.bl();
           _bl.bl_id = this.NewRow.id;
-          let ac = this.NewRow.data.find(x => x.columnName === 'agent_commission').data;
-          _agent.agent_commission = ac;
-          _agent.agent_country = this.NewRow.data.find(x => x.columnName === 'agent_country').data;
-          this.as.AddEntry(_agent).then(x => {
+          _bl.bl_status_id = this.NewRow.data.find(x => x.columnName === 'bl_status_id').data;
+          _bl.bl_date = this.NewRow.data.find(x => x.columnName === 'bl_date').data;
+          _bl.port_of_discharge = this.NewRow.data.find(x => x.columnName === 'port_of_discharge').data;
+          _bl.port_of_loading = this.NewRow.data.find(x => x.columnName === 'port_of_loading').data;
+          _bl.vessel = this.NewRow.data.find(x => x.columnName === 'vessel').data;
+          this.bls.AddEntry(_bl).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
               this.successModal.show();
@@ -628,30 +745,237 @@ export class RecordComponent implements OnInit {
         }
         break;
       case 'bridge-finance':
+        if(this._newID!==0){
+          let _bridge_finance = new entity.bridge_finance();
+          _bridge_finance.inventory_id = this.NewRow.data.find(x => x.columnName === 'inventory_id').data;
+          _bridge_finance.cost = this.NewRow.data.find(x => x.columnName === 'cost').data;
+          this.bfs.AddEntry(_bridge_finance).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'contract':
+        if(this._newID!==0){
+          let _contract = new entity.contract();
+          _contract.contract_id = this.NewRow.id;
+          _contract.contract_status_id = this.NewRow.data.find(x => x.columnName === 'contract_status_id').data;
+          _contract.contract_type_id = this.NewRow.data.find(x => x.columnName === 'contract_type_id').data;
+          _contract.counterparty_id = this.NewRow.data.find(x => x.columnName === 'counterparty_id').data;
+          _contract.agent_id = this.NewRow.data.find(x => x.columnName === 'agent_id').data;
+          _contract.bl_id = this.NewRow.data.find(x => x.columnName === 'bl_id').data;
+          _contract.incoterms_id = this.NewRow.data.find(x => x.columnName === 'incoterms_id').data;
+          _contract.link_id = this.NewRow.data.find(x => x.columnName === 'link_id').data;
+          _contract.payment_terms_id = this.NewRow.data.find(x => x.columnName === 'payment_terms_id').data;
+          _contract.contract_date = this.NewRow.data.find(x => x.columnName === 'contract_date').data;
+          this.cs.AddEntry(_contract).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'counterparty':
+        if(this._newID!==0){
+          let _counterparty = new entity.counterparty();
+          _counterparty.counterparty_id = this.NewRow.id;
+          _counterparty.counterparty_type_id = this.NewRow.data.find(x => x.columnName === 'counterparty_type_id').data;
+          _counterparty.counterparty_name = this.NewRow.data.find(x => x.columnName === 'counterparty_name').data;
+          this.cps.AddEntry(_counterparty).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'inventory-schedule':
+        if(this._newID!==0){
+          let _inventory_schedule = new entity.inventory_schedule();
+          _inventory_schedule.inventory_schedule_id = this.NewRow.id;
+          _inventory_schedule.inventory_id = this.NewRow.data.find(x => x.columnName === 'inventory_id').data;
+          _inventory_schedule.product_id = this.NewRow.data.find(x => x.columnName === 'product_id').data;
+          this.iss.AddEntry(_inventory_schedule).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'inventory':
+        if(this._newID!==0){
+          let _inventory = new entity.inventory();
+          _inventory.inventory_id = this.NewRow.id;
+          _inventory.product_id = this.NewRow.data.find(x => x.columnName === 'product_id').data;
+          _inventory.warehouse_id = this.NewRow.data.find(x => x.columnName === 'warehouse_id').data;
+          _inventory.quantity = this.NewRow.data.find(x => x.columnName === 'quantity').data;
+          _inventory.received_date = this.NewRow.data.find(x => x.columnName === 'received_date').data;
+          _inventory.release_date = this.NewRow.data.find(x => x.columnName === 'release_date').data;
+          this.is.AddEntry(_inventory).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'lc':
-        break;
-      case 'measurement':
+        if(this._newID!==0){
+          let _lc = new entity.lc();
+          _lc.lc_id = this.NewRow.id;
+          _lc.lc_number = this.NewRow.data.find(x => x.columnName === 'lc_number').data;
+          _lc.lc_location = this.NewRow.data.find(x => x.columnName === 'lc_location').data;
+          _lc.lc_date = this.NewRow.data.find(x => x.columnName === 'lc_date').data;
+          _lc.lc_price = this.NewRow.data.find(x => x.columnName === 'lc_price').data;
+          _lc.customer = this.NewRow.data.find(x => x.columnName === 'customer').data;
+          _lc.product = this.NewRow.data.find(x => x.columnName === 'product').data;
+          _lc.quantity = this.NewRow.data.find(x => x.columnName === 'quantity').data;
+          _lc.cutoff = this.NewRow.data.find(x => x.columnName === 'cutoff').data;
+          _lc.eta = this.NewRow.data.find(x => x.columnName === 'eta').data;
+          _lc.ets = this.NewRow.data.find(x => x.columnName === 'ets').data;
+          _lc.fee = this.NewRow.data.find(x => x.columnName === 'fee').data;
+          _lc.unit_measurement_id = this.NewRow.data.find(x => x.columnName === 'unit_measurement_id').data;
+          this.lcs.AddEntry(_lc).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'payment-terms':
+        if(this._newID!==0){
+          let _payment_terms = new entity.payment_terms();
+          _payment_terms.payment_terms_id = this.NewRow.id;
+          _payment_terms.payments_terms_type = this.NewRow.data.find(x => x.columnName === 'payments_terms_type').data;
+          _payment_terms.shipment_date = this.NewRow.data.find(x => x.columnName === 'shipment_date').data;
+          this.pts.AddEntry(_payment_terms).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'product':
+        if(this._newID!==0){
+          let _product = new entity.product();
+          _product.product_id = this.NewRow.id;
+          _product.grade = this.NewRow.data.find(x => x.columnName === 'grade').data;
+          _product.rc_number = this.NewRow.data.find(x => x.columnName === 'rc_number').data;
+          this.ps.AddEntry(_product).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'trader':
+        if(this._newID!==0){
+          let _trader = new entity.trader();
+          _trader.trader_id = this.NewRow.id;
+          _trader.trader_name = this.NewRow.data.find(x => x.columnName === 'trader_name').data;
+          this.ts.AddEntry(_trader).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'trucker':
+        if(this._newID!==0){
+          let _trucker = new entity.trucker();
+          _trucker.trucker_id = this.NewRow.id;
+          _trucker.warehouse_id = this.NewRow.data.find(x => x.columnName === 'warehouse_id').data;
+          _trucker.company = this.NewRow.data.find(x => x.columnName === 'company').data;
+          _trucker.rate = this.NewRow.data.find(x => x.columnName === 'rate').data;
+          this.trs.AddEntry(_trucker).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'unit_measurement':
+        if(this._newID!==0){
+          let _unit_measurement = new entity.unit_measurement();
+          _unit_measurement.unit_measurement_id = this.NewRow.id;
+          _unit_measurement.unit_measurement_desc = this.NewRow.data.find(x => x.columnName === 'unit_measurement_desc').data;
+          this.ums.AddEntry(_unit_measurement).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       case 'warehouse':
+        if(this._newID!==0){
+          let _warehouse = new entity.warehouse();
+          _warehouse.warehouse_id = this.NewRow.id;
+          _warehouse.warehouse_rate = this.NewRow.data.find(x => x.columnName === 'warehouse_rate').data;
+          this.ws.AddEntry(_warehouse).then(x => {
+            if(x){
+              this.successMsg='Successfully added entry!';
+              this.successModal.show();
+            } else {
+              this.dangerMsg="Failed to add entry";
+              this.dangerModal.show();
+            }
+            this.selectView();
+          });
+        }
         break;
       default:
         break;
