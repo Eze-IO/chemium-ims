@@ -215,26 +215,226 @@ export class RecordComponent implements OnInit {
           })
           break;
         case 'counterparty':
+          this.RecordName = entityService.CounterpartyService.Name;
+          rows = [];
+          this.cps.GetEntries().then(x => {
+            x.forEach(cp => {
+              let r = new row();
+              r.id = cp.counterparty_id;
+              let c = new cell();
+              r.data = [];
+              c.columnName = "counterparty_name";
+              c.data = cp.counterparty_name;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "counterparty_type_id";
+              c.data = cp.counterparty_type_id;
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'inventory-schedule':
+          this.RecordName = entityService.InventoryScheduleService.Name;
+          rows = [];
+          this.iss.GetEntries().then(x => {
+            x.forEach(is => {
+              let r = new row();
+              r.id = is.inventory_id
+              let c = new cell();
+              r.data = [];
+              c.columnName = "inventory_schedule_id";
+              c.data = is.inventory_schedule_id
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "product_id";
+              c.data = is.product_id;
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'inventory':
+          this.RecordName = entityService.InventoryScheduleService.Name;
+          rows = [];
+          this.iss.GetEntries().then(x => {
+            x.forEach(is => {
+              let r = new row();
+              r.id = is.inventory_id
+              let c = new cell();
+              r.data = [];
+              c.columnName = "inventory_schedule_id";
+              c.data = is.inventory_schedule_id
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "product_id";
+              c.data = is.product_id;
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'lc':
-          break;
-        case 'measurement':
+          this.RecordName = entityService.LCService.Name;
+          rows = [];
+          this.lcs.GetEntries().then(x => {
+            x.forEach(lc => {
+              let r = new row();
+              r.id = lc.lc_id
+              let c = new cell();
+              r.data = [];
+              c.columnName = "lc_location";
+              c.data = lc.lc_location;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "lc_number";
+              c.data = lc.lc_number;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "lc_price";
+              c.data = lc.lc_price;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "lc_date";
+              c.data = lc.lc_date;
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'payment-terms':
+          this.RecordName = entityService.PaymentTermsService.Name;
+          rows = [];
+          this.pts.GetEntries().then(x => {
+            x.forEach(pt => {
+              let r = new row();
+              r.id = pt.payment_terms_id;
+              let c = new cell();
+              r.data = [];
+              c.columnName = "payments_terms_type";
+              c.data = pt.payments_terms_type;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "shipment_date";
+              c.data = this.formatDate(pt.shipment_date);
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'product':
+          this.RecordName = entityService.ProductService.Name;
+          rows = [];
+          this.ps.GetEntries().then(x => {
+            x.forEach(p => {
+              let r = new row();
+              r.id = p.product_id;
+              let c = new cell();
+              r.data = [];
+              c.columnName = "rc_number";
+              c.data = p.rc_number;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "grade";
+              c.data = p.grade;
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'trader':
+          this.RecordName = entityService.TraderService.Name;
+          rows = [];
+          this.ts.GetEntries().then(x => {
+            x.forEach(t => {
+              let r = new row();
+              r.id = t.trader_id;
+              let c = new cell();
+              r.data = [];
+              c.columnName = "trader_name";
+              c.data = t.trader_name;
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'trucker':
+          this.RecordName = entityService.TruckerService.Name;
+          rows = [];
+          this.trs.GetEntries().then(x => {
+            x.forEach(tr => {
+              let r = new row();
+              r.id = tr.trucker_id;
+              let c = new cell();
+              r.data = [];
+              c.columnName = "warehouse_id";
+              c.data = tr.warehouse_id;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "company";
+              c.data = tr.company;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "rate";
+              c.data = tr.rate;
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'unit_measurement':
+          this.RecordName = entityService.UnitMeasurementService.Name;
+          rows = [];
+          this.ums.GetEntries().then(x => {
+            x.forEach(um => {
+              let r = new row();
+              r.id = um.unit_measurement_id;
+              let c = new cell();
+              r.data = [];
+              c.columnName = "unit_measurement_desc";
+              c.data = um.unit_measurement_desc;
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         case 'warehouse':
+          this.RecordName = entityService.WarehouseService.Name;
+          rows = [];
+          this.ws.GetEntries().then(x => {
+            x.forEach(w => {
+              let r = new row();
+              r.id = w.warehouse_id;
+              let c = new cell();
+              r.data = [];
+              c.columnName = "unit_measurement_id";
+              c.data = w.unit_measurement_id;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "warehouse_rate";
+              c.data = w.warehouse_rate;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "trader_id";
+              c.data = w.trader_id;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "location_desc";
+              c.data = w.location_desc;
+              r.data.push(c);
+              rows.push(r);
+            })
+            this.generateTable(rows);
+          })
           break;
         default:
           this.showDefaultPage();
@@ -433,6 +633,7 @@ export class RecordComponent implements OnInit {
         });
           break;
       default:
+        this.showDefaultPage();
         break;
     }
   }
@@ -645,6 +846,7 @@ export class RecordComponent implements OnInit {
         })
         break;
       default:
+        this.showDefaultPage();
         break;
     }
   }
@@ -978,6 +1180,7 @@ export class RecordComponent implements OnInit {
         }
         break;
       default:
+        this.showDefaultPage();
         break;
     }
   }

@@ -18,9 +18,9 @@ export class WarehouseService {
     return ["Trucker", "Inventory"];
   }
 
-  public GetEntries(): warehouse[] {
+  public async GetEntries()  {
     let arr: warehouse[] = new Array();
-    let entries = this.ras.GetEntity("warehouse");
+    let entries = await this.ras.GetEntity("warehouse");
     entries.then(items => {
       items.forEach(function (item) {
         let w = new warehouse();

@@ -48,8 +48,6 @@ export class CurrentUserService {
         this._firstName = ExtensionService.IsEmptyOrNull(_name[0]) ? null : _name[0];
         this._lastName = ExtensionService.IsEmptyOrNull(_name[1]) ? null : _name[1];
       }
-    } else {
-      this.auth.Deauthorize();
     }
     return this.u;
   }
