@@ -30,6 +30,8 @@ export class PaymentTermsService {
     let arr: payment_terms[] = new Array();
     if(this.u.type!==Type.Viewer){
       let payment_terms = await this.ras.GetEntity("payment_terms");
+      if(payment_terms===null)
+        return [];
       payment_terms.forEach(function(item) {
         let pt = new payment_terms();
         pt.payment_terms_id = item['payment_terms_id'];

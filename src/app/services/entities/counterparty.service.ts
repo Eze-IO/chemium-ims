@@ -30,6 +30,8 @@ export class CounterpartyService {
     let arr: counterparty[] = new Array();
     if(this.u.type!==Type.Viewer){
       let counterparties = await this.ras.GetEntity("counterparty");
+      if(counterparties===null)
+        return [];
       counterparties.forEach(function(item) {
         let cp = new counterparty();
         cp.counterparty_id = item['counterparty_id'];

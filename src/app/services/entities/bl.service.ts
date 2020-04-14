@@ -30,6 +30,8 @@ export class BLService {
     let arr: bl[] = new Array();
     if(this.u.type!==Type.Viewer){
       let bls = await this.ras.GetEntity("bl");
+      if(bls===null)
+        return [];
       bls.forEach(function(item) {
         let b = new bl();
         b.bl_id = item['bl_id'];

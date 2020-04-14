@@ -30,6 +30,8 @@ export class ProductService {
     let arr: product[] = new Array();
     if(this.u.type!==Type.Viewer){
       let products = await this.ras.GetEntity("product");
+      if(products===null)
+        return [];
       products.forEach(function(item) {
         let p = new product();
         p.product_id = item['product_id'];

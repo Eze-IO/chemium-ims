@@ -20,8 +20,10 @@ export class WarehouseService {
 
   public async GetEntries()  {
     let arr: warehouse[] = new Array();
-    let entries = await this.ras.GetEntity("warehouse");
-    entries.then(items => {
+    let warehouses = await this.ras.GetEntity("warehouse");
+    if(warehouses===null)
+      return [];
+    warehouses.then(items => {
       items.forEach(function (item) {
         let w = new warehouse();
         w.warehouse_id = item['warehouse_id'];

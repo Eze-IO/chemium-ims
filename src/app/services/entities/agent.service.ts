@@ -30,6 +30,8 @@ export class AgentService {
     let arr: agent[] = new Array();
     if(this.u.type!==Type.Viewer){
       let agents = await this.ras.GetEntity("agent");
+      if(agents===null)
+        return [];
       agents.forEach(function(item) {
         let a = new agent();
         a.agent_id = item['agent_id'];

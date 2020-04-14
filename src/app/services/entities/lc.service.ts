@@ -30,6 +30,8 @@ export class LCService {
     let arr: lc[] = new Array();
     if(this.u.type!==Type.Viewer){
       let lcs = await this.ras.GetEntity("lc");
+      if(lcs===null)
+        return [];
       lcs.forEach(function(item) {
         let l = new lc();
         l.lc_id = item['lc_id'];

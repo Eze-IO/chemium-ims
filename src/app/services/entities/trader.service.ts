@@ -30,6 +30,8 @@ export class TraderService {
     let arr: trader[] = new Array();
     if(this.u.type!==Type.Viewer){
       let traders = await this.ras.GetEntity("trader");
+      if(traders===null)
+        return [];
       traders.forEach(function(item) {
         let t = new trader();
         t.trader_id = item['trader_id'];

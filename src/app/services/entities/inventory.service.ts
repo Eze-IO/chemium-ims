@@ -30,6 +30,8 @@ export class InventoryService {
     let arr: inventory[] = new Array();
     if(this.u.type!==Type.Viewer){
       let inventories = await this.ras.GetEntity("inventory");
+      if(inventories===null)
+        return [];
       inventories.forEach(function(item) {
         let i = new inventory();
         i.inventory_id = item['inventory_id'];

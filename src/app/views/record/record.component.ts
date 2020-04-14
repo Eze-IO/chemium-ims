@@ -148,7 +148,7 @@ export class RecordComponent implements OnInit {
             this.generateTable(rows);
           })
           break;
-        case 'bridge-finance':
+        case 'bridge_finance':
           this.RecordName = entityService.BridgeFinanceService.Name;
           rows = [];
           this.bfs.GetEntries().then(x => {
@@ -218,6 +218,7 @@ export class RecordComponent implements OnInit {
           this.RecordName = entityService.CounterpartyService.Name;
           rows = [];
           this.cps.GetEntries().then(x => {
+            console.log(x);
             x.forEach(cp => {
               let r = new row();
               r.id = cp.counterparty_id;
@@ -498,6 +499,8 @@ export class RecordComponent implements OnInit {
   columns: string[];
   rows: row[];
   generateTable(rows: row[]){
+    if(rows.length<=0)
+      this.u.type = Type.Viewer;
     this.columns = [];
     let _fin = false;
     rows.forEach(x => {

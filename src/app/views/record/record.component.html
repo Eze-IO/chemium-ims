@@ -43,7 +43,7 @@
             </tr>
           </tbody>
         </table>
-        <div class="card-footer text-center">
+        <div *ngIf="!IsViewer" class="card-footer text-center">
           <button type="button"
           class="btn btn-block btn-primary" data-toggle="modal"
           (click)="infoModal.show()">
@@ -67,6 +67,9 @@
               {{ item.name }}
               <img class="" width="240" height="240" src="../../../../assets/img/record.gif"/>
             </a>
+            <!--<div style='background-image: url("../../../../assets/img/record.gif");'>
+              {{ item.name }}
+            </div>-->
           </div>
         </div>
       </div>

@@ -30,6 +30,8 @@ export class UnitMeasurementService {
     let arr: unit_measurement[] = new Array();
     if(this.u.type!==Type.Viewer){
       let unit_measurements = await this.ras.GetEntity("unit_measurement");
+      if(unit_measurements===null)
+        return [];
       unit_measurements.forEach(function(item) {
         let u = new unit_measurement();
         u.unit_measurement_id = item['unit_measurement_id'];

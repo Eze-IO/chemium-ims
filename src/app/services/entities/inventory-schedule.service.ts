@@ -29,6 +29,8 @@ export class InventoryScheduleService {
     let arr: inventory_schedule[] = new Array();
     if(this.u.type!==Type.Viewer){
       let inventory_schedules = await this.ras.GetEntity("inventory_schedule");
+      if(inventory_schedules===null)
+        return [];
       inventory_schedules.forEach(function(item) {
         let is = new inventory_schedule();
         is.inventory_schedule_id = item['inventory_schedule_id'];

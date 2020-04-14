@@ -30,6 +30,8 @@ export class LinkService {
     let arr: link[] = new Array();
     if(this.u.type!==Type.Viewer){
       let links = await this.ras.GetEntity("link");
+      if(links===null)
+        return [];
       links.forEach(function(item) {
         let li = new link();
         li.link_id = item['link_id'];

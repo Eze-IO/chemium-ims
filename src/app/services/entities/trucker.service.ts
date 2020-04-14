@@ -30,6 +30,8 @@ export class TruckerService {
     let arr: trucker[] = new Array();
     if(this.u.type!==Type.Viewer){
       let truckers = await this.ras.GetEntity("trucker");
+      if(truckers===null)
+        return [];
       truckers.forEach(function(item) {
         let tr = new trucker();
         tr.trucker_id = item['trucker_id'];

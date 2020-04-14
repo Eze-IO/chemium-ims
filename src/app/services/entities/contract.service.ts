@@ -30,6 +30,8 @@ export class ContractService {
     let arr: contract[] = new Array();
     if(this.u.type!==Type.Viewer){
       let contracts = await this.ras.GetEntity("contract");
+      if(contracts===null)
+        return [];
       contracts.forEach(function(item) {
         let c = new contract();
         c.contract_id = item['contract_id'];

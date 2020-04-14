@@ -30,6 +30,8 @@ export class BridgeFinanceService {
     let arr: bridge_finance[] = new Array();
     if(this.u.type!==Type.Viewer){
       let bridge_finances = await this.ras.GetEntity("bridge_finance");
+      if(bridge_finances===null)
+        return [];
       bridge_finances.forEach(function(item) {
         let bf = new bridge_finance();
         bf.inventory_id = item['inventory_id'];
