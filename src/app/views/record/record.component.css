@@ -3,18 +3,20 @@
   overflow: hidden;
 }
 .record-text {
-  color: black;
+  color: white;
+  font-size: 90%;
   font-weight: bold;
-  position: relative;
-  text-align: center;
-  font-weight: 30%;
-  bottom: -50%;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .records-sliding {
   position: absolute;
   left: 0;
   top: 0;
   animation: slideshow 24s linear infinite;
+  text-align: center;
 }
 @keyframes slideshow {
   0%    { left: 200%; }

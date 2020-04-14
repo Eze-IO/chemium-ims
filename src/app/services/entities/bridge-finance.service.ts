@@ -10,7 +10,7 @@ import { Type } from '../../models/type';
 })
 export class BridgeFinanceService {
 
-  public static Name:string = "bridge_finance";
+  public static Name:string = "Bridge Finance";
 
   private u:user = new user();
   constructor(private ras: RestAPIService,

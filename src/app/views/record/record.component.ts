@@ -482,7 +482,7 @@ export class RecordComponent implements OnInit {
 
   formatName(str: string){
     if(!ExtensionService.IsEmptyOrNull(str))
-      return str.toUpperCase().replace(/_/g,' ');
+      return str.toUpperCase().replace(/_/g,' ').replace('ID', ' ');
     else
       return str;
   }
@@ -512,7 +512,6 @@ export class RecordComponent implements OnInit {
         _fin = true;
       }
     })
-    console.log(this.columns);
     this.rows = rows;
     this.count = [];
     for(let i=0;i<rows.length;i++){
@@ -520,6 +519,10 @@ export class RecordComponent implements OnInit {
     }
     this.loading = 1;
     this.NewRow = this.getNewRow();
+    if(rows.length<=0)
+      this.tableMessage = "There are no records to view, add or edit";
+    else if(this.IsViewer)
+      this.tableMessage = "This record is in read only mode!";
   }
 
   onCellFocus(e, rowid :number, columnName: string) {

@@ -62,14 +62,11 @@
       <br><br>
       <div class="row animated fadeIn" [@slideInOut]>
         <div class="col-md-12">
-          <div *ngFor="let item of _navItems" class="records-sliding">
-            <a class="records-sliding record-text h5" routerLink="{{ item.url }}">
-              {{ item.name }}
-              <img class="" width="240" height="240" src="../../../../assets/img/record.gif"/>
+          <div *ngFor="let item of _navItems" class="">
+            <a class="records-sliding" routerLink="{{ item.url }}">
+              <img class="" width="480" height="480" src="../../../../assets/img/record.gif"/>
+              <div id="record-text" class="record-text">{{ item.name }}</div>
             </a>
-            <!--<div style='background-image: url("../../../../assets/img/record.gif");'>
-              {{ item.name }}
-            </div>-->
           </div>
         </div>
       </div>

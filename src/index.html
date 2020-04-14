@@ -9,6 +9,8 @@
   <meta name="author" content="Cloud Consultants">
   <meta name="keyword" content="Chemium,IMS,Cloud,Consultants">
   <link rel="shortcut icon" href="assets/img/favicon.ico">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="assets/js/circletype.min.js"></script>
   <script src="assets/js/moment.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded',
@@ -23,6 +25,8 @@
       document.documentElement.style.setProperty('--timer-seconds', "'" + moment().format("ss") + "'");
       requestAnimationFrame(updateTime);
     }
+
+    $('#record-text').circleType({radius: 800});
   </script>
   <title>Chemium IMS - Inventory Management System</title>
   <script>
