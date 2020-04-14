@@ -195,19 +195,19 @@ export class RecordComponent implements OnInit {
               r.data.push(c);
               c = new cell();
               c.columnName = "counterparty_id";
-              c.data = cc.counterparty_id;
+              c.data = cc.counterparty_id.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "incoterms_id";
-              c.data = cc.incoterms_id;
+              c.data = cc.incoterms_id.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "link_id";
-              c.data = cc.link_id;
+              c.data = cc.link_id.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "bl_id";
-              c.data = cc.bl_id;
+              c.data = cc.bl_id.toString();
               r.data.push(c);
               rows.push(r);
             })
@@ -228,49 +228,62 @@ export class RecordComponent implements OnInit {
               r.data.push(c);
               c = new cell();
               c.columnName = "counterparty_type_id";
-              c.data = cp.counterparty_type_id;
+              c.data = cp.counterparty_type_id.toString();
               r.data.push(c);
               rows.push(r);
             })
             this.generateTable(rows);
           })
           break;
-        case 'inventory-schedule':
+        case 'inventory_schedule':
           this.RecordName = entityService.InventoryScheduleService.Name;
           rows = [];
           this.iss.GetEntries().then(x => {
             x.forEach(is => {
               let r = new row();
-              r.id = is.inventory_id
+              r.id = is.inventory_schedule_id
               let c = new cell();
               r.data = [];
-              c.columnName = "inventory_schedule_id";
-              c.data = is.inventory_schedule_id
+              c.columnName = "inventory_id";
+              c.data = is.inventory_id.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "product_id";
-              c.data = is.product_id;
+              c.data = is.product_id.toString();
               r.data.push(c);
               rows.push(r);
             })
+            console.log(rows);
             this.generateTable(rows);
           })
           break;
         case 'inventory':
-          this.RecordName = entityService.InventoryScheduleService.Name;
+          this.RecordName = entityService.InventoryService.Name;
           rows = [];
-          this.iss.GetEntries().then(x => {
+          this.is.GetEntries().then(x => {
             x.forEach(is => {
               let r = new row();
               r.id = is.inventory_id
               let c = new cell();
               r.data = [];
-              c.columnName = "inventory_schedule_id";
-              c.data = is.inventory_schedule_id
+              c.columnName = "product_id";
+              c.data = is.product_id.toString();
               r.data.push(c);
               c = new cell();
-              c.columnName = "product_id";
-              c.data = is.product_id;
+              c.columnName = "warehouse_id";
+              c.data = is.warehouse_id.toString();
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "quantity";
+              c.data = is.quantity.toString();
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "received_date";
+              c.data = this.formatDate(is.received_date);
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "release_date";
+              c.data = this.formatDate(is.release_date);
               r.data.push(c);
               rows.push(r);
             })
@@ -295,18 +308,38 @@ export class RecordComponent implements OnInit {
               r.data.push(c);
               c = new cell();
               c.columnName = "lc_price";
-              c.data = lc.lc_price;
+              c.data = lc.lc_price.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "lc_date";
-              c.data = lc.lc_date;
+              c.data = this.formatDate(lc.lc_date);
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "customer";
+              c.data = lc.customer;
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "cutoff";
+              c.data = this.formatDate(lc.cutoff);
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "eta";
+              c.data = this.formatDate(lc.eta);
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "ets";
+              c.data = this.formatDate(lc.ets);
+              r.data.push(c);
+              c = new cell();
+              c.columnName = "fee";
+              c.data = lc.fee.toString();
               r.data.push(c);
               rows.push(r);
             })
             this.generateTable(rows);
           })
           break;
-        case 'payment-terms':
+        case 'payment_terms':
           this.RecordName = entityService.PaymentTermsService.Name;
           rows = [];
           this.pts.GetEntries().then(x => {
@@ -337,7 +370,7 @@ export class RecordComponent implements OnInit {
               let c = new cell();
               r.data = [];
               c.columnName = "rc_number";
-              c.data = p.rc_number;
+              c.data = p.rc_number.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "grade";
@@ -358,7 +391,7 @@ export class RecordComponent implements OnInit {
               let c = new cell();
               r.data = [];
               c.columnName = "trader_name";
-              c.data = t.trader_name;
+              c.data = t.trader_name.toString();
               r.data.push(c);
               rows.push(r);
             })
@@ -375,15 +408,15 @@ export class RecordComponent implements OnInit {
               let c = new cell();
               r.data = [];
               c.columnName = "warehouse_id";
-              c.data = tr.warehouse_id;
+              c.data = tr.warehouse_id.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "company";
-              c.data = tr.company;
+              c.data = tr.company.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "rate";
-              c.data = tr.rate;
+              c.data = tr.rate.toString();
               r.data.push(c);
               rows.push(r);
             })
@@ -400,7 +433,7 @@ export class RecordComponent implements OnInit {
               let c = new cell();
               r.data = [];
               c.columnName = "unit_measurement_desc";
-              c.data = um.unit_measurement_desc;
+              c.data = um.unit_measurement_desc.toString();
               r.data.push(c);
               rows.push(r);
             })
@@ -417,19 +450,19 @@ export class RecordComponent implements OnInit {
               let c = new cell();
               r.data = [];
               c.columnName = "unit_measurement_id";
-              c.data = w.unit_measurement_id;
+              c.data = w.unit_measurement_id.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "warehouse_rate";
-              c.data = w.warehouse_rate;
+              c.data = w.warehouse_rate.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "trader_id";
-              c.data = w.trader_id;
+              c.data = w.trader_id.toString();
               r.data.push(c);
               c = new cell();
               c.columnName = "location_desc";
-              c.data = w.location_desc;
+              c.data = w.location_desc.toString();
               r.data.push(c);
               rows.push(r);
             })
@@ -512,7 +545,7 @@ export class RecordComponent implements OnInit {
           this.selectView();
         });
         break;
-      case 'bridge-finance':
+      case 'bridge_finance':
         this.bfs.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
@@ -542,7 +575,7 @@ export class RecordComponent implements OnInit {
           this.selectView();
         });
         break;
-      case 'inventory-schedule':
+      case 'inventory_schedule':
         this.iss.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
@@ -572,7 +605,7 @@ export class RecordComponent implements OnInit {
           this.selectView();
         });
         break;
-      case 'payment-terms':
+      case 'payment_terms':
         this.pts.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
@@ -677,7 +710,7 @@ export class RecordComponent implements OnInit {
           }
         })
         break;
-      case 'bridge-finance':
+      case 'bridge_finance':
         this.bfs.DeleteEntry(d.id).then(x => {
           if(x){
             this.selectView();
@@ -722,7 +755,7 @@ export class RecordComponent implements OnInit {
           }
         })
         break;
-      case 'inventory-schedule':
+      case 'inventory_schedule':
         this.iss.DeleteEntry(d.id).then(x => {
           if(x){
             this.selectView();
@@ -763,7 +796,7 @@ export class RecordComponent implements OnInit {
           }
         })
         break;
-      case 'payment-terms':
+      case 'payment_terms':
         this.pts.DeleteEntry(d.id).then(x => {
           if(x){
             this.selectView();
@@ -867,7 +900,14 @@ export class RecordComponent implements OnInit {
     r.data = [];
     for(let c=0;c<cells;c++){
       let _c = new cell();
-      let da = this.rows.shift().data;
+      let _fin = false;
+      let da = [];
+      this.rows.forEach(x => {
+        if(x!==undefined&&x!==null&&!_fin){
+          da = x.data;
+          _fin = true;
+        }
+      })
       _c.columnName = (da[c].columnName);
       r.data.push(_c);
     }
@@ -911,7 +951,7 @@ export class RecordComponent implements OnInit {
           let _agent = new entity.agent();
           _agent.agent_id = this.NewRow.id;
           let ac = this.NewRow.data.find(x => x.columnName === 'agent_commission').data;
-          _agent.agent_commission = ac;
+          _agent.agent_commission = Number(ac);
           _agent.agent_country = this.NewRow.data.find(x => x.columnName === 'agent_country').data;
           this.as.AddEntry(_agent).then(x => {
             if(x){
@@ -929,8 +969,8 @@ export class RecordComponent implements OnInit {
         if(this._newID!==0){
           let _bl = new entity.bl();
           _bl.bl_id = this.NewRow.id;
-          _bl.bl_status_id = this.NewRow.data.find(x => x.columnName === 'bl_status_id').data;
-          _bl.bl_date = this.NewRow.data.find(x => x.columnName === 'bl_date').data;
+          _bl.bl_status_id = Number(this.NewRow.data.find(x => x.columnName === 'bl_status_id').data);
+          _bl.bl_date = new Date(this.NewRow.data.find(x => x.columnName === 'bl_date').data);
           _bl.port_of_discharge = this.NewRow.data.find(x => x.columnName === 'port_of_discharge').data;
           _bl.port_of_loading = this.NewRow.data.find(x => x.columnName === 'port_of_loading').data;
           _bl.vessel = this.NewRow.data.find(x => x.columnName === 'vessel').data;
@@ -946,11 +986,11 @@ export class RecordComponent implements OnInit {
           });
         }
         break;
-      case 'bridge-finance':
+      case 'bridge_finance':
         if(this._newID!==0){
           let _bridge_finance = new entity.bridge_finance();
-          _bridge_finance.inventory_id = this.NewRow.data.find(x => x.columnName === 'inventory_id').data;
-          _bridge_finance.cost = this.NewRow.data.find(x => x.columnName === 'cost').data;
+          _bridge_finance.inventory_id = Number(this.NewRow.data.find(x => x.columnName === 'inventory_id').data);
+          _bridge_finance.cost = Number(this.NewRow.data.find(x => x.columnName === 'cost').data);
           this.bfs.AddEntry(_bridge_finance).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -967,15 +1007,15 @@ export class RecordComponent implements OnInit {
         if(this._newID!==0){
           let _contract = new entity.contract();
           _contract.contract_id = this.NewRow.id;
-          _contract.contract_status_id = this.NewRow.data.find(x => x.columnName === 'contract_status_id').data;
-          _contract.contract_type_id = this.NewRow.data.find(x => x.columnName === 'contract_type_id').data;
-          _contract.counterparty_id = this.NewRow.data.find(x => x.columnName === 'counterparty_id').data;
-          _contract.agent_id = this.NewRow.data.find(x => x.columnName === 'agent_id').data;
-          _contract.bl_id = this.NewRow.data.find(x => x.columnName === 'bl_id').data;
-          _contract.incoterms_id = this.NewRow.data.find(x => x.columnName === 'incoterms_id').data;
-          _contract.link_id = this.NewRow.data.find(x => x.columnName === 'link_id').data;
-          _contract.payment_terms_id = this.NewRow.data.find(x => x.columnName === 'payment_terms_id').data;
-          _contract.contract_date = this.NewRow.data.find(x => x.columnName === 'contract_date').data;
+          _contract.contract_status_id = Number(this.NewRow.data.find(x => x.columnName === 'contract_status_id').data);
+          _contract.contract_type_id = Number(this.NewRow.data.find(x => x.columnName === 'contract_type_id').data);
+          _contract.counterparty_id = Number(this.NewRow.data.find(x => x.columnName === 'counterparty_id').data);
+          _contract.agent_id = Number(this.NewRow.data.find(x => x.columnName === 'agent_id').data);
+          _contract.bl_id = Number(this.NewRow.data.find(x => x.columnName === 'bl_id').data);
+          _contract.incoterms_id = Number(this.NewRow.data.find(x => x.columnName === 'incoterms_id').data);
+          _contract.link_id = Number(this.NewRow.data.find(x => x.columnName === 'link_id').data);
+          _contract.payment_terms_id = Number(this.NewRow.data.find(x => x.columnName === 'payment_terms_id').data);
+          _contract.contract_date = new Date(this.NewRow.data.find(x => x.columnName === 'contract_date').data);
           this.cs.AddEntry(_contract).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -992,7 +1032,7 @@ export class RecordComponent implements OnInit {
         if(this._newID!==0){
           let _counterparty = new entity.counterparty();
           _counterparty.counterparty_id = this.NewRow.id;
-          _counterparty.counterparty_type_id = this.NewRow.data.find(x => x.columnName === 'counterparty_type_id').data;
+          _counterparty.counterparty_type_id = Number(this.NewRow.data.find(x => x.columnName === 'counterparty_type_id').data);
           _counterparty.counterparty_name = this.NewRow.data.find(x => x.columnName === 'counterparty_name').data;
           this.cps.AddEntry(_counterparty).then(x => {
             if(x){
@@ -1006,12 +1046,12 @@ export class RecordComponent implements OnInit {
           });
         }
         break;
-      case 'inventory-schedule':
+      case 'inventory_schedule':
         if(this._newID!==0){
           let _inventory_schedule = new entity.inventory_schedule();
           _inventory_schedule.inventory_schedule_id = this.NewRow.id;
-          _inventory_schedule.inventory_id = this.NewRow.data.find(x => x.columnName === 'inventory_id').data;
-          _inventory_schedule.product_id = this.NewRow.data.find(x => x.columnName === 'product_id').data;
+          _inventory_schedule.inventory_id = Number(this.NewRow.data.find(x => x.columnName === 'inventory_id').data);
+          _inventory_schedule.product_id = Number(this.NewRow.data.find(x => x.columnName === 'product_id').data);
           this.iss.AddEntry(_inventory_schedule).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1028,11 +1068,11 @@ export class RecordComponent implements OnInit {
         if(this._newID!==0){
           let _inventory = new entity.inventory();
           _inventory.inventory_id = this.NewRow.id;
-          _inventory.product_id = this.NewRow.data.find(x => x.columnName === 'product_id').data;
-          _inventory.warehouse_id = this.NewRow.data.find(x => x.columnName === 'warehouse_id').data;
-          _inventory.quantity = this.NewRow.data.find(x => x.columnName === 'quantity').data;
-          _inventory.received_date = this.NewRow.data.find(x => x.columnName === 'received_date').data;
-          _inventory.release_date = this.NewRow.data.find(x => x.columnName === 'release_date').data;
+          _inventory.product_id = Number(this.NewRow.data.find(x => x.columnName === 'product_id').data);
+          _inventory.warehouse_id = Number(this.NewRow.data.find(x => x.columnName === 'warehouse_id').data);
+          _inventory.quantity = Number(this.NewRow.data.find(x => x.columnName === 'quantity').data);
+          _inventory.received_date = new Date(this.NewRow.data.find(x => x.columnName === 'received_date').data);
+          _inventory.release_date = new Date(this.NewRow.data.find(x => x.columnName === 'release_date').data);
           this.is.AddEntry(_inventory).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1051,16 +1091,16 @@ export class RecordComponent implements OnInit {
           _lc.lc_id = this.NewRow.id;
           _lc.lc_number = this.NewRow.data.find(x => x.columnName === 'lc_number').data;
           _lc.lc_location = this.NewRow.data.find(x => x.columnName === 'lc_location').data;
-          _lc.lc_date = this.NewRow.data.find(x => x.columnName === 'lc_date').data;
-          _lc.lc_price = this.NewRow.data.find(x => x.columnName === 'lc_price').data;
+          _lc.lc_date = new Date(this.NewRow.data.find(x => x.columnName === 'lc_date').data);
+          _lc.lc_price = Number(this.NewRow.data.find(x => x.columnName === 'lc_price').data);
           _lc.customer = this.NewRow.data.find(x => x.columnName === 'customer').data;
           _lc.product = this.NewRow.data.find(x => x.columnName === 'product').data;
-          _lc.quantity = this.NewRow.data.find(x => x.columnName === 'quantity').data;
-          _lc.cutoff = this.NewRow.data.find(x => x.columnName === 'cutoff').data;
-          _lc.eta = this.NewRow.data.find(x => x.columnName === 'eta').data;
-          _lc.ets = this.NewRow.data.find(x => x.columnName === 'ets').data;
-          _lc.fee = this.NewRow.data.find(x => x.columnName === 'fee').data;
-          _lc.unit_measurement_id = this.NewRow.data.find(x => x.columnName === 'unit_measurement_id').data;
+          _lc.quantity = Number(this.NewRow.data.find(x => x.columnName === 'quantity').data);
+          _lc.cutoff = new Date(this.NewRow.data.find(x => x.columnName === 'cutoff').data);
+          _lc.eta = new Date(this.NewRow.data.find(x => x.columnName === 'eta').data);
+          _lc.ets = new Date(this.NewRow.data.find(x => x.columnName === 'ets').data);
+          _lc.fee = Number(this.NewRow.data.find(x => x.columnName === 'fee').data);
+          _lc.unit_measurement_id = Number(this.NewRow.data.find(x => x.columnName === 'unit_measurement_id').data);
           this.lcs.AddEntry(_lc).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1073,12 +1113,12 @@ export class RecordComponent implements OnInit {
           });
         }
         break;
-      case 'payment-terms':
+      case 'payment_terms':
         if(this._newID!==0){
           let _payment_terms = new entity.payment_terms();
           _payment_terms.payment_terms_id = this.NewRow.id;
           _payment_terms.payments_terms_type = this.NewRow.data.find(x => x.columnName === 'payments_terms_type').data;
-          _payment_terms.shipment_date = this.NewRow.data.find(x => x.columnName === 'shipment_date').data;
+          _payment_terms.shipment_date = new Date(this.NewRow.data.find(x => x.columnName === 'shipment_date').data);
           this.pts.AddEntry(_payment_terms).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1096,7 +1136,7 @@ export class RecordComponent implements OnInit {
           let _product = new entity.product();
           _product.product_id = this.NewRow.id;
           _product.grade = this.NewRow.data.find(x => x.columnName === 'grade').data;
-          _product.rc_number = this.NewRow.data.find(x => x.columnName === 'rc_number').data;
+          _product.rc_number = Number(this.NewRow.data.find(x => x.columnName === 'rc_number').data);
           this.ps.AddEntry(_product).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1130,9 +1170,9 @@ export class RecordComponent implements OnInit {
         if(this._newID!==0){
           let _trucker = new entity.trucker();
           _trucker.trucker_id = this.NewRow.id;
-          _trucker.warehouse_id = this.NewRow.data.find(x => x.columnName === 'warehouse_id').data;
+          _trucker.warehouse_id = Number(this.NewRow.data.find(x => x.columnName === 'warehouse_id').data);
           _trucker.company = this.NewRow.data.find(x => x.columnName === 'company').data;
-          _trucker.rate = this.NewRow.data.find(x => x.columnName === 'rate').data;
+          _trucker.rate = Number(this.NewRow.data.find(x => x.columnName === 'rate').data);
           this.trs.AddEntry(_trucker).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1166,7 +1206,7 @@ export class RecordComponent implements OnInit {
         if(this._newID!==0){
           let _warehouse = new entity.warehouse();
           _warehouse.warehouse_id = this.NewRow.id;
-          _warehouse.warehouse_rate = this.NewRow.data.find(x => x.columnName === 'warehouse_rate').data;
+          _warehouse.warehouse_rate = Number(this.NewRow.data.find(x => x.columnName === 'warehouse_rate').data);
           this.ws.AddEntry(_warehouse).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';

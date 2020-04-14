@@ -3,5 +3,5 @@
 */
 export class cell {
   columnName:string;
-  data:any;
+  data:string;
 }

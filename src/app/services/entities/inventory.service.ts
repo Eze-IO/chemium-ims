@@ -37,7 +37,7 @@ export class InventoryService {
         i.warehouse_id = item['warehouse_id'];
         i.quantity = item['quantity'];
         i.received_date = item['received_date'];
-        i.release_date = item['release_date']
+        i.release_date = item['release_date'];
         arr.push(i);
       });
     }
