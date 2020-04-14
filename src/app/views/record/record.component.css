@@ -5,9 +5,10 @@
 .record-text {
   color: black;
   font-weight: bold;
-  position: absolute;
+  position: relative;
   text-align: center;
   font-weight: 30%;
+  bottom: -50%;
 }
 .records-sliding {
   position: absolute;

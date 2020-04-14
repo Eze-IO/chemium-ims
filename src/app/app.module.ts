@@ -56,7 +56,6 @@ import { ClockComponent } from './views/clock/clock.component';
 import { SupportComponent } from './views/support/support.component';
 import { RegisterComponent } from './views/register/register.component';
 import { ConfirmComponent } from './views/confirm/confirm.component';
-import { ModalsComponent } from './views/modals/modals.component';
 
 @NgModule({
   imports: [
@@ -76,7 +75,7 @@ import { ModalsComponent } from './views/modals/modals.component';
     ReactiveFormsModule,
     Ng2TelInputModule,
     FormsModule,
-    ModalModule 
+    ModalModule
   ],
   declarations: [
     AppComponent,
@@ -88,8 +87,7 @@ import { ModalsComponent } from './views/modals/modals.component';
     LogoutComponent,
     RegisterComponent,
     SupportComponent,
-    ConfirmComponent,
-    ModalsComponent    
+    ConfirmComponent,   
 
   ],
   providers: [

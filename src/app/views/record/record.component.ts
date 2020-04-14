@@ -336,6 +336,7 @@ export class RecordComponent implements OnInit {
               r.data.push(c);
               rows.push(r);
             })
+            console.log(rows);
             this.generateTable(rows);
           })
           break;

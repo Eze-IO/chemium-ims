@@ -34,7 +34,7 @@ export class CounterpartyService {
         let cp = new counterparty();
         cp.counterparty_id = item['counterparty_id'];
         cp.counterparty_type_id = item['counterparty_type_id'];
-        cp.counterparty_name = item['counterpart_name'];
+        cp.counterparty_name = item['counterparty_name'];
         arr.push(cp);
       });
     }

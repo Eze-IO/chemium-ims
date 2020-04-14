@@ -35,6 +35,7 @@ export class LCService {
         l.lc_id = item['lc_id'];
         l.lc_number = item['lc_number'];
         l.product = item['product'];
+        l.lc_location = item['lc_location'];
         l.unit_measurement_id = item['unit_measurement_id'];
         l.quantity = item['quantity'];
         l.lc_price = item['lc_price'];
