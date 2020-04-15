@@ -91,7 +91,7 @@ import { ConfirmComponent } from './views/confirm/confirm.component';
 
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    //{ provide: LocationStrategy, useClass: HashLocationStrategy }, //Turn off hash url
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
   ],

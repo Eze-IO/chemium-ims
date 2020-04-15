@@ -41,8 +41,8 @@ export class ProfileComponent implements OnInit {
    this.mainForm = this.formBuilder.group({
        first_name: ['', Validators.required],
        last_name: ['', Validators.required],
-       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
-       phone_number: ['', Validators.required],
+       email: [{value:'', disabled:true}, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+       phone_number: [{value:'', disabled:true}, Validators.required],
        role: [{value:'', disabled:true}]
     });
   }
@@ -138,10 +138,9 @@ export class ProfileComponent implements OnInit {
   }
 
   async onUpload() {
-    this.u = await this.cu.GetInfo();
     this.toggleLoadingProfile();
     if (this.dataUrl !== null) {
-      let x = this.cu.UploadPicture(this.dataUrl);
+      this.cu.UploadPicture(this.dataUrl).then(x => {
         if (x) {
           this._success = true;
           this._status = "Successfully updated profile picture";
@@ -150,23 +149,24 @@ export class ProfileComponent implements OnInit {
           this._status = "Failed to update profile picture";
         }
         this.uploadButtonToggle = false;
+      });
     }
-    timer(3000).subscribe((val) => {
-      this.toggleLoadingProfile();
+    timer(4500).subscribe((val) => {
+      this.cu.GetInfo().then( x => {
+        this.u = x;
+        this.toggleLoadingProfile();
+      })
     });
+    
   }
 
   toggleProfileInfoEnable() {
     if(!this.mainForm.controls.first_name.disabled){
       this.mainForm.controls.first_name.disable();
       this.mainForm.controls.last_name.disable();
-      this.mainForm.controls.email.disable();
-      this.mainForm.controls.phone_number.disable();
     } else {
       this.mainForm.controls.first_name.enable();
       this.mainForm.controls.last_name.enable();
-      this.mainForm.controls.email.enable();
-      this.mainForm.controls.phone_number.enable();
     }
   }
 

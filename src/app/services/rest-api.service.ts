@@ -219,7 +219,7 @@ public SendConfirmation(email: string): Promise<boolean> {
         'email': _user.email,
         'name': _user.name,
         'phone_number': _user.phone_number,
-        'token': `"${AuthenticationService.Token}"`
+        'token': `${AuthenticationService.Token}`
       };
 
       return this.http.post<any>(restapiurl.updateuser.toString(), request, httpOptions).toPromise<boolean>()
