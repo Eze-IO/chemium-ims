@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { ModalModule } from "ngx-bootstrap/modal";
 
-import { UrlSerializer } from '@angular/router';
+import { UrlSerializer, RouteReuseStrategy } from '@angular/router';
 import { JwtInterceptor } from './jwt.interceptor';
 import { HttpErrorInterceptor } from './http.interceptor';
 
@@ -87,7 +87,7 @@ import { ConfirmComponent } from './views/confirm/confirm.component';
     LogoutComponent,
     RegisterComponent,
     SupportComponent,
-    ConfirmComponent,   
+    ConfirmComponent,
 
   ],
   providers: [

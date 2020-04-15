@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as entityService from '../../services/entities/index';
 import * as entity from '../../models/entities/index';
 import { ExtensionService } from '../../helpers/extension.service';
@@ -61,9 +61,12 @@ export class RecordComponent implements OnInit {
   private trs: entityService.TruckerService,
   private ums: entityService.UnitMeasurementService,
   private ws: entityService.WarehouseService,
-  private cu: CurrentUserService) {
+  private cu: CurrentUserService,
+  private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.activatedRoute.paramMap.subscribe(params => {
           this.Table = params.get('table');
+          this
     });
   }
 

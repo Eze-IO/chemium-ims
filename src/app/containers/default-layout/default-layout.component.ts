@@ -29,7 +29,6 @@ export class DefaultLayoutComponent implements OnInit {
   private router: Router) {
     this.setPicture();
     this.GetName();
-    this.checkAuth();
   }
 
   ngOnInit(): void {
@@ -43,6 +42,7 @@ export class DefaultLayoutComponent implements OnInit {
         this.navItems = null;
         this.showHeaderInfo = false;
       }
+      this.checkAuth();
     });
   }
 

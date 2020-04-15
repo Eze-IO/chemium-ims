@@ -30,6 +30,8 @@ export class AuthenticationService {
   }
 
   public get IsAuthorized(): boolean {
+    if(this.ras.IsTokenExpired)
+      return false;
     return (localStorage.getItem('auth_header') === `IMS ${AuthenticationService.Token}`);
   }
 

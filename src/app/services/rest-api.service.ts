@@ -123,6 +123,11 @@ export class RestAPIService {
    }
  }
 
+ private _tokenExpired:boolean = false;
+ public get IsTokenExpired():boolean {
+   return this._tokenExpired;
+ }
+
  public GetUser(token: string): Promise<object> {
   if (!ExtensionService.IsEmptyOrNull(token)) {
     const request = {
@@ -131,6 +136,9 @@ export class RestAPIService {
 
     return this.http.post<any>(restapiurl.getuser.toString(), request, httpOptions).toPromise<object>()
       .then(x => {
+          this._tokenExpired = false;
+          if(new String(x).indexOf("expired")>-1)
+            this._tokenExpired = true;
           if (x['Success']) {
             let json = JSON.parse(x['Result']);
             return json;
@@ -138,7 +146,7 @@ export class RestAPIService {
           return null;
         }
       ).catch(err => {
-        console.log('Error: ' + err);
+        console.log('Error: ' + new String(err));
         return null;
       });
   }
@@ -301,6 +309,7 @@ public SendConfirmation(email: string): Promise<boolean> {
       return this.http.post<any>(restapiurl.tokenrequester.toString(), request, httpOptions).toPromise<any>()
         .then(x => {
             if (x['Success']) {
+              this._tokenExpired = false;
               let json = JSON.parse(x['Result']);
               return json;
             }
