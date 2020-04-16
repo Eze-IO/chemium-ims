@@ -123,11 +123,6 @@ export class RestAPIService {
    }
  }
 
- private _tokenExpired:boolean = false;
- public get IsTokenExpired():boolean {
-   return this._tokenExpired;
- }
-
  public GetUser(token: string): Promise<object> {
   if (!ExtensionService.IsEmptyOrNull(token)) {
     const request = {
@@ -136,12 +131,11 @@ export class RestAPIService {
 
     return this.http.post<any>(restapiurl.getuser.toString(), request, httpOptions).toPromise<object>()
       .then(x => {
-          this._tokenExpired = false;
-          if(new String(x).indexOf("expired")>-1)
-            this._tokenExpired = true;
           if (x['Success']) {
             let json = JSON.parse(x['Result']);
             return json;
+          } else {
+            localStorage.setItem('auth_header', null);
           }
           return null;
         }

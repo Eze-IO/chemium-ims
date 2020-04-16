@@ -29,12 +29,26 @@ export class LoginComponent implements OnInit {
         private cu: CurrentUserService) { }
 
   ngOnInit() {
+    let session = sessionStorage.getItem('expire_date');
+    if(!ExtensionService.IsEmptyOrNull(session)){
+      let _date = this.formatDate(new Date(session));
+      this._status = "You've been logged out."
+      if(!ExtensionService.IsEmptyOrNull(_date))
+        this._status += (" Session expired: "+ _date);
+    }
+    sessionStorage.setItem('expire_date', '');
+
      this.mainForm = this.formBuilder.group({
         email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
         password: ['', Validators.required]
       });
       if(this.auth.IsAuthorized)
         this.router.navigate(["/"], { relativeTo: this.route });
+  }
+
+  formatDate(date: Date):string {
+    date = new Date(date);
+    return (((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()+" "+date.toLocaleTimeString('en-US'))
   }
 
   private email: string;

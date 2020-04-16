@@ -57,13 +57,6 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'register',
-    component: RegisterComponent,
-    data: {
-      title: 'User Register Page'
-    }
-  },
-  {
     path: 'confirm',
     component: ConfirmComponent,
     data: {

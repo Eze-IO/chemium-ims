@@ -46,9 +46,9 @@ export class UsersComponent implements OnInit {
   }
 
   updateView(){
+    this.loading = 2;
     this.userList = [];
     this.admin.GetUsers().then((element) => {
-      this.loading = 2;
       timer(2000).subscribe(x => {
         element.forEach(e => {
           if(ExtensionService.IsEmptyOrNull(e.picture))
@@ -86,8 +86,8 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(u) {
+    this.loading = 2;
     if((<user>u).email!==this.currentUser.email) {
-      this.loading = 2;
       this.admin.DeleteUser(u).then(x => {
         timer(8000).subscribe((x)=> {
           this._status = null;

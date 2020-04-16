@@ -22,7 +22,7 @@ export class LogoutComponent implements OnInit {
     timer(3000).subscribe((val) => {
       localStorage.setItem('last_page', this.router.url);
       this.auth.Deauthorize();
-      this.router.navigate(["/"], { relativeTo: this.route });
+      this.router.navigate(["/login"], { relativeTo: this.route });
     });
   }
 

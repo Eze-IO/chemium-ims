@@ -22,7 +22,8 @@
         </div>
         <div class="card-footer">
           <div class="text-center">
-            <ul style="text-align:left;list-style-type:none;">
+            <ul style="text-align:center;list-style-type:none;">
+              <li><label for="files"><em>(limit of 3 mgb file size)</em></label></li>
               <li><input (change)="onFileSelected($event)" type="file" class="col-sm-10" value="?" accept="image/png,image/gif,image/jpeg" /></li>
               &nbsp;
               <li><button (click)="onUpload()" [disabled]="!uploadButtonToggle" class="btn btn-sm btn-primary col-sm-10">Upload</button></li>

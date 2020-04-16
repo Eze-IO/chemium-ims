@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { RestAPIService } from './rest-api.service';
 import { ExtensionService } from '../helpers/extension.service';
 import { JwtInterceptor } from '../jwt.interceptor';
@@ -30,13 +30,11 @@ export class AuthenticationService {
   }
 
   public get IsAuthorized(): boolean {
-    if(this.ras.IsTokenExpired)
-      return false;
     return (localStorage.getItem('auth_header') === `IMS ${AuthenticationService.Token}`);
   }
 
   public Deauthorize(): void {
-    localStorage.setItem('auth_header', null)
+    localStorage.setItem('auth_header', null);
     localStorage.setItem('auth_token', null);
   }
 }

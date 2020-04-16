@@ -3,6 +3,8 @@ import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { ExtensionService } from '../../helpers/extension.service';
 import { timer } from 'rxjs';
+import { AuthenticationService } from '../../services/authentication.service';
+import { Router } from '@angular/router';
 //import { ClockComponent } from '../clock/clock.component';
 
 @Component({
@@ -15,6 +17,11 @@ export class DashboardComponent implements OnInit {
 
   public RefreshPage(event) {
     location.reload();
+  }
+
+  constructor(private auth: AuthenticationService,
+  private router: Router){
+
   }
 
   ngOnInit(): void {

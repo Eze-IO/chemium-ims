@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as entityService from '../../services/entities/index';
 import * as entity from '../../models/entities/index';
 import { ExtensionService } from '../../helpers/extension.service';
-import { trigger, transition, animate, style } from '@angular/animations';
+import { trigger, transition, animate, style, query, stagger } from '@angular/animations';
 import { navItems } from '../../_nav';
 import { INavData } from '@coreui/angular';
 import { cell } from '../../models/tables/cell';
@@ -30,11 +30,25 @@ import { Decimal } from 'decimal.js';
         animate('825ms ease-in', style({transform: 'translateY(-100%)'}))
       ])
     ]),
+    trigger('row.data', [
+      transition('* => *', [
+        query(':leave', [
+          stagger(500, [
+            animate(1000, style({ opacity: 0 }))
+          ])
+        ], { optional: true }),
+        query(':enter', [
+          style({ opacity: 0 }),
+          animate(1000, style({ opacity: 1 }))
+        ], { optional: true })
+      ])
+    ])
   ]
 })
 export class RecordComponent implements OnInit {
   @ViewChild('successModal') public successModal: ModalDirective;
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
+  @ViewChild('infoModal') public infoModal: ModalDirective;
   RecordName:string;
   private Table: string;
   private _navItems: INavData[];
@@ -43,6 +57,7 @@ export class RecordComponent implements OnInit {
   successMsg:string;
   dangerMsg:string;
 
+  loadingAdd:number = 0;
   loading:number = 2;
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -86,7 +101,7 @@ export class RecordComponent implements OnInit {
     this.tableMessage = "Click any cell to edit and press enter to save modifications!";
     timer(50).subscribe(async() => {
       this.u = await this.cu.GetInfo();
-      timer(3000).subscribe(async() => {
+      timer(1750).subscribe(async() => {
         this.selectView();
       })
     })
@@ -954,7 +969,13 @@ export class RecordComponent implements OnInit {
     console.log(this.NewRow);
   }
 
+  addEntry(){
+    this.loadingAdd = 0;
+    this.infoModal.show();
+  }
+
   saveChanges(){
+
     switch (this.Table) {
       case 'agent':
         if(this._newID!==0){
@@ -963,6 +984,7 @@ export class RecordComponent implements OnInit {
           let ac = this.NewRow.data.find(x => x.columnName === 'agent_commission').data;
           _agent.agent_commission = Number(ac);
           _agent.agent_country = this.NewRow.data.find(x => x.columnName === 'agent_country').data;
+          this.loadingAdd = 2;
           this.as.AddEntry(_agent).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -971,6 +993,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -984,6 +1007,7 @@ export class RecordComponent implements OnInit {
           _bl.port_of_discharge = this.NewRow.data.find(x => x.columnName === 'port_of_discharge').data;
           _bl.port_of_loading = this.NewRow.data.find(x => x.columnName === 'port_of_loading').data;
           _bl.vessel = this.NewRow.data.find(x => x.columnName === 'vessel').data;
+          this.loadingAdd = 2;
           this.bls.AddEntry(_bl).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -992,6 +1016,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1001,6 +1026,7 @@ export class RecordComponent implements OnInit {
           let _bridge_finance = new entity.bridge_finance();
           _bridge_finance.inventory_id = Number(this.NewRow.data.find(x => x.columnName === 'inventory_id').data);
           _bridge_finance.cost = Number(this.NewRow.data.find(x => x.columnName === 'cost').data);
+          this.loadingAdd = 2;
           this.bfs.AddEntry(_bridge_finance).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1009,6 +1035,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1026,6 +1053,7 @@ export class RecordComponent implements OnInit {
           _contract.link_id = Number(this.NewRow.data.find(x => x.columnName === 'link_id').data);
           _contract.payment_terms_id = Number(this.NewRow.data.find(x => x.columnName === 'payment_terms_id').data);
           _contract.contract_date = new Date(this.NewRow.data.find(x => x.columnName === 'contract_date').data);
+          this.loadingAdd = 2;
           this.cs.AddEntry(_contract).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1034,6 +1062,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1044,6 +1073,7 @@ export class RecordComponent implements OnInit {
           _counterparty.counterparty_id = this.NewRow.id;
           _counterparty.counterparty_type_id = Number(this.NewRow.data.find(x => x.columnName === 'counterparty_type_id').data);
           _counterparty.counterparty_name = this.NewRow.data.find(x => x.columnName === 'counterparty_name').data;
+          this.loadingAdd = 2;
           this.cps.AddEntry(_counterparty).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1052,6 +1082,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1062,6 +1093,7 @@ export class RecordComponent implements OnInit {
           _inventory_schedule.inventory_schedule_id = this.NewRow.id;
           _inventory_schedule.inventory_id = Number(this.NewRow.data.find(x => x.columnName === 'inventory_id').data);
           _inventory_schedule.product_id = Number(this.NewRow.data.find(x => x.columnName === 'product_id').data);
+          this.loadingAdd = 2;
           this.iss.AddEntry(_inventory_schedule).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1070,6 +1102,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1083,6 +1116,7 @@ export class RecordComponent implements OnInit {
           _inventory.quantity = Number(this.NewRow.data.find(x => x.columnName === 'quantity').data);
           _inventory.received_date = new Date(this.NewRow.data.find(x => x.columnName === 'received_date').data);
           _inventory.release_date = new Date(this.NewRow.data.find(x => x.columnName === 'release_date').data);
+          this.loadingAdd = 2;
           this.is.AddEntry(_inventory).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1091,6 +1125,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1111,6 +1146,7 @@ export class RecordComponent implements OnInit {
           _lc.ets = new Date(this.NewRow.data.find(x => x.columnName === 'ets').data);
           _lc.fee = Number(this.NewRow.data.find(x => x.columnName === 'fee').data);
           _lc.unit_measurement_id = Number(this.NewRow.data.find(x => x.columnName === 'unit_measurement_id').data);
+          this.loadingAdd = 2;
           this.lcs.AddEntry(_lc).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1119,6 +1155,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1129,6 +1166,7 @@ export class RecordComponent implements OnInit {
           _payment_terms.payment_terms_id = this.NewRow.id;
           _payment_terms.payments_terms_type = this.NewRow.data.find(x => x.columnName === 'payments_terms_type').data;
           _payment_terms.shipment_date = new Date(this.NewRow.data.find(x => x.columnName === 'shipment_date').data);
+          this.loadingAdd = 2;
           this.pts.AddEntry(_payment_terms).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1137,6 +1175,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1147,6 +1186,7 @@ export class RecordComponent implements OnInit {
           _product.product_id = this.NewRow.id;
           _product.grade = this.NewRow.data.find(x => x.columnName === 'grade').data;
           _product.rc_number = Number(this.NewRow.data.find(x => x.columnName === 'rc_number').data);
+          this.loadingAdd = 2;
           this.ps.AddEntry(_product).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1155,6 +1195,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1164,6 +1205,7 @@ export class RecordComponent implements OnInit {
           let _trader = new entity.trader();
           _trader.trader_id = this.NewRow.id;
           _trader.trader_name = this.NewRow.data.find(x => x.columnName === 'trader_name').data;
+          this.loadingAdd = 2;
           this.ts.AddEntry(_trader).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1172,6 +1214,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1183,6 +1226,7 @@ export class RecordComponent implements OnInit {
           _trucker.warehouse_id = Number(this.NewRow.data.find(x => x.columnName === 'warehouse_id').data);
           _trucker.company = this.NewRow.data.find(x => x.columnName === 'company').data;
           _trucker.rate = Number(this.NewRow.data.find(x => x.columnName === 'rate').data);
+          this.loadingAdd = 2;
           this.trs.AddEntry(_trucker).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1191,6 +1235,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1200,6 +1245,7 @@ export class RecordComponent implements OnInit {
           let _unit_measurement = new entity.unit_measurement();
           _unit_measurement.unit_measurement_id = this.NewRow.id;
           _unit_measurement.unit_measurement_desc = this.NewRow.data.find(x => x.columnName === 'unit_measurement_desc').data;
+          this.loadingAdd = 2;
           this.ums.AddEntry(_unit_measurement).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1208,6 +1254,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }
@@ -1217,6 +1264,7 @@ export class RecordComponent implements OnInit {
           let _warehouse = new entity.warehouse();
           _warehouse.warehouse_id = this.NewRow.id;
           _warehouse.warehouse_rate = Number(this.NewRow.data.find(x => x.columnName === 'warehouse_rate').data);
+          this.loadingAdd = 2;
           this.ws.AddEntry(_warehouse).then(x => {
             if(x){
               this.successMsg='Successfully added entry!';
@@ -1225,6 +1273,7 @@ export class RecordComponent implements OnInit {
               this.dangerMsg="Failed to add entry";
               this.dangerModal.show();
             }
+            this.loadingAdd = 0;
             this.selectView();
           });
         }

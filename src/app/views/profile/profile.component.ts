@@ -9,6 +9,7 @@ import { RestAPIService } from "../../services/rest-api.service";
 import { timer } from 'rxjs';
 import { Type } from '../../models/type';
 import { AuthenticationService } from '../../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -29,7 +30,11 @@ export class ProfileComponent implements OnInit {
   dataUrl: string = null;
 
   u:user = new user();
-  constructor(private cu: CurrentUserService, private formBuilder: FormBuilder, private ras: RestAPIService) { }
+  constructor(private cu: CurrentUserService,
+    private formBuilder: FormBuilder,
+    private ras: RestAPIService,
+    private auth: AuthenticationService,
+    private router: Router) { }
 
   ngOnInit(): void {
     timer(1025).subscribe((val) => {
@@ -61,7 +66,6 @@ export class ProfileComponent implements OnInit {
 
   async fillValues(){
     this.u = await this.cu.GetInfo();
-    console.log(this.u);
     this.mainForm.patchValue({
       first_name: this.cu.FirstName,
       last_name: this.cu.LastName,
@@ -76,7 +80,7 @@ export class ProfileComponent implements OnInit {
   loading:number = 0;
   toggleLoadingProfile(){
     if(this.loading===0){
-      this.picture = this.u.picture;
+      this.picture = this.u.picture+"?"+ new Date().getTime();
       if(ExtensionService.IsEmptyOrNull(this.u.picture)||this.u.picture===undefined)
         this.picture = "../../../../assets/img/avatars/default.png";
       this.loading=2;
@@ -157,7 +161,7 @@ export class ProfileComponent implements OnInit {
         this.toggleLoadingProfile();
       })
     });
-    
+
   }
 
   toggleProfileInfoEnable() {

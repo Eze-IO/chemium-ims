@@ -14,11 +14,11 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
     ReactiveFormsModule,
     RegisterRoutingModule,
     BsDropdownModule,
-    BrowserModule,
+    /*BrowserModule,*/
     ButtonsModule,
     CommonModule,
     FormsModule
   ],
-  declarations: [ ]
+  declarations: [ RegisterComponent ]
 })
 export class RegisterModule { }

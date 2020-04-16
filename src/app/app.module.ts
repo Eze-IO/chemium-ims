@@ -85,10 +85,8 @@ import { ConfirmComponent } from './views/confirm/confirm.component';
     P500Component,
     LoginComponent,
     LogoutComponent,
-    RegisterComponent,
     SupportComponent,
-    ConfirmComponent,
-
+    ConfirmComponent
   ],
   providers: [
     //{ provide: LocationStrategy, useClass: HashLocationStrategy }, //Turn off hash url

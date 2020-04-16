@@ -22,8 +22,9 @@ export class RegisterComponent implements OnInit {
   get success(): boolean {
     return this._success;
   }
+  loading:number = 0;
 
-  password_requirement:string = "Password must be at least 8 character(s), a uppercaseletter,"
+  password_requirement:string = "Password must be at least be 8 character(s), have a uppercaseletter,"
   +" a lowercase letter, a number (0-9), and one special character (ex. ^ $ * .[]{}()?-!@#%&,><':;)";
 
   constructor(private formBuilder: FormBuilder,
@@ -115,6 +116,8 @@ export class RegisterComponent implements OnInit {
     }
 
 
+
+
     if(msg.length<=0){
       if(this.password.trim()===this.password_repeat.trim()){
         if(this.checkPassword(this.password))
@@ -152,7 +155,7 @@ export class RegisterComponent implements OnInit {
       }
   }
 
-  onSubmit(){
+  async onSubmit(){
     if(this.checkValues()){
       if(!this.mainForm.invalid){
         this._status = null;
@@ -161,17 +164,19 @@ export class RegisterComponent implements OnInit {
         u.name = `${this.first_name} ${this.last_name}`;
         u.phone_number = this.phone_number;
         u.type = this.type;
-        if(this.admin.CreateUser(u, this.password)){
-          timer(3500).subscribe(x => {
-            this.router.navigate(["/users"], { relativeTo: this.route });
-          })
-          this._success = true;
-          this._status = "Successfully registered user!";
-        } else {
-          this._success = false;
-          this._status = "Failed to register user 🥺";
-          const invalid = [];
-        }
+        await this.admin.CreateUser(u, this.password).then(x => {
+          if(x){
+            timer(3500).subscribe(x => {
+              this.router.navigate(["/users"], { relativeTo: this.route });
+            })
+            this._success = true;
+            this._status = "Successfully registered user!";
+          } else {
+            this._success = false;
+            this._status = "Failed to register user 🥺";
+            const invalid = [];
+          }
+        })
       } else {
         const invalid = [];
         this._success = false;
@@ -185,5 +190,6 @@ export class RegisterComponent implements OnInit {
         this._status+=invalid.join(", ");
       }
     }
+    this.loading = 0;
   }
 }
