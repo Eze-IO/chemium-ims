@@ -9,7 +9,7 @@ import { Type } from '../../models/type';
   providedIn: 'root'
 })
 export class InventoryScheduleService {
-  public static Name:string = "inventory_schedule";
+  public static Name:string = "Inventory Schedule";
 
   private u:user = new user();
   constructor(private ras: RestAPIService,

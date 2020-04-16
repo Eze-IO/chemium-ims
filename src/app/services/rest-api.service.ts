@@ -303,7 +303,6 @@ public SendConfirmation(email: string): Promise<boolean> {
       return this.http.post<any>(restapiurl.tokenrequester.toString(), request, httpOptions).toPromise<any>()
         .then(x => {
             if (x['Success']) {
-              this._tokenExpired = false;
               let json = JSON.parse(x['Result']);
               return json;
             }

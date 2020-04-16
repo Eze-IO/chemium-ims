@@ -7,8 +7,7 @@
         </div>
       </div>
     </div>
-    <div *ngSwitchCase="1" class="col-md-12 mx-auto animated fadeInbox box">
-      <div class="card">
+    <div *ngSwitchCase="1" class="col-lg-12 animated fadeInbox card box">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> {{ RecordName }} Record
         </div>
@@ -16,7 +15,7 @@
           <div class="alert alert-info animated fadeIn" role="alert">
             {{ tableMessage }}
           </div>
-        <table class="table table-striped animated fadeIn">
+        <table class="table table-striped animated fadeIn box">
           <thead>
             <tr >
               <th>#</th>
@@ -29,7 +28,7 @@
           <tbody >
             <tr *ngFor="let row of rows; let i = index">
               <td [attr.id]="i">{{i+1}}.</td>
-              <td *ngFor="let d of row.data | slice:0:4"><input
+              <td *ngFor="let d of row.data"><input
                 class="table-cell" value="{{ d.data }}" [readonly]="IsViewer"
                 (keyup.enter)="onCellInput($event, d.columnName)"
                 (focus)="onCellFocus($event, row.id, d.columnName)"
@@ -51,7 +50,6 @@
           </button>
         </div>
         </div>
-      </div>
     </div>
     <div *ngSwitchDefault class="col-md-8 mx-auto animated fadeIn">
       <div class="row">
@@ -72,7 +70,7 @@
       </div>
     </div>
   </div>
-  <div bsModal #infoModal="bs-modal" class="modal fade box" tabindex="-1" role="dialog" aria-labelledby="add-modal" aria-hidden="true">
+  <div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-modal" aria-hidden="true">
     <div class="modal-dialog modal-info" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -81,7 +79,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body" [ngSwitch]="loadingAdd">
+        <div class="modal-body box" [ngSwitch]="loadingAdd">
           <div *ngSwitchCase="2" class="col-md-8 mx-auto animated fadeIn">
             <div class="d-flex justify-content-center" style="margin:auto;">
               <div class="spinner-border m-5" style="width: 6rem; height: 6rem;" role="status">

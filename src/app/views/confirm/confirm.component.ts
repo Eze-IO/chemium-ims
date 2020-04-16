@@ -116,11 +116,11 @@ export class ConfirmComponent implements OnInit {
             this.emailInput = "none";
           } else {
             this.title = null;
-            this.status = "Confirmation Failed: please check that your not already confirmed & your code is correct";
+            this.status = "Confirmation Failed: please check that your not already confirmed & your code/email is correct";
           }
           this.toggleLoadingScreen();
         });
-    } 
+    }
   }
-   
+
 }

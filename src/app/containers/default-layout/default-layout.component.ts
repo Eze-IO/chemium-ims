@@ -64,7 +64,7 @@ export class DefaultLayoutComponent implements OnInit {
   @HostListener('click', ['$event'])
   onUserClick(event: MouseEvent) {
       if(!this.auth.IsAuthorized){
-        sessionStorage.setItem('expire_date', Date.now.toString());
+        sessionStorage.setItem('expire_date', new Date().toLocaleString());
         location.reload();
       }
   }

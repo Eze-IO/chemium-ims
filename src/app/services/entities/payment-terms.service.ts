@@ -29,14 +29,14 @@ export class PaymentTermsService {
   public async GetEntries() {
     let arr: payment_terms[] = new Array();
     if(this.u.type!==Type.Viewer){
-      let payment_terms = await this.ras.GetEntity("payment_terms");
+      let pts = await this.ras.GetEntity("payment_terms");
       if(payment_terms===null)
         return [];
-      payment_terms.forEach(function(item) {
+      pts.forEach(function(item) {
         let pt = new payment_terms();
         pt.payment_terms_id = item['payment_terms_id'];
         pt.shipment_date = item['shipment_date'];
-        pt.payments_terms_type = item['payments_terms_type'];
+        pt.payments_terms_type = item['payment_terms_type'];
         arr.push(pt);
       });
     }

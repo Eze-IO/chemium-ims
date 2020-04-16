@@ -81,7 +81,6 @@ export class RecordComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.activatedRoute.paramMap.subscribe(params => {
           this.Table = params.get('table');
-          this
     });
   }
 
@@ -161,6 +160,7 @@ export class RecordComponent implements OnInit {
               c.columnName = "bl_date";
               c.data = this.formatDate(bl.bl_date);
               r.data.push(c);
+              console.log(r);
               rows.push(r);
             })
             this.generateTable(rows);
@@ -353,6 +353,7 @@ export class RecordComponent implements OnInit {
               c.columnName = "fee";
               c.data = lc.fee.toString();
               r.data.push(c);
+              console.log(r);
               rows.push(r);
             })
             console.log(rows);
@@ -500,7 +501,7 @@ export class RecordComponent implements OnInit {
 
   formatName(str: string){
     if(!ExtensionService.IsEmptyOrNull(str))
-      return str.toUpperCase().replace(/_/g,' ').replace('ID', ' ');
+      return str.toUpperCase().replace(/_/g,' ');
     else
       return str;
   }

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       let _date = this.formatDate(new Date(session));
       this._status = "You've been logged out."
       if(!ExtensionService.IsEmptyOrNull(_date))
-        this._status += (" Session expired: "+ _date);
+        this._status += (" Session expired at: "+ _date);
     }
     sessionStorage.setItem('expire_date', '');
 

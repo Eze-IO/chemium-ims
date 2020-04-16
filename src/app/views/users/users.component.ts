@@ -112,6 +112,6 @@ export class UsersComponent implements OnInit {
       this._status = "User cannot remove itself!";
       this.loading = 0;
     }
-    this.loading = 0;
+    //this.loading = 0;
   }
 }
