@@ -4,4 +4,5 @@
 export class cell {
   columnName:string;
   data:string;
+  isID:boolean = false;
 }

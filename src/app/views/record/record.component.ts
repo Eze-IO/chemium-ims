@@ -97,7 +97,7 @@ export class RecordComponent implements OnInit {
        }, _time);
       _time+=(Math.floor(Math.random() * 5000) + 2500);
     })
-    this.tableMessage = "Click any cell to edit and press enter to save modifications!";
+    this.tableMessage = "Click any cell to edit and press enter to save modifications! (Record IDs are not modifiable)";
     timer(50).subscribe(async() => {
       this.u = await this.cu.GetInfo();
       timer(1750).subscribe(async() => {
@@ -120,6 +120,11 @@ export class RecordComponent implements OnInit {
               r.id = a.agent_id;
               let c = new cell();
               r.data = [];
+              c.columnName = "agent_id";
+              c.data = a.agent_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "agent_commission";
               c.data = a.agent_commission.toString();
               r.data.push(c);
@@ -141,6 +146,11 @@ export class RecordComponent implements OnInit {
               r.id = bl.bl_id;
               let c = new cell();
               r.data = [];
+              c.columnName = "bl_id";
+              c.data = bl.bl_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "bl_status_id";
               c.data = bl.bl_status_id.toString();
               r.data.push(c);
@@ -175,6 +185,11 @@ export class RecordComponent implements OnInit {
               r.id = (bf.cost+bf.inventory_id);
               let c = new cell();
               r.data = [];
+              c.columnName = "id";
+              c.data = r.id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "inventory_id";
               c.data = bf.inventory_id.toString();
               r.data.push(c);
@@ -196,6 +211,11 @@ export class RecordComponent implements OnInit {
               r.id = cc.contract_id;
               let c = new cell();
               r.data = [];
+              c.columnName = "contract_id";
+              c.data = cc.contract_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "agent_id";
               c.data = cc.agent_id.toString();
               r.data.push(c);
@@ -242,6 +262,11 @@ export class RecordComponent implements OnInit {
               r.id = cp.counterparty_id;
               let c = new cell();
               r.data = [];
+              c.columnName = "counterparty_id";
+              c.data = cp.counterparty_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "counterparty_name";
               c.data = cp.counterparty_name;
               r.data.push(c);
@@ -263,6 +288,11 @@ export class RecordComponent implements OnInit {
               r.id = is.inventory_schedule_id
               let c = new cell();
               r.data = [];
+              c.columnName = "inventory_schedule_id";
+              c.data = is.inventory_schedule_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "inventory_id";
               c.data = is.inventory_id.toString();
               r.data.push(c);
@@ -285,6 +315,11 @@ export class RecordComponent implements OnInit {
               r.id = is.inventory_id
               let c = new cell();
               r.data = [];
+              c.columnName = "inventory_id";
+              c.data = is.inventory_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "product_id";
               c.data = is.product_id.toString();
               r.data.push(c);
@@ -318,6 +353,11 @@ export class RecordComponent implements OnInit {
               r.id = lc.lc_id
               let c = new cell();
               r.data = [];
+              c.columnName = "lc_id";
+              c.data = lc.lc_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "lc_location";
               c.data = lc.lc_location;
               r.data.push(c);
@@ -369,6 +409,11 @@ export class RecordComponent implements OnInit {
               r.id = pt.payment_terms_id;
               let c = new cell();
               r.data = [];
+              c.columnName = "payment_terms_id";
+              c.data = pt.payment_terms_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "payments_terms_type";
               c.data = pt.payments_terms_type;
               r.data.push(c);
@@ -390,6 +435,11 @@ export class RecordComponent implements OnInit {
               r.id = p.product_id;
               let c = new cell();
               r.data = [];
+              c.columnName = "product_id";
+              c.data = p.product_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "rc_number";
               c.data = p.rc_number.toString();
               r.data.push(c);
@@ -411,6 +461,11 @@ export class RecordComponent implements OnInit {
               r.id = t.trader_id;
               let c = new cell();
               r.data = [];
+              c.columnName = "trader_id";
+              c.data = t.trader_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "trader_name";
               c.data = t.trader_name.toString();
               r.data.push(c);
@@ -428,6 +483,11 @@ export class RecordComponent implements OnInit {
               r.id = tr.trucker_id;
               let c = new cell();
               r.data = [];
+              c.columnName = "trucker_id";
+              c.data = tr.trucker_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "warehouse_id";
               c.data = tr.warehouse_id.toString();
               r.data.push(c);
@@ -453,6 +513,11 @@ export class RecordComponent implements OnInit {
               r.id = um.unit_measurement_id;
               let c = new cell();
               r.data = [];
+              c.columnName = "unit_measurement_id";
+              c.data = um.unit_measurement_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "unit_measurement_desc";
               c.data = um.unit_measurement_desc.toString();
               r.data.push(c);
@@ -470,6 +535,11 @@ export class RecordComponent implements OnInit {
               r.id = w.warehouse_id;
               let c = new cell();
               r.data = [];
+              c.columnName = "warehouse_id";
+              c.data = w.warehouse_id.toString();
+              c.isID = true;
+              r.data.push(c);
+              c = new cell();
               c.columnName = "unit_measurement_id";
               c.data = w.unit_measurement_id.toString();
               r.data.push(c);
@@ -555,7 +625,7 @@ export class RecordComponent implements OnInit {
         this.as.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -565,7 +635,7 @@ export class RecordComponent implements OnInit {
         this.bls.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -575,7 +645,7 @@ export class RecordComponent implements OnInit {
         this.bfs.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -585,7 +655,7 @@ export class RecordComponent implements OnInit {
         this.cs.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -595,7 +665,7 @@ export class RecordComponent implements OnInit {
         this.cps.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -605,7 +675,7 @@ export class RecordComponent implements OnInit {
         this.iss.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -615,7 +685,7 @@ export class RecordComponent implements OnInit {
         this.is.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -625,7 +695,7 @@ export class RecordComponent implements OnInit {
         this.lcs.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -635,7 +705,7 @@ export class RecordComponent implements OnInit {
         this.pts.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -645,7 +715,7 @@ export class RecordComponent implements OnInit {
         this.ps.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -655,7 +725,7 @@ export class RecordComponent implements OnInit {
         this.ts.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -665,7 +735,7 @@ export class RecordComponent implements OnInit {
         this.trs.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -675,7 +745,7 @@ export class RecordComponent implements OnInit {
         this.ums.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -685,7 +755,7 @@ export class RecordComponent implements OnInit {
         this.ws.UpdateEntry(this.currentID, columnName, e.target.value).then(x => {
           if(x){
           } else {
-            this.dangerMsg = 'Failed to update entry';
+            this.dangerMsg = 'Failed to update entry: invalid input!';
             this.dangerModal.show();
           }
           this.selectView();
@@ -934,6 +1004,8 @@ export class RecordComponent implements OnInit {
           _fin = true;
         }
       })
+      if(c==0)
+        _c.isID = true;
       _c.columnName = (da[c].columnName);
       r.data.push(_c);
     }
@@ -1014,7 +1086,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1033,7 +1105,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1060,7 +1132,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1080,7 +1152,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1100,7 +1172,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1123,7 +1195,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1153,7 +1225,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1173,7 +1245,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1193,7 +1265,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1212,7 +1284,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1233,7 +1305,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1252,7 +1324,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;
@@ -1271,7 +1343,7 @@ export class RecordComponent implements OnInit {
               this.successMsg='Successfully added entry!';
               this.successModal.show();
             } else {
-              this.dangerMsg="Failed to add entry";
+              this.dangerMsg="Failed to add entry: invalid input!";
               this.dangerModal.show();
             }
             this.loadingAdd = 0;

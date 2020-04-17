@@ -29,7 +29,7 @@
             <tr *ngFor="let row of rows; let i = index">
               <td [attr.id]="i">{{i+1}}.</td>
               <td *ngFor="let d of row.data"><input
-                class="table-cell" value="{{ d.data }}" [readonly]="IsViewer"
+                class="table-cell" value="{{ d.data }}" [readonly]="IsViewer||d.isID"
                 (keyup.enter)="onCellInput($event, d.columnName)"
                 (focus)="onCellFocus($event, row.id, d.columnName)"
                 (focusout)="onCellFocusOut($event)"
@@ -91,7 +91,7 @@
             <thead>
               <tr >
                 <th *ngFor="let column of columns">
-                  {{ column.toUpperCase().replace('_', ' ') }}
+                  {{ formatName(column) }}
                 </th>
                 <th></th>
               </tr>
@@ -99,7 +99,7 @@
             <tbody >
               <tr>
                 <td *ngFor="let d of NewRow.data"><input
-                  class="table-cell" value="{{ d.data }}"
+                  class="table-cell" value="{{ (d.isID) ? NewRow.id : d.data }}" [readonly]="d.isID"
                   (keyup.enter)="addCellInput($event, d.columnName)"
                   (focus)="addCellFocus($event, NewRow.id, d.columnName)"
                   (focusout)="addCellFocusOut($event)"

@@ -20,11 +20,10 @@ export class WarehouseService {
 
   public async GetEntries()  {
     let arr: warehouse[] = new Array();
-    let warehouses = await this.ras.GetEntity("warehouse");
-    if(warehouses===null)
+    let ws = await this.ras.GetEntity("warehouse");
+    if(ws===null)
       return [];
-    warehouses.then(items => {
-      items.forEach(function (item) {
+    ws.forEach(function (item) {
         let w = new warehouse();
         w.warehouse_id = item['warehouse_id'];
         w.location_desc = item['location_desc'];
@@ -32,8 +31,8 @@ export class WarehouseService {
         w.warehouse_rate = item['warehouse_rate'];
         w.trader_id = item['trader_id'];
         arr.push(w);
-      });
     });
+    console.log(arr);
     return arr;
   }
 
