@@ -33,10 +33,13 @@ export class BridgeFinanceService {
       if(bridge_finances===null)
         return [];
       bridge_finances.forEach(function(item) {
-        let bf = new bridge_finance();
-        bf.inventory_id = item['inventory_id'];
-        bf.cost = item['cost'];
-        arr.push(bf);
+        try{
+          let bf = new bridge_finance();
+          bf.inventory_id = item['inventory_id'];
+          bf.cost = item['cost'];
+          arr.push(bf);
+        }
+        catch {}
       });
     }
     return arr;

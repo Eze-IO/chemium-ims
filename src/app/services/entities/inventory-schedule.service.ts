@@ -33,10 +33,11 @@ export class InventoryScheduleService {
         return [];
       inventory_schedules.forEach(function(item) {
         let is = new inventory_schedule();
-        is.inventory_schedule_id = item['inventory_schedule_id'];
+        is.inventory_status_id = item['inventory_status_id'];
         is.product_id = item['product_id']
         is.inventory_id = item['inventory_id'];
         arr.push(is);
+        console.log(item);
       });
     }
     return arr;
@@ -45,7 +46,7 @@ export class InventoryScheduleService {
   public async GetEntry(id: number) {
     if(this.u.type!==Type.Viewer){
       let all = await this.GetEntries();
-      return all.find(x => x.inventory_schedule_id === id);
+      return all.find(x => x.inventory_status_id === id);
     }
     return null;
   }

@@ -33,11 +33,13 @@ export class AgentService {
       if(agents===null)
         return [];
       agents.forEach(function(item) {
-        let a = new agent();
-        a.agent_id = item['agent_id'];
-        a.agent_country = item['agent_country'];
-        a.agent_commission = item['agent_commission'];
-        arr.push(a);
+        try{
+          let a = new agent();
+          a.agent_id = item['agent_id'];
+          a.agent_country = item['agent_country'];
+          a.agent_commission = item['agent_commission'];
+          arr.push(a);
+        } catch {}
       });
     }
     return arr;

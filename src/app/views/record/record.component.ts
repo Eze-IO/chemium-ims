@@ -146,12 +146,12 @@ export class RecordComponent implements OnInit {
               r.id = bl.bl_id;
               let c = new cell();
               r.data = [];
-              c.columnName = "bl_id";
+              c.columnName = "bill_of_lading_id";
               c.data = bl.bl_id.toString();
               c.isID = true;
               r.data.push(c);
               c = new cell();
-              c.columnName = "bl_status_id";
+              c.columnName = "bill_of_lading_status_id";
               c.data = bl.bl_status_id.toString();
               r.data.push(c);
               c = new cell();
@@ -167,7 +167,7 @@ export class RecordComponent implements OnInit {
               c.data = bl.vessel.toString();
               r.data.push(c);
               c = new cell();
-              c.columnName = "bl_date";
+              c.columnName = "bill_of_lading_date";
               c.data = this.formatDate(bl.bl_date);
               r.data.push(c);
               console.log(r);
@@ -185,7 +185,7 @@ export class RecordComponent implements OnInit {
               r.id = (bf.cost+bf.inventory_id);
               let c = new cell();
               r.data = [];
-              c.columnName = "id";
+              c.columnName = "bridge_finance_id";
               c.data = r.id.toString();
               c.isID = true;
               r.data.push(c);
@@ -244,7 +244,7 @@ export class RecordComponent implements OnInit {
               c.data = cc.link_id.toString();
               r.data.push(c);
               c = new cell();
-              c.columnName = "bl_id";
+              c.columnName = "bill_of_lading_id";
               c.data = cc.bl_id.toString();
               r.data.push(c);
               rows.push(r);
@@ -285,11 +285,11 @@ export class RecordComponent implements OnInit {
           this.iss.GetEntries().then(x => {
             x.forEach(is => {
               let r = new row();
-              r.id = is.inventory_schedule_id
+              r.id = is.inventory_status_id
               let c = new cell();
               r.data = [];
               c.columnName = "inventory_schedule_id";
-              c.data = is.inventory_schedule_id.toString();
+              c.data = is.inventory_status_id.toString();
               c.isID = true;
               r.data.push(c);
               c = new cell();
@@ -353,24 +353,24 @@ export class RecordComponent implements OnInit {
               r.id = lc.lc_id
               let c = new cell();
               r.data = [];
-              c.columnName = "lc_id";
+              c.columnName = "letter_of_credit_id";
               c.data = lc.lc_id.toString();
               c.isID = true;
               r.data.push(c);
               c = new cell();
-              c.columnName = "lc_location";
+              c.columnName = "letter_of_credit_location";
               c.data = lc.lc_location;
               r.data.push(c);
               c = new cell();
-              c.columnName = "lc_number";
+              c.columnName = "letter_of_credit_number";
               c.data = lc.lc_number;
               r.data.push(c);
               c = new cell();
-              c.columnName = "lc_price";
+              c.columnName = "letter_of_credit_price";
               c.data = lc.lc_price.toString();
               r.data.push(c);
               c = new cell();
-              c.columnName = "lc_date";
+              c.columnName = "letter_of_credit_date";
               c.data = this.formatDate(lc.lc_date);
               r.data.push(c);
               c = new cell();
@@ -382,11 +382,11 @@ export class RecordComponent implements OnInit {
               c.data = this.formatDate(lc.cutoff);
               r.data.push(c);
               c = new cell();
-              c.columnName = "eta";
+              c.columnName = "estimated_time_of_arrival";
               c.data = this.formatDate(lc.eta);
               r.data.push(c);
               c = new cell();
-              c.columnName = "ets";
+              c.columnName = "estimated_time_of_shipping";
               c.data = this.formatDate(lc.ets);
               r.data.push(c);
               c = new cell();
@@ -1163,7 +1163,7 @@ export class RecordComponent implements OnInit {
       case 'inventory_schedule':
         if(this._newID!==0){
           let _inventory_schedule = new entity.inventory_schedule();
-          _inventory_schedule.inventory_schedule_id = this.NewRow.id;
+          _inventory_schedule.inventory_status_id = this.NewRow.id;
           _inventory_schedule.inventory_id = Number(this.NewRow.data.find(x => x.columnName === 'inventory_id').data);
           _inventory_schedule.product_id = Number(this.NewRow.data.find(x => x.columnName === 'product_id').data);
           this.loadingAdd = 2;

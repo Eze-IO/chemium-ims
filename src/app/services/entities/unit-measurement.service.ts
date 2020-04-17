@@ -33,10 +33,12 @@ export class UnitMeasurementService {
       if(unit_measurements===null)
         return [];
       unit_measurements.forEach(function(item) {
-        let u = new unit_measurement();
-        u.unit_measurement_id = item['unit_measurement_id'];
-        u.unit_measurement_desc = item['unit_measurement_desc'];
-        arr.push(u);
+        try {
+          let u = new unit_measurement();
+          u.unit_measurement_id = item['unit_measurement_id'];
+          u.unit_measurement_desc = item['unit_measurement_desc'];
+          arr.push(u);
+        } catch {}
       });
     }
     return arr;

@@ -33,14 +33,16 @@ export class BLService {
       if(bls===null)
         return [];
       bls.forEach(function(item) {
-        let b = new bl();
-        b.bl_id = item['bl_id'];
-        b.bl_status_id = item['bl_status_id'];
-        b.vessel = item['vessel'];
-        b.port_of_discharge = item['port_of_discharge'];
-        b.port_of_loading = item['port_of_loading'];
-        b.bl_date = item['bl_date']
-        arr.push(b);
+        try{
+          let b = new bl();
+          b.bl_id = item['bl_id'];
+          b.bl_status_id = item['bl_status_id'];
+          b.vessel = item['vessel'];
+          b.port_of_discharge = item['port_of_discharge'];
+          b.port_of_loading = item['port_of_loading'];
+          b.bl_date = item['bl_date']
+          arr.push(b);
+        } catch {}
       });
     }
     return arr;

@@ -33,11 +33,13 @@ export class ProductService {
       if(products===null)
         return [];
       products.forEach(function(item) {
-        let p = new product();
-        p.product_id = item['product_id'];
-        p.grade = item['grade'];
-        p.rc_number = item['rc_number'];
-        arr.push(p);
+        try {
+          let p = new product();
+          p.product_id = item['product_id'];
+          p.grade = item['grade'];
+          p.rc_number = item['rc_number'];
+          arr.push(p);
+        } catch {}
       });
     }
     return arr;

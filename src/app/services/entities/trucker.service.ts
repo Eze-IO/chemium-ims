@@ -33,12 +33,14 @@ export class TruckerService {
       if(truckers===null)
         return [];
       truckers.forEach(function(item) {
-        let tr = new trucker();
-        tr.trucker_id = item['trucker_id'];
-        tr.rate = item['rate'];
-        tr.company = item['company'];
-        tr.warehouse_id = item['warehouse_id'];
-        arr.push(tr);
+        try {
+          let tr = new trucker();
+          tr.trucker_id = item['trucker_id'];
+          tr.rate = item['rate'];
+          tr.company = item['company'];
+          tr.warehouse_id = item['warehouse_id'];
+          arr.push(tr);
+        } catch {}
       });
     }
     return arr;

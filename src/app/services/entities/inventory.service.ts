@@ -33,14 +33,16 @@ export class InventoryService {
       if(inventories===null)
         return [];
       inventories.forEach(function(item) {
-        let i = new inventory();
-        i.inventory_id = item['inventory_id'];
-        i.product_id = item['product_id'];
-        i.warehouse_id = item['warehouse_id'];
-        i.quantity = item['quantity'];
-        i.received_date = item['received_date'];
-        i.release_date = item['release_date'];
-        arr.push(i);
+        try{
+          let i = new inventory();
+          i.inventory_id = item['inventory_id'];
+          i.product_id = item['product_id'];
+          i.warehouse_id = item['warehouse_id'];
+          i.quantity = item['quantity'];
+          i.received_date = item['received_date'];
+          i.release_date = item['release_date'];
+          arr.push(i);
+        } catch {}
       });
     }
     return arr;

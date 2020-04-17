@@ -24,13 +24,15 @@ export class WarehouseService {
     if(ws===null)
       return [];
     ws.forEach(function (item) {
-        let w = new warehouse();
-        w.warehouse_id = item['warehouse_id'];
-        w.location_desc = item['location_desc'];
-        w.unit_measurement_id = item['unit_measurement_id'];
-        w.warehouse_rate = item['warehouse_rate'];
-        w.trader_id = item['trader_id'];
-        arr.push(w);
+        try {
+          let w = new warehouse();
+          w.warehouse_id = item['warehouse_id'];
+          w.location_desc = item['location_desc'];
+          w.unit_measurement_id = item['unit_measurement_id'];
+          w.warehouse_rate = item['warehouse_rate'];
+          w.trader_id = item['trader_id'];
+          arr.push(w);
+        } catch {}
     });
     console.log(arr);
     return arr;

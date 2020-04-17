@@ -33,10 +33,12 @@ export class TraderService {
       if(traders===null)
         return [];
       traders.forEach(function(item) {
-        let t = new trader();
-        t.trader_id = item['trader_id'];
-        t.trader_name = item['trader_name'];
-        arr.push(t);
+        try {
+          let t = new trader();
+          t.trader_id = item['trader_id'];
+          t.trader_name = item['trader_name'];
+          arr.push(t);
+        } catch {}
       });
     }
     return arr;

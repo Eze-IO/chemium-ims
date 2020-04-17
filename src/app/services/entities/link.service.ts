@@ -33,15 +33,17 @@ export class LinkService {
       if(links===null)
         return [];
       links.forEach(function(item) {
-        let li = new link();
-        li.link_id = item['link_id'];
-        li.purchase = item['purchase'];
-        li.sale = item['sale'];
-        li.pnl = item['pnl'];
-        li.gross = item['gross'];
-        li.fees = item['fees'];
-        li.lc_id = item['lc_id'];
-        arr.push(li);
+        try {
+          let li = new link();
+          li.link_id = item['link_id'];
+          li.purchase = item['purchase'];
+          li.sale = item['sale'];
+          li.pnl = item['pnl'];
+          li.gross = item['gross'];
+          li.fees = item['fees'];
+          li.lc_id = item['lc_id'];
+          arr.push(li);
+        } catch {}
       });
     }
     return arr;

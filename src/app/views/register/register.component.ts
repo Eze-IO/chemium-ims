@@ -4,9 +4,11 @@ import { Routes, RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ExtensionService } from '../../helpers/extension.service';
 import { AdministratorService } from '../../services/administrator.service';
+import { Location } from '@angular/common';
 import { Type } from '../../models/type';
 import { user } from '../../models/user';
 import { timer } from 'rxjs';
+import { CurrentUserService } from '../../services/current-user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,6 +25,7 @@ export class RegisterComponent implements OnInit {
     return this._success;
   }
   loading:number = 0;
+  private u:user;
 
   password_requirement:string = "Password must be at least be 8 character(s), have a uppercaseletter,"
   +" a lowercase letter, a number (0-9), and one special character (ex. ^ $ * .[]{}()?-!@#%&,><':;)";
@@ -30,9 +33,14 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private admin: AdministratorService) { }
+        private admin: AdministratorService,
+        private location: Location,
+        private cu: CurrentUserService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.u = await this.cu.GetInfo();
+    if(this.u.type!==Type.Administrator)
+      this.router.navigate(["/403"], { relativeTo: this.route });
     this.mainForm = this.formBuilder.group({
           first_name: ['', Validators.required],
           last_name: ['', Validators.required],
@@ -42,6 +50,10 @@ export class RegisterComponent implements OnInit {
           repeat_password: ['', Validators.required],
           user_role: ['', Validators.required]
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   checkPassword(password:string): boolean {

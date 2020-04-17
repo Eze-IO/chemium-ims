@@ -33,11 +33,13 @@ export class PaymentTermsService {
       if(payment_terms===null)
         return [];
       pts.forEach(function(item) {
-        let pt = new payment_terms();
-        pt.payment_terms_id = item['payment_terms_id'];
-        pt.shipment_date = item['shipment_date'];
-        pt.payments_terms_type = item['payment_terms_type'];
-        arr.push(pt);
+        try {
+          let pt = new payment_terms();
+          pt.payment_terms_id = item['payment_terms_id'];
+          pt.shipment_date = item['shipment_date'];
+          pt.payments_terms_type = item['payment_terms_type'];
+          arr.push(pt);
+        } catch {}
       });
     }
     return arr;

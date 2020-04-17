@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ElementRef, ViewChild } from '@an
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExtensionService } from '../../helpers/extension.service';
 import { RestAPIService } from '../../services/rest-api.service';
+import { Location } from '@angular/common';
 declare var $: any;
 
 @Component({
@@ -22,7 +23,8 @@ export class ConfirmComponent implements OnInit {
   @ViewChild("contain") inputFields: ElementRef;
 
   constructor(private formBuilder: FormBuilder,
-    private ras: RestAPIService) { }
+    private ras: RestAPIService,
+    private location: Location) { }
 
   ngOnInit(): void {
     this.toggleLoadingScreen();
@@ -36,6 +38,10 @@ export class ConfirmComponent implements OnInit {
       i6: ['', Validators.required]
     });
     this.toggleLoadingScreen();
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   toggleLoadingScreen(){
