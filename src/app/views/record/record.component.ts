@@ -774,7 +774,9 @@ export class RecordComponent implements OnInit {
   onCellFocusOut(e){
   }
 
-  deleteRow(d){
+
+  deleteRow(d, id){
+    let currentDiv = document.getElementById(id);
     switch (this.Table) {
       case 'agent':
         this.as.DeleteEntry(d.id).then(x => {
@@ -1029,7 +1031,6 @@ export class RecordComponent implements OnInit {
   }
 
   addCellTextChange(e, columnName) {
-    console.log(e.target.value);
     if(this.NewRow===null)
       this.NewRow = this.getNewRow();
     let results:cell = null;
@@ -1039,7 +1040,6 @@ export class RecordComponent implements OnInit {
           x.data = e.target.value;
       });
     } catch { }
-    console.log(this.NewRow);
   }
 
   addEntry(){

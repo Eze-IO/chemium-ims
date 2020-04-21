@@ -34,10 +34,11 @@
                 (focus)="onCellFocus($event, row.id, d.columnName)"
                 (focusout)="onCellFocusOut($event)"
                 (change)="onCellTextChange($event)"
+                id="{{i+1}}"
                 required/>
               </td>
               <td>
-                <i (click)="deleteRow(row)" class="cui-circle-x icons font-4xl mt-2" *ngIf="!IsViewer"></i>
+                <i (click)="deleteRow(row, i+1)" class="cui-circle-x icons font-4xl mt-2" *ngIf="!IsViewer"></i>
               </td>
             </tr>
           </tbody>

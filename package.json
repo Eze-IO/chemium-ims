@@ -1,10 +1,10 @@
 {
   "name": "Chemium-IMS",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A cloud based application for managing and storing inventory information for Chemium",
   "author": {
     "name": "Cloud Solutions Consultants",
-    "url": "http://ims.chemium.com"
+    "url": "http://chemium-ims.net"
   },
   "contributors": [
     {
