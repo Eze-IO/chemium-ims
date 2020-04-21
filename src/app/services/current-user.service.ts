@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { RestAPIService } from './rest-api.service';
 import { user } from "../models/user";
 import { Type } from "../models/type";
@@ -45,15 +45,24 @@ export class CurrentUserService {
 
       if(!ExtensionService.IsEmptyOrNull(this.u.name)){
         let _name = this.u.name.split(' ');
-        this._firstName = ExtensionService.IsEmptyOrNull(_name[0]) ? null : _name[0];
-        this._lastName = ExtensionService.IsEmptyOrNull(_name[1]) ? null : _name[1];
+        if(_name.length>0){
+          this._lastName = ExtensionService.IsEmptyOrNull(_name[_name.length-1]) ? " " : _name[_name.length-1];
+          _name.length = (_name.length-1);
+          this._firstName = ExtensionService.IsEmptyOrNull(_name.join(' ')) ? " " : _name.join(' ');
+        }
       }
     }
     return this.u;
   }
 
+  private InfoHasChanged: EventEmitter<any> = new EventEmitter();
+  public onInfoChange() { return this.InfoHasChanged; }
+
   public async UpdateInfo(user: user) {
     let result = await this.ras.UpdateUser(user);
+    if(result){
+      this.InfoHasChanged.emit(result);
+    }
     return result;
   }
 
@@ -62,8 +71,14 @@ export class CurrentUserService {
     return result;
   }
 
+  private HasPictureChanged: EventEmitter<any> = new EventEmitter();
+  public onPictureChange() { return this.HasPictureChanged; }
+
   public async UploadPicture(picture: string) {
     let result = await this.ras.UploadUserPicture(this.u.email, picture);
+    if(result){
+      this.HasPictureChanged.emit(result);
+    }
     return result;
   }
 

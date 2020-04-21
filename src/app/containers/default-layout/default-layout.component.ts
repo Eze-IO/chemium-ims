@@ -9,7 +9,14 @@ import { timer, Observable } from 'rxjs';
 import { AdministratorService } from '../../services/administrator.service';
 import { ThemeService } from 'ng2-charts';
 import { AuthenticationService } from '../../services/authentication.service';
+import { HttpClient, HttpHeaders, HttpResponse, HttpEvent } from '@angular/common/http';
 import { Router } from '@angular/router';
+
+const httpOptions = new HttpHeaders({
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT',
+  'Access-Control-Allow-Headers': 'x-requested-with, Content-Type, origin, authorization, accept, client-security-token'
+});
 
 @Component({
   selector: 'app-dashboard',
@@ -26,17 +33,24 @@ export class DefaultLayoutComponent implements OnInit {
   constructor(private cu: CurrentUserService,
   private admin: AdministratorService,
   private auth: AuthenticationService,
-  private router: Router) {
+  private router: Router,
+  private http: HttpClient) {
     this.setPicture();
     this.GetName();
   }
 
 
   ngOnInit(): void {
+    this.setPicture();
+    this.cu.onPictureChange().subscribe(x => {
+      this.setPicture();
+    });
+    this.GetName();
+    this.cu.onInfoChange().subscribe(y => {
+      this.GetName();
+    });
     timer(1750, 25000).subscribe((val) => {
       if(ExtensionService.IsConnected()){
-        this.setPicture();
-        this.GetName();
         this.navItems = navItems;
         this.showHeaderInfo = true;
       } else {
@@ -53,6 +67,7 @@ export class DefaultLayoutComponent implements OnInit {
     else
       this.Name = `Hello 👋, ${this.u.name}`;
   }
+
 
   public async setPicture() {
     this.u = await this.cu.GetInfo();

@@ -37,10 +37,7 @@ export class RegisterComponent implements OnInit {
         private location: Location,
         private cu: CurrentUserService) { }
 
-  async ngOnInit() {
-    this.u = await this.cu.GetInfo();
-    if(this.u.type!==Type.Administrator)
-      this.router.navigate(["/403"], { relativeTo: this.route });
+  ngOnInit() {
     this.mainForm = this.formBuilder.group({
           first_name: ['', Validators.required],
           last_name: ['', Validators.required],
@@ -50,6 +47,11 @@ export class RegisterComponent implements OnInit {
           repeat_password: ['', Validators.required],
           user_role: ['', Validators.required]
     });
+    timer(250).subscribe(async() => {
+      this.u = await this.cu.GetInfo();
+      if(this.u.type!==Type.Administrator)
+        this.router.navigate(["/403"], { relativeTo: this.route });
+    })
   }
 
   goBack() {
@@ -86,6 +88,7 @@ export class RegisterComponent implements OnInit {
 
   checkValues(): boolean {
     let result = false;
+    console.log(this.mainForm.controls.first_name.value);
     this.first_name = this.mainForm.controls.first_name.value;
     this.last_name = this.mainForm.controls.last_name.value;
     this.email = this.mainForm.controls.email.value;
